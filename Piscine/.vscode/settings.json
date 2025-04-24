@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "numeric": "c",
+        "unistd.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "ranges": "c",
+        "utility": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
