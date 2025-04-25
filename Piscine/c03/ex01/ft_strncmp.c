@@ -12,9 +12,9 @@
 
 #include <stdio.h>
 
-int	ft_strncmp(char *s1, char *s2, unsigned int n)
+int ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	unsigned int	i;
+	size_t	i;
 
 	i = 0;
 	/*if (n == 0)
@@ -22,13 +22,18 @@ int	ft_strncmp(char *s1, char *s2, unsigned int n)
 	while (s1[i] == s2[i] && s1[i] && s2[i] && i < n - 1)
 		i++;
 	return (s1[i] - s2[i]);
+	/* 
+	0 = die ersten n Zeichen sind gleich
+	< 0  s1 kommt lexographis vor s2
+	> 0 s2 kommt vorher 
+	*/
 }
 
 int	main(void)
 {
 	char src[] = "aaaacaba";
 	char dest[] = "aaaaabcabcabb";
-	unsigned int n = 0;
+	size_t n = 7;
 
 	int result = ft_strncmp(src, dest, n);
     	printf("Return: %d", result);
