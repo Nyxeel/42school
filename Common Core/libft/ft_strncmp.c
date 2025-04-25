@@ -31,8 +31,8 @@ int ft_strncmp(const char *s1, const char *s2, size_t n)
 
 int	main(void)
 {
-	char src[] = "aaaacaba";
-	char dest[] = "aaaaabcabcabb";
+	char src[] = "Hallo";
+	char dest[] = "HalLo";
 	size_t n = 7;
 
 	int result = ft_strncmp(src, dest, n);
