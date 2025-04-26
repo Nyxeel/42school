@@ -1,0 +1,5 @@
+memset
+bzero 			sicherung einbauen falls n größer als sizeof(array)
+
+
+überprüfen falls pointer oder andere werte nicht gefunden werden, sodass sicher return gemacht wird!
