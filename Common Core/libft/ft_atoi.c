@@ -13,38 +13,38 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int	ft_atoi(char *str)
+int ft_atoi(const char *str)
 {
-	int	count;
+	int	minus;
 	int	num;
 	int	i;
 
 	i = 0;
-	count = 1;
+	minus = 1;
 	num = 0;
 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	while (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
-			count = count * (-1);
+			minus = minus * (-1);
 		i++;
 	}
 	while (str[i] >= 48 && str[i] <= 57)
 	{
-		num = num * 10;
-		num = num + str[i] - '0';
+		num = num * 10;						// 						1 = 1 * 10 = 10
+		num = num + str[i] - '0';			// 0 + 49 - 48 = 1		10 + 52 - 48 = 14
 		i++;
 	}
-	return (count * num);
+	return (minus * num);
 }
-/*
+
 int main(void)
 {
-    char *c = "-++---++00648234bbdd6464";
+    char *c = "	-14";
     int num;
 
     num = ft_atoi(c);
     printf("Nummer: %d", num);
 
-}*/
+}
