@@ -13,12 +13,12 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int	ft_strlen(char *str)
+size_t	ft_strlen(const char *str)
 {
-	int	count;
+	size_t	count;
 
 	count = 0;
-	while (str[count])
+	while (str[count]) 
 		count++;
 	return (count);
 }
