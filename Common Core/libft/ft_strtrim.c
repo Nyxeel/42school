@@ -98,10 +98,14 @@ char *ft_strtrim(char const *s1, char const *set)
 
 int	main(void)
 {
-	char str[] = "xyxyyx--xHellox--xyxx";
+	char str[] = "xyxyyx--x--xHELLOyxx";
 	char set[] = "xy-";
+	char *trim;
 
 	printf("%s\n", str);
 	printf("Trimm: %s\n", set);
-	printf("%s\n", (char *) ft_strtrim(str, set));
+
+	trim = (char *)ft_strtrim(str, set);
+	printf("%s\n", trim);
+	free(trim);
 }
