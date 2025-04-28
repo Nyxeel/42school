@@ -10,17 +10,35 @@ size_t	ft_strlen(const char *str)
 	return (count);
 }
 
-char **ft_split(char const *s, char c)
+size_t ft_split(char const *s, char c)
 {
 	size_t strlen;
-	strlen = ft_strlen(s);
+	size_t i;
+	size_t count;
+
+	count = 0;
+	i = 0;
+	// strlen = ft_strlen(s);
+	while(s[i] == c)
+		i++;
+	while(s[i])
+	{
+		if(s[i - 1] == c && s[i] != c)
+			count++;
+		//if ((s[i] != c && s[i + 1] == c) || s[i] == c && s[i + 1] == '\0')
+		i++;		
+	}
+	return (count);	
 }
 
 int	main(void)
 {
-	char str[] = " Hallo, das ist ein Text zum Splitten, tschau!!!";
+	char str[] = " Hal   jjj   kkk      kk  k k  k   "; // 8 Wörter
 	char sep = ' ';
 
-	char **split = ft_split(str, sep);
+
+	size_t split = ft_split(str, sep);
+	printf("Wörter: %zu\n", split);
+
 
 }
