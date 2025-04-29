@@ -30,21 +30,29 @@ static size_t ft_wordcount(char const *s, char c)
 	return (count);	
 }
 
-static size_t ft_sepcount(char const *s, char c)
+static char *ft_cpy(char const *str, char c)
 {
 	size_t count;
 	size_t i;
+	char *p;
 
 	i = 0;
 	count = 0;
-	while(s[i])
+	while(str[count] != c)
+		count++;
+	p = (char *)malloc((count + 1) * sizeof(char));
+	if (!p)
+		return (NULL);
+	while(i < count && str[i] != '\0')
 	{
-		if(s[i] == c)
-			count++;
+		p[i] = str[i];
 		i++;
 	}
-	return (count);	
+	p[i] = '\0';
+	return (p);
 }
+
+
 
 char **ft_split(char const *s, char c)
 {
@@ -56,33 +64,25 @@ char **ft_split(char const *s, char c)
 	char **split;
 
 	wordcount = ft_wordcount(s, c);
-	sepcount = ft_sepcount(s, c);
 
-	split = (char **)malloc((ft_strlen(s) - sepcount + wordcount) * sizeof(char));
+	split = (char **)malloc((wordcount + 1) * sizeof(char));
+	if (!split)
+		return (NULL);
 	printf("Wordcount: %zu\n", wordcount);
-	printf("Sepcount: %zu\n", sepcount);
-	printf("Split Len: %zu\n", ft_strlen(s) - sepcount + wordcount);
 	j = 0;
 	i = 0;
-	len = 0;
-	while(s[len] != '\0')
+	while(s[i] != '\0')
 	{
-	
-		if (s[len] != c)
+		if (s[i] != c)
 		{
-			*split[j] = s[len];
+			*split[j] = *ft_cpy(&s[i], c);
 			j++;
+			//if (!split[j])
+			//ft_free(split, j);
 		}
-		if (s[len] == c)
-		{
-			split[i][j] = '\0';
-			i++;
-			j = 0;
-		}		
-		len++;
+		i++;
 	}
-	
-	split[i] = NULL;
+	split[j] = NULL;
 	return (split);
 }
 
@@ -92,12 +92,13 @@ int	main(void)
 	char sep = ' ';
 
 
-	char **split = ft_split(str, sep);
+	char **split = (char **)ft_split(str, sep);
 	int i = 0;
 	int j = 0;
 	while(split[i])
 	{
 		printf("Split[%d]: %s\n", i, split[i]);
+		free(split[i]);
 		i++;
 	}
 	free(split);
