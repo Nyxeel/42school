@@ -22,7 +22,7 @@ static size_t ft_wordcount(char const *s, char c)
 		i++;
 	while(s[i])
 	{
-		if(s[i - 1] == c && s[i] != c)
+		if(s[i - 1] == c && s[i] != c || ( s[i + 1] == '\0'))
 			count++;
 		i++;		
 	}
@@ -38,8 +38,9 @@ static char *ft_cpy(char const *str, char c)
 
 	i = 0;
 	count = 0;
-	while(str[count] != c)
+	while(str[count] != c && str[count] != '\0' )
 		count++;
+	printf("Len:%zu\n", count);
 	p = (char *)malloc((count + 1) * sizeof(char));
 	if (!p)
 		return (NULL);
@@ -51,7 +52,16 @@ static char *ft_cpy(char const *str, char c)
 	p[i] = '\0';
 	return (p);
 }
+/*
+void *ft_freeall()
+{
+	size_t i;
 
+	i = 0;
+	while (i--)
+		free(split[i]);
+	free(split;)
+}*/
 
 
 char **ft_split(char const *s, char c)
@@ -65,7 +75,7 @@ char **ft_split(char const *s, char c)
 
 	wordcount = ft_wordcount(s, c);
 
-	split = (char **)malloc((wordcount + 1) * sizeof(char));
+	split = (char **)malloc((wordcount + 1) * sizeof(char *));
 	if (!split)
 		return (NULL);
 	printf("Wordcount: %zu\n", wordcount);
@@ -75,8 +85,13 @@ char **ft_split(char const *s, char c)
 	{
 		if (s[i] != c)
 		{
-			*split[j] = *ft_cpy(&s[i], c);
-			j++;
+			split[j] = ft_cpy(&s[i], c);
+			printf("split[%zu]:%s\n", j, split[j]);
+			if (j < wordcount)
+				j++;
+			
+			while(s[i] != c && s[i] != '\0')
+				i++;
 			//if (!split[j])
 			//ft_free(split, j);
 		}
@@ -88,16 +103,17 @@ char **ft_split(char const *s, char c)
 
 int	main(void)
 {
-	char str[] = " Hal   jjj   kkk      kk  k k  k   "; // 8 Wörter
+	char str[] = "Wir haben viel Spaß hier zusammen yaaaa juhu!"; // 8 Wörter
 	char sep = ' ';
 
 
 	char **split = (char **)ft_split(str, sep);
 	int i = 0;
 	int j = 0;
+	
 	while(split[i])
 	{
-		printf("Split[%d]: %s\n", i, split[i]);
+		printf("**split[%d]: %s\n", i, split[i]);
 		free(split[i]);
 		i++;
 	}
