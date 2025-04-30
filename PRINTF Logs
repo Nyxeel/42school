@@ -1,0 +1,58 @@
+printf("1\n");
+
+printf("str[%d]\n", i);
+
+#include <stdio.h>
+
+void test_int(int value) {
+    printf("DEBUG: Integer-Wert = %d\n", value);
+}
+
+void test_float(float value) {
+    printf("DEBUG: Float-Wert = %.2f\n", value);
+}
+
+void test_char(char value) {
+    printf("DEBUG: Char-Wert = '%c'\n", value);
+}
+
+void test_string(const char *str) {
+    if (str)
+        printf("DEBUG: String = \"%s\"\n", str);
+    else
+        printf("DEBUG: String = NULL\n");
+}
+
+void test_pointer(void *ptr) {
+    if (ptr)
+        printf("DEBUG: Pointer-Adresse = %p\n", ptr);
+    else
+        printf("DEBUG: Pointer = NULL\n");
+}
+
+void test_array(int *arr, int size) {
+    printf("DEBUG: Array-Werte = ");
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+void test_function_entry(const char *func_name) {
+    printf("DEBUG: >>> Betrete Funktion: %s\n", func_name);
+}
+
+void test_function_exit(const char *func_name) {
+    printf("DEBUG: <<< Verlasse Funktion: %s\n", func_name);
+}
+
+void test_condition(const char *desc, int condition) {
+    printf("DEBUG: Bedingung [%s] ist %s\n", desc, condition ? "WAHR" : "FALSCH");
+}
+
+void test_memory(const char *label, const void *data, size_t size) {
+    printf("DEBUG: %s (hex): ", label);
+    const unsigned char *bytes = (const unsigned char *)data;
+    for (size_t i = 0; i < size; i++)
+        printf("%02X ", bytes[i]);
+    printf("\n");
+}
