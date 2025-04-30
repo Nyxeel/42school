@@ -28,11 +28,9 @@ static char *ft_intochar(char *arr, long int num, int digits, int minus)
 	
 	index = digits + minus - 1;
 	arr[digits] = '\0';
-	printf("minus = %d\n", minus); 
 	while (index >= 0)
 	{
 		arr[index] = (num % 10) + '0';
-		printf("intarr[%d]: %d\n", index, arr[index]);
 		num = num / 10;
 		index--;
 	}
@@ -51,12 +49,11 @@ char *ft_itoa(int n)
 	num = n;
 	minus = 0;
 	digits = ft_countdigit(n);
-	printf("digits: %d\n", digits);
 	if (num < 0)
 	{
 		num *= -1;
 		minus = 1;
-	}	
+	}
 	intarr = (char *)malloc((digits + minus + 1)* sizeof(char));
 	if (!intarr)
 		return (NULL);
@@ -66,11 +63,10 @@ char *ft_itoa(int n)
 
 int	main(void)
 {
-	long int ascii = 2147483648;
+	long int ascii = 2147483647;
 	char *converted;
 	
 	converted = ft_itoa(ascii);
 	printf("%s", converted);
 	free(converted);
-
 }
