@@ -67,7 +67,7 @@ char *ft_substr(char const *s, unsigned int start, size_t len)
 	sub = (char *)malloc(len + 1);
 	if (!sub)
 		return (NULL);
-    while (s[start + i] != '\0' && i < len)
+    while (s[start + i] != '\0' && i < len - 1)
 	{
 		sub[i] = s[start + i];
 		i++;
@@ -92,7 +92,7 @@ char *ft_strtrim(char const *s1, char const *set)
 		end--;
 	if (start > end)
 		return (ft_calloc(1, sizeof(char)));
-	len = end - start;
+	len = end - start + 1;
 	return (ft_substr(s1, start, len));
 }
 
