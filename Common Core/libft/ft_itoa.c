@@ -39,7 +39,7 @@ static char *ft_intochar(char *arr, long int num, int digits, int minus)
 	return (arr);
 }
 
-char *ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char *intarr;
 	int digits;

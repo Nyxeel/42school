@@ -11,7 +11,7 @@ size_t	ft_strlen(const char *str)
 	return (count);
 }
 
-char *ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char *join;
 	size_t i;

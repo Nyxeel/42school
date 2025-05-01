@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void *ft_bzero(void *s, size_t n)
+void	*ft_bzero(void *s, size_t n)
 {
     size_t i;   
-  	unsigned char *arr = (unsigned char*) s;
+  	i = 0;
+    unsigned char *arr = (unsigned char*) s;
 
-	i = 0;
+	if(n <= 0)
+		return NULL;
     while (i < n)
     {
         arr[i] = 0;
@@ -19,11 +21,12 @@ void *ft_calloc(size_t nmemb, size_t size)
 {
     unsigned char *p;
 
+	if(
+
 	p = malloc(nmemb * size);
 	if	(p == NULL)
 		return(NULL);
 	return (ft_bzero(p, nmemb * size));
-
 }
 
 int	main(void)
@@ -32,13 +35,14 @@ int	main(void)
 
 	elements = 10;
 
-	int *p = ft_calloc(elements, sizeof(int));
+	int *p = ft_calloc(elements, 0);
 
-	int i = 0;
+	size_t i = 0;
 	while (i < elements)
 	{
-		printf("p[%d]: %d\n", i, p[i]);
+		printf("p[%zu]: %d\n", i, p[i]);
 		i++;
 	}
+	free(p);
 
 }

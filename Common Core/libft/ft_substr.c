@@ -13,7 +13,7 @@ size_t	ft_strlen(const char *str)
 
 //malloc(len+1) is nicht die echte string länge wenn zb. start ziemlich am ende von s liegt und dadurch die stringlänge unter len liegen würde!
 
-char *ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
     char *sub;
 	int i;

@@ -65,7 +65,7 @@ char **ft_freeall(char **freearr, size_t index)
 }
 
 
-char **ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	size_t wordcount;
 	size_t i;

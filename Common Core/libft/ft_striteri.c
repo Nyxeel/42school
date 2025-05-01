@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void ft_chchr(unsigned int index, char *str)
+static void ft_chchr(unsigned int index, char *str)
 {
 	printf("index:%d\n", index);
 	if(index < 5)
@@ -8,7 +8,7 @@ void ft_chchr(unsigned int index, char *str)
 }
 
 
-void ft_striteri(char *s, void (*f)(unsigned int,char*))
+void	ft_striteri(char *s, void (*f)(unsigned int,char*))
 {
 	unsigned int i;
 

@@ -12,8 +12,9 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include "libft.h"
 
-int ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int	minus;
 	int	num;
@@ -24,7 +25,7 @@ int ft_atoi(const char *str)
 	num = 0;
 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
 		i++;
-	while (str[i] == '-' || str[i] == '+')
+	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
 			minus = minus * (-1);
@@ -41,10 +42,10 @@ int ft_atoi(const char *str)
 
 int main(void)
 {
-    char *c = "	-14";
+    char *c = "2147483647";
     int num;
 
     num = ft_atoi(c);
-    printf("Nummer: %d", num);
+    printf("Nummer: %d\n", num);
 
 }

@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-char *ft_strrchr(const char *str, int c)
+char	*ft_strrchr(const char *str, int c)
 {
     unsigned char letter;
     //int i;

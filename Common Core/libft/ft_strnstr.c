@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-char *ft_strnstr(const char *haystack, const char *needle, size_t n)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
 {
     //unsigned char *haufen;
     //unsigned char *nadel;

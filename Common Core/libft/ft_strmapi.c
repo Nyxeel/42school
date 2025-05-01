@@ -18,7 +18,7 @@ char manipulate(unsigned int index, char c)
 	return (c);
 }
 
-char *ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	char *hidden;
 	unsigned int i;

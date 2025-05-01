@@ -76,7 +76,7 @@ char *ft_substr(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
-char *ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t end;
 	size_t start;
