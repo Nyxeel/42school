@@ -20,9 +20,11 @@ void	*ft_bzero(void *s, size_t n)
 void *ft_calloc(size_t nmemb, size_t size)
 {
     unsigned char *p;
+	size_t total;
 
-	if(
-
+	total = nmemb * size;
+	if (!(total / nmemb == size))
+		return(malloc(1));
 	p = malloc(nmemb * size);
 	if	(p == NULL)
 		return(NULL);
