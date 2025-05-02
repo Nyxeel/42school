@@ -1,35 +1,44 @@
 #include <stdio.h>
 
+size_t	ft_strlen(const char *str)
+{
+	size_t	count;
+
+	count = 0;
+	while (str[count]) 
+		count++;
+	return (count);
+}
 char	*ft_strrchr(const char *str, int c)
 {
     unsigned char letter;
-    const char *last;
-    //int i;
-
+    char *last = NULL;
+	char *tmp = (char *) str;
+	size_t i;
+	
     letter = (unsigned char) c;
-
-    if (str == NULL)
+	i = 0;
+    if (tmp == NULL)
         return (NULL);
-    if (letter == 0)
-        return ((char *)str);
-   // i = 0;
-    while (*str)
+    if (letter == '\0')
+        return (tmp + (ft_strlen(tmp)));
+    while (tmp[i])
     {
-        if (*str == letter)
-            (char *)last = &str;
-        if (*str + 1 == '\0')
-            return ((char *)last);
-        str++;
+        if (tmp[i] == letter)
+        	last = tmp + i;
+        if (tmp[i + 1] == '\0')
+            return (last);
+    	i++;
     }
     return (NULL);
 }
 
 int main(void)
 {
-    char str[] = "Da wort das ich suche";
-    char suche = 's';
+    char str[] = "hahahahabcgcgedjdk";
+    char suche = 'a';
 
-    char *p = ft_strchr(str, suche);
+    char *p = ft_strrchr(str, suche);
     if (p != NULL)
     {
         printf("Gefunden: '%c'\n", *p);                // → s

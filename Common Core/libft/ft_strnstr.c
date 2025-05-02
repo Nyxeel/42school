@@ -2,27 +2,19 @@
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
 {
-    //unsigned char *haufen;
-    //unsigned char *nadel;
-    size_t i;
-    size_t j;
+	size_t i;
+	size_t j;
 
-    //haufen = (unsigned char) haystack;
-    //nadel = needle;
-
-    i = 0;
-    j = 0;
-
-    if (needle == "")
+	i = 0;
+    if (needle[0] == '\0')
         return ((char *)haystack);
     while(i < n && haystack[i] != '\0')
     {
-        printf("%zu\n", i);
+		j = 0;
         while (haystack[i + j] == needle[j] && i + j < n)
         {
-            printf("%zu\n", j);
             if (needle[j + 1] == '\0')
-                return ((char *)haystack + i);
+                return ((char *)&haystack[i]);
             j++;
         }
         i++;
@@ -33,8 +25,8 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
 int main(void) 
 {
     
-    const char big[] = "Hi schöne Welt";
-    const char little[] = "We";
+    const char big[] = "Hi we schönewea welt";
+    const char little[] = "wel";
 
     printf("%s", ft_strnstr(big, little, 100));
 }
