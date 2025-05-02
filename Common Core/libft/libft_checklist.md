@@ -2,254 +2,290 @@
 
 This checklist is optimized for **VSCode usage**, with real edge cases verified against `libc` and expected 42 behavior. NULL-related tests are only included where behavior is defined or useful for debugging.
 
+Each entry includes **expected output** or behavior for reliable testing.
+
 ---
 
 ## `ft_atoi`
-- [ ] Empty string
-- [ ] Only whitespaces
-- [ ] Valid number with leading/trailing spaces
-- [ ] Positive number with `+`
-- [ ] Negative number with `-`
-- [ ] Multiple signs (`--42`, `+-42`) → should return 0
-- [ ] Alphanumeric mix (`42abc`) → should stop at non-digit
-- [ ] Only letters → should return 0
-- [ ] `INT_MAX` and `INT_MIN`
-- [ ] Overflow strings → returns undefined (but should not crash)
+
+* [ ] Empty string → returns `0`
+* [ ] Only whitespaces → returns `0`
+* [ ] Valid number with leading/trailing spaces → parses number, e.g. `"   42\n"` → `42`
+* [ ] Positive number with `+` → e.g. `"+42"` → `42`
+* [ ] Negative number with `-` → e.g. `"-42"` → `-42`
+* [ ] Multiple signs (`--42`, `+-42`) → returns `0`
+* [ ] Alphanumeric mix (`42abc`) → returns `42`
+* [ ] Only letters → returns `0`
+* [ ] `INT_MAX` (`2147483647`) → returns `2147483647`
+* [ ] `INT_MIN` (`-2147483648`) → returns `-2147483648`
+* [ ] Overflow strings (e.g. `"9223372036854775807"`) → undefined, usually clamps or wraps
 
 ---
 
 ## `ft_bzero`
-- [ ] Zero length
-- [ ] Normal memory block
-- [ ] Overwrite non-zero memory
+
+* [ ] Zero length → no change
+* [ ] Normal memory block → memory is zeroed
+* [ ] Overwrite non-zero memory → memory becomes `\0`
 
 ---
 
 ## `ft_calloc`
-- [ ] `count = 0`, `size > 0`
-- [ ] `count > 0`, `size = 0`
-- [ ] `count * size` causes overflow → return NULL
-- [ ] Returned memory is zeroed
+
+* [ ] `count = 0`, `size > 0` → returns non-NULL (implementation-defined)
+* [ ] `count > 0`, `size = 0` → same
+* [ ] `count * size` causes overflow → returns `NULL`
+* [ ] Returned memory is all zero → all bytes are `\0`
 
 ---
 
 ## `ft_isalnum`
-- [ ] Digits: `'0'`–`'9'`
-- [ ] Letters: `'a'`–`'z'`, `'A'`–`'Z'`
-- [ ] Special characters → should return 0
-- [ ] Control characters → should return 0
+
+* [ ] Digits: `'0'`–`'9'` → returns `1`
+* [ ] Letters: `'a'`–`'z'`, `'A'`–`'Z'` → returns `1`
+* [ ] Special characters (e.g. `'!'`) → returns `0`
+* [ ] Control characters (e.g. `\n`) → returns `0`
 
 ---
 
 ## `ft_isalpha`
-- [ ] Upper and lower case letters
-- [ ] Digits → should return 0
-- [ ] Special characters → should return 0
+
+* [ ] Upper and lower case letters → returns `1`
+* [ ] Digits → returns `0`
+* [ ] Special characters → returns `0`
 
 ---
 
 ## `ft_isascii`
-- [ ] Values 0–127
-- [ ] Values > 127
-- [ ] Negative values
+
+* [ ] Values 0–127 → returns `1`
+* [ ] Values > 127 → returns `0`
+* [ ] Negative values → returns `0`
 
 ---
 
 ## `ft_isdigit`
-- [ ] `'0'`–`'9'`
-- [ ] Characters before/after digit range (e.g. `'/'`, `':'`)
+
+* [ ] `'0'`–`'9'` → returns `1`
+* [ ] Characters before/after digit range → returns `0`
 
 ---
 
 ## `ft_isprint`
-- [ ] Printable ASCII (32–126)
-- [ ] Non-printables (0–31, 127)
+
+* [ ] ASCII 32–126 → returns `1`
+* [ ] ASCII <32 or 127 → returns `0`
 
 ---
 
 ## `ft_itoa`
-- [ ] 0
-- [ ] Positive numbers
-- [ ] Negative numbers
-- [ ] `INT_MIN`, `INT_MAX`
+
+* [ ] `0` → returns "0"
+* [ ] Positive numbers → e.g. `123` → "123"
+* [ ] Negative numbers → `-42` → "-42"
+* [ ] `INT_MIN` → "-2147483648"
+* [ ] `INT_MAX` → "2147483647"
 
 ---
 
 ## `ft_memchr`
-- [ ] Character found at beginning
-- [ ] In the middle
-- [ ] At the end
-- [ ] Not found
-- [ ] Length = 0
+
+* [ ] Found at beginning → returns pointer to that byte
+* [ ] Found in middle → pointer to correct offset
+* [ ] Found at end → pointer to last match
+* [ ] Not found → returns `NULL`
+* [ ] Length = 0 → returns `NULL`
 
 ---
 
 ## `ft_memcmp`
-- [ ] Buffers equal
-- [ ] First byte different
-- [ ] Last byte different
-- [ ] Length = 0
+
+* [ ] Buffers equal → returns `0`
+* [ ] First byte different → returns negative or positive depending on values
+* [ ] Last byte different → same
+* [ ] Length = 0 → returns `0`
 
 ---
 
 ## `ft_memcpy`
-- [ ] Normal copy
-- [ ] `n = 0`
-- [ ] `dst == src`
-- [ ] Overlapping → undefined behavior (test separately)
+
+* [ ] Normal copy → destination matches source
+* [ ] `n = 0` → nothing copied, no crash
+* [ ] `dst == src` → no corruption
+* [ ] Overlapping regions → **undefined behavior**
 
 ---
 
 ## `ft_memmove`
-- [ ] Non-overlapping copy
-- [ ] `dst < src` (forward overlap)
-- [ ] `dst > src` (backward overlap)
-- [ ] `dst == src`
+
+* [ ] Non-overlapping → same as memcpy
+* [ ] `dst < src` overlap → copied forward safely
+* [ ] `dst > src` overlap → copied backward safely
+* [ ] `dst == src` → unchanged
 
 ---
 
 ## `ft_memset`
-- [ ] Zero length
-- [ ] Set to 0
-- [ ] Set to 255
+
+* [ ] Zero length → no effect
+* [ ] Fill with `0` → all bytes zero
+* [ ] Fill with `255` → all bytes `\xFF`
 
 ---
 
 ## `ft_putchar_fd`
-- [ ] Printable ASCII
-- [ ] Non-printable ASCII
-- [ ] `fd = 1`, `fd = 2`
+
+* [ ] Printable ASCII → prints correctly
+* [ ] Non-printable → sends byte to `fd`
+* [ ] `fd = 1`, `fd = 2` → stdout/stderr
 
 ---
 
 ## `ft_putendl_fd`
-- [ ] Normal string
-- [ ] Empty string
-- [ ] Ends with newline
+
+* [ ] Normal string → string + newline
+* [ ] Empty string → just newline
+* [ ] Ends with newline → adds one more newline
 
 ---
 
 ## `ft_putnbr_fd`
-- [ ] Positive and negative numbers
-- [ ] Zero
-- [ ] `INT_MAX`, `INT_MIN`
+
+* [ ] Positive, negative, zero → prints number as string
+* [ ] `INT_MAX` → "2147483647"
+* [ ] `INT_MIN` → "-2147483648"
 
 ---
 
 ## `ft_putstr_fd`
-- [ ] Normal string
-- [ ] Empty string
+
+* [ ] Normal string → writes to fd
+* [ ] Empty string → no output
 
 ---
 
 ## `ft_split`
-- [ ] String with multiple delimiters in a row
-- [ ] String with no delimiters
-- [ ] String with delimiters at start and end
-- [ ] Only delimiters → empty result
-- [ ] Empty input string
+
+* [ ] Multiple delimiters → no empty strings returned
+* [ ] No delimiters → returns original string as one token
+* [ ] Delimiters at start/end → tokens in the middle
+* [ ] Only delimiters → returns `NULL`-terminated array with no tokens
+* [ ] Empty input → same as above
 
 ---
 
 ## `ft_strchr`
-- [ ] Character present (start, middle, end)
-- [ ] Character not found
-- [ ] `c = '\0'`
+
+* [ ] Character present → pointer to first match
+* [ ] Not found → returns `NULL`
+* [ ] `c = '\0'` → pointer to null terminator
 
 ---
 
 ## `ft_strdup`
-- [ ] Empty string
-- [ ] Normal string
-- [ ] Very long string
+
+* [ ] Empty → returns ""
+* [ ] Normal → deep copy
+* [ ] Very long → allocated correctly
 
 ---
 
 ## `ft_striteri`
-- [ ] Empty string
-- [ ] Confirm correct index behavior
+
+* [ ] Empty → function not called
+* [ ] Function uses index → can modify in place
 
 ---
 
 ## `ft_strjoin`
-- [ ] Both strings non-empty
-- [ ] One string empty
-- [ ] Both strings empty
+
+* [ ] Both non-empty → joins
+* [ ] One empty → returns other
+* [ ] Both empty → returns empty string
 
 ---
 
 ## `ft_strlcat`
-- [ ] `dstsize = 0`
-- [ ] `dstsize < strlen(dst)`
-- [ ] Enough space for full concat
+
+* [ ] `dstsize = 0` → returns `strlen(src)`
+* [ ] Not enough space → returns attempted length
+* [ ] Enough space → returns total length and appends
 
 ---
 
 ## `ft_strlcpy`
-- [ ] `dstsize = 0`
-- [ ] `dstsize < strlen(src)`
-- [ ] `dstsize > strlen(src)`
+
+* [ ] `dstsize = 0` → returns `strlen(src)` only
+* [ ] Not enough space → copies up to `dstsize - 1`
+* [ ] Enough space → full copy + null
 
 ---
 
 ## `ft_strlen`
-- [ ] Empty string
-- [ ] Normal string
-- [ ] Very long string
+
+* [ ] Empty → `0`
+* [ ] Normal → correct length
+* [ ] Very long → no overflow
 
 ---
 
 ## `ft_strmapi`
-- [ ] Empty string
-- [ ] Function uses index properly
+
+* [ ] Empty → returns empty
+* [ ] Function uses index → mapped string returned
 
 ---
 
 ## `ft_strncmp`
-- [ ] Equal strings
-- [ ] Difference at start
-- [ ] Difference at end
-- [ ] `n = 0`
-- [ ] `n > string length`
+
+* [ ] Equal → `0`
+* [ ] Diff at start → non-zero
+* [ ] Diff at end → non-zero
+* [ ] `n = 0` → returns `0`
+* [ ] `n > strlen` → returns correct comparison
 
 ---
 
 ## `ft_strnstr`
-- [ ] Empty needle
-- [ ] Needle not in haystack
-- [ ] Needle at start/middle/end
-- [ ] `len = 0`
+
+* [ ] Empty needle → returns `haystack`
+* [ ] Not found → `NULL`
+* [ ] Found at start/mid/end → pointer
+* [ ] `len = 0` → returns `NULL`
 
 ---
 
 ## `ft_strrchr`
-- [ ] Character found multiple times
-- [ ] `c = '\0'`
-- [ ] Character not present
+
+* [ ] Multiple matches → pointer to last one
+* [ ] `c = '\0'` → pointer to terminator
+* [ ] Not found → `NULL`
 
 ---
 
 ## `ft_strtrim`
-- [ ] String with leading/trailing trim chars
-- [ ] Trim set empty
-- [ ] String only contains trim chars
-- [ ] No trim chars present
+
+* [ ] Leading/trailing trim chars → removed
+* [ ] Trim set empty → original string
+* [ ] Only trim chars → returns ""
+* [ ] No trim chars → unchanged
 
 ---
 
 ## `ft_substr`
-- [ ] `start > strlen(s)` → return empty string
-- [ ] `len = 0`
-- [ ] `len > strlen(s)`
+
+* [ ] `start > strlen` → returns ""
+* [ ] `len = 0` → returns ""
+* [ ] `len > strlen` → returns until end
 
 ---
 
 ## `ft_tolower` / `ft_toupper`
-- [ ] All letters
-- [ ] Digits and symbols → unchanged
-- [ ] Negative values → unchanged (test optional)
+
+* [ ] Letters → converted correctly
+* [ ] Digits/symbols → unchanged
+* [ ] Negative values → unchanged
 
 ---
 
 ✅ Use this file to build tests or a `libft_tester`. All cases verified to be necessary and sufficient for edge coverage.
-

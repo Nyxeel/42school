@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 11:57:04 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/02 11:57:06 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 
 int	ft_memcmp(const void *ptr1, const void *ptr2, size_t num)
@@ -10,7 +22,7 @@ int	ft_memcmp(const void *ptr1, const void *ptr2, size_t num)
     s2 = (unsigned char *)ptr2;
     
     i = 0;
-    while (i < num)
+    while (i < num && s1[i] && s2[i])
 	{
         if (s1[i] != s2[i])
             return (s1[i] - s2[i]);
@@ -22,7 +34,7 @@ int	ft_memcmp(const void *ptr1, const void *ptr2, size_t num)
 int main(void)
 {
     char s1[] = "Hallo";
-    char s2[] = "HalLo";
+    char s2[] = "Hallo";
 
-    printf("%d\n", ft_memcmp(s1, s2, 5));
+    printf("%d\n", ft_memcmp(s1, s2, 10));
 }

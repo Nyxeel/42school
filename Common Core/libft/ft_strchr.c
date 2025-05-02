@@ -3,7 +3,6 @@
 char	*ft_strchr(const char *str, int c)
 {
     unsigned char letter;
-    const char *last;
     //int i;
 
     letter = (unsigned char) c;
@@ -16,9 +15,7 @@ char	*ft_strchr(const char *str, int c)
     while (*str)
     {
         if (*str == letter)
-            (char *)last = &str;
-        if (*str + 1)
-            return ((char *)last);
+            return ((char *)str);
         str++;
     }
     return (NULL);
@@ -26,8 +23,8 @@ char	*ft_strchr(const char *str, int c)
 
 int main(void)
 {
-    char str[] = "Da wort das ich suche";
-    char suche = 's';
+    char str[] = "ort das ich suche";
+    char suche = 'u';
 
     char *p = ft_strchr(str, suche);
     if (p != NULL)

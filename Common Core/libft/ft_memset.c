@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 14:21:16 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/02 15:17:48 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 
 void	*ft_memset(void *s, int c, size_t n)
@@ -5,10 +17,11 @@ void	*ft_memset(void *s, int c, size_t n)
     size_t i;   
     unsigned char *arr;
 
-	i = 0;
 	arr = s;
-
-    while (i < n)
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (i < n)
     {
         arr[i] = (unsigned char) c;
         i++;
@@ -19,6 +32,12 @@ void	*ft_memset(void *s, int c, size_t n)
 int main(void)
 {
     char arr[10];
-    
-	printf("%s", (char *)ft_memset(&arr, 'A', sizeof(arr)));
+	char *p = ft_memset(arr, '0', 12);
+	
+	int i = 0;
+	while(i < 10)
+	{
+		printf("int:%d vs char: %c\n", p[i], p[i]);
+		i++;
+	}
 }

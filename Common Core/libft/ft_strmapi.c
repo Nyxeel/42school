@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 17:51:00 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/02 17:55:28 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -25,20 +37,23 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 
 	i = 0;
 	hidden = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
-	
+	if(!hidden)
+		return (NULL);	
 	while(s[i])
 	{
 		hidden[i] = f(i, s[i]);
 		i++;
 	}
+	hidden[i] = '\0';
 	return (hidden);
 }
 
 int	main(void)
 {
-	char const s[] = "Der manipulierende Text";
+	char const s[] = "";
 	char *new;
 
 	new = ft_strmapi(s, manipulate);
 	printf("%s\n", new);
+	free(new);
 }

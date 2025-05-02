@@ -13,7 +13,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
     i = 0;
     j = 0;
 
-    if (needle[0] == NULL)
+    if (needle == "")
         return ((char *)haystack);
     while(i < n && haystack[i] != '\0')
     {
@@ -34,7 +34,7 @@ int main(void)
 {
     
     const char big[] = "Hi schöne Welt";
-    const char little[] = "Welt ";
+    const char little[] = "We";
 
     printf("%s", ft_strnstr(big, little, 100));
 }

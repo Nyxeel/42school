@@ -28,13 +28,13 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-int	main(void)
+int	maidfgdn(void)
 {
 	char arr[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', '\0'};
 	char array[] = "ABCDEFGH";
 
-	(char *) ft_memmove(&arr[4], &arr[0], 2);
-	printf("%s\n", arr);
+	char *p = ft_memmove(&arr[4], &arr[0], 2);
+	printf("%s\n", p);
 	memmove(&array[4], &array[0], 2);
 	printf("%s", &array[0]);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 11:38:58 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/02 11:47:17 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -27,13 +39,13 @@ static char *ft_intochar(char *arr, long int num, int digits, int minus)
 	int index;
 	
 	index = digits + minus - 1;
-	arr[digits] = '\0';
 	while (index >= 0)
 	{
 		arr[index] = (num % 10) + '0';
 		num = num / 10;
 		index--;
 	}
+	arr[digits + minus] = '\0';
 	if (minus == 1)
 			arr[0] = '-';
 	return (arr);
@@ -49,6 +61,7 @@ char	*ft_itoa(int n)
 	num = n;
 	minus = 0;
 	digits = ft_countdigit(n);
+	printf("digits:%d\n", digits);
 	if (num < 0)
 	{
 		num *= -1;
@@ -63,7 +76,7 @@ char	*ft_itoa(int n)
 
 int	main(void)
 {
-	long int ascii = 2147483647;
+	long int ascii = 0;
 	char *converted;
 	
 	converted = ft_itoa(ascii);

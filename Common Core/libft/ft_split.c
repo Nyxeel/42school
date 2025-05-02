@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/02 14:28:50 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -22,7 +34,7 @@ static size_t ft_wordcount(char const *s, char c)
 		i++;
 	while(s[i])
 	{
-		if(s[i - 1] != c && s[i] == c || s[i] != c && s[i + 1] == '\0')
+		if((s[i - 1] != c && s[i] == c) || (s[i] != c && s[i + 1] == '\0'))
 			count++;
 		i++;		
 	}
@@ -67,13 +79,11 @@ char **ft_freeall(char **freearr, size_t index)
 
 char	**ft_split(char const *s, char c)
 {
-	size_t wordcount;
 	size_t i;
 	size_t j;
 	char **split;
 
-	wordcount = ft_wordcount(s, c);
-	split = (char **)malloc((wordcount + 1) * sizeof(char *));
+	split = (char **)malloc((ft_wordcount(s, c) + 1) * sizeof(char *));
 	if (!split)
 		return (NULL);
 	j = 0;
@@ -88,7 +98,7 @@ char	**ft_split(char const *s, char c)
 			j++;			
 			while(s[i] != c && s[i] != '\0')
 				i++;
-			}
+		}
 		i++;
 	}
 	split[j] = NULL;
@@ -100,11 +110,8 @@ int	main(void)
 	char str[] = "Wir haben viel Spas hier zusammen yaaaa juhu!"; // 8 Wörter
 	char sep = ' ';
 
-
 	char **split = (char **)ft_split(str, sep);
-	int i = 0;
-	int j = 0;
-	
+	int i = 0;	
 	while(split[i])
 	{
 		printf("**split[%d]: %s\n", i, split[i]);

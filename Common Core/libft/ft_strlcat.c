@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 15:44:01 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/02 16:21:33 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 
 size_t	ft_strlen(const char *str)
@@ -22,10 +34,9 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		buffer = ft_strlen(dst) + ft_strlen(src);
 	i = 0;
 	while (dst[i] != '\0')
-	{
 		i++;
-	}
 	j = 0;
+	
 	while (src[j] != '\0' && i + j < size - 1)
 	{
 		dst[i + j] = src[j];
@@ -37,10 +48,10 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 
 int	main(void)
 {
-	char dst[27] = "Hallo, liebe"; //12 + 1
-	char src[] = " Freunde abcdefgh";		// 8 + 1
+	char dst[25] = "Hallo, liebe"; //12 + 1
+	char src[] = " Freunde123456789";		// 8 + 1
 
-	size_t result = ft_strlcat(dst, src, sizeof(dst));
+	size_t result = ft_strlcat(dst, src, 18);
 	printf("%s:\n", dst);
-	printf("Komplette Stringlänge: %zu\n", result);
+	printf("Komplette Stringlänge ohne \\0: %zu\n", result);
 }

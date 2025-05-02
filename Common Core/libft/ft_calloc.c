@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 10:36:44 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/02 11:41:42 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -23,28 +35,46 @@ void *ft_calloc(size_t nmemb, size_t size)
 	size_t total;
 
 	total = nmemb * size;
-	if (!(total / nmemb == size))
+	if (size != 0 && !(total / nmemb == size))
 		return(malloc(1));
-	p = malloc(nmemb * size);
+	p = malloc(total);
 	if	(p == NULL)
 		return(NULL);
-	return (ft_bzero(p, nmemb * size));
+	return (ft_bzero(p, total));
 }
 
 int	main(void)
 {
-	size_t elements;
-
-	elements = 10;
-
-	int *p = ft_calloc(elements, 0);
+	char elements[10];
+	printf("elemnts: %zu\n", sizeof(elements));
+	//printf("elemnts: %zu\n", elements);
+	
+	char *p = ft_calloc(10, sizeof(elements[0]));
 
 	size_t i = 0;
-	while (i < elements)
+	while (i < 10)
 	{
-		printf("p[%zu]: %d\n", i, p[i]);
+		printf("elements[%zu]: %d\n", i, p[i]);
 		i++;
 	}
 	free(p);
+/*
+	char elem[] = {'c', 'a', 'd', 'a', 'e'};
+	int *s = ft_calloc(elem, 10);
 
+	size_t len;
+	size_t arr_size;
+	size_t data_size;
+
+	arr_size = sizeof(elem);
+	data_size = sizeof(elem[0]);
+	len = arr_size / data_size;
+
+	i = 0;
+	while (i < len)
+	{
+		printf("s[%zu]: %d\n", i, s[i]);
+		i++;
+	}
+	free(s);*/
 }

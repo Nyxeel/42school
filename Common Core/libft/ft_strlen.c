@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42vienna.c      +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 12:11:56 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/02/21 21:07:59 by pjelinek         ###   ########.fr       */
+/*   Created: 2025/05/02 17:50:02 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/02 17:50:29 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ size_t	ft_strlen(const char *str)
 		count++;
 	return (count);
 }
-/*
+
 int	main(void)
 {
 	char src[] = "aaaabbbbccccddddee";
 
-	printf("Count: %d", ft_strlen(src));
-}*/
+	printf("Count: %zu", ft_strlen(src));
+}
