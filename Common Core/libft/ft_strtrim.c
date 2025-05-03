@@ -53,21 +53,18 @@ static int ft_check(char const *set, char const c)
 
 char *ft_substr(char const *s, unsigned int start, size_t len)
 {
-    char *sub;
-	int i;
+    char *sub = NULL;
+	size_t i;
 	
 	i = 0;
 	if (!s)
         return (NULL);
-    if (start > ft_strlen(s))
-	{
-		sub[0] = '\0';
-		return (sub);
-	}
+    if (start >= ft_strlen(s) || len == 0)
+		return (ft_calloc(1, sizeof(char)));
 	sub = (char *)malloc(len + 1);
 	if (!sub)
 		return (NULL);
-    while (s[start + i] != '\0' && i < len - 1)
+    while (s[start + i] != '\0' && i < len)
 	{
 		sub[i] = s[start + i];
 		i++;
@@ -80,19 +77,21 @@ char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t end;
 	size_t start;
-	char *trim;
 	size_t len;
 
 	start = 0;
-
+	if (!s1 || !set)
+		return (NULL);
 	while(ft_check(set, s1[start]) != 0)
 		start++;
 	end = ft_strlen(s1);
+	if (end == 0)
+		return (ft_calloc(1, sizeof(char)));
 	while(ft_check(set, s1[end - 1]))
 		end--;
 	if (start > end)
 		return (ft_calloc(1, sizeof(char)));
-	len = end - start + 1;
+	len = end - start;
 	return (ft_substr(s1, start, len));
 }
 
