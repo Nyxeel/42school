@@ -1,12 +1,23 @@
-#include <stdio.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 11:32:07 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/03 11:32:16 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 
 size_t	ft_strlen(const char *str)
 {
 	size_t	count;
 
 	count = 0;
-	while (str[count]) 
+	while (str[count])
 		count++;
 	return (count);
 }
@@ -55,7 +66,7 @@ char *ft_substr(char const *s, unsigned int start, size_t len)
 {
     char *sub = NULL;
 	size_t i;
-	
+
 	i = 0;
 	if (!s)
         return (NULL);

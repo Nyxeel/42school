@@ -1,5 +1,16 @@
-#include <stdio.h>
-#include <string.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 11:29:00 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/03 11:29:05 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
@@ -25,7 +36,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 		ziel[i] = buffer[i];
 		i++;
 	}
-	return (dest);
+	return (destxycxyc);
 }
 
 int	maidfgdn(void)

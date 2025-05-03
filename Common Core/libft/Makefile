@@ -1,6 +1,6 @@
 NAME := libft.a          # legt den namen der zu erstellenden bibliothek fest
 
-HEADER := libft.h        # definiert die header-datei als abhängigkeit für die .o-dateien
+HEADER := libft.h       # definiert die header-datei als abhängigkeit für die .o-dateien
 
 CC := cc                 # legt den compiler fest, hier standardmäßig 'cc'
 
@@ -46,7 +46,7 @@ OBJ := $(SRC:.c=.o)      # ersetzt die endung .c in der src-liste durch .o und s
 RM := rm -f              # legt den befehl zum löschen von dateien fest
 
 %.o: %.c $(HEADER)       # definiert eine regel wie eine .c-datei zu einer .o-datei kompiliert wird, abhängig vom header
-	$(CC) $(FLAGS) -c $< -o $@   
+	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)          # regel zur erstellung der bibliothek aus allen objektdateien
 	ar rcs $(NAME) $(OBJ)

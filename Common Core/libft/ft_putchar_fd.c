@@ -6,19 +6,19 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:21:22 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/02 14:21:31 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 11:53:43 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
 void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	ft_putchar_fd('c', 1);
 	return (0);
-}
+} */

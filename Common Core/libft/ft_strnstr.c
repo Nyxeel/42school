@@ -1,4 +1,16 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 11:31:10 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/03 11:31:52 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
 {
@@ -22,9 +34,9 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
     return (NULL);
 }
 
-int main(void) 
+int main(void)
 {
-    
+
     const char big[] = "Hi we schönewea welt";
     const char little[] = "wel";
 

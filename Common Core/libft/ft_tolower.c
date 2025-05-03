@@ -1,20 +1,32 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 11:33:27 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/03 11:33:32 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_tolower(int c)
 {
-	unsigned char d;
+	unsigned char	d;
 
-	d = c;
+	d = (char) c;
 	if (d >= 'A' && d <= 'Z')
 		return (c + 32);
 	return (c);
 }
 
-int main(void)
+int	main(void)
 {
-	char a = 'A';
-	int b = -5;
+	char	a = 'A';
+	int		b = -5;
 
-	printf("%c\n", ft_tolower(a)); // a
-	printf("%d\n", ft_tolower(b)); // b
+	printf("%c\n", ft_tolower(a));
+	printf("%d\n", ft_tolower(b));
 }

@@ -1,11 +1,23 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 11:31:56 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/03 11:32:01 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 
 size_t	ft_strlen(const char *str)
 {
 	size_t	count;
 
 	count = 0;
-	while (str[count]) 
+	while (str[count])
 		count++;
 	return (count);
 }
@@ -15,7 +27,7 @@ char	*ft_strrchr(const char *str, int c)
     char *last = NULL;
 	char *tmp = (char *) str;
 	size_t i;
-	
+
     letter = (unsigned char) c;
 	i = 0;
     if (tmp == NULL)

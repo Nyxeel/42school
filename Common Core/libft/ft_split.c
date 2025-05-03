@@ -6,57 +6,45 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/02 14:28:50 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 11:59:49 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
-size_t	ft_strlen(const char *str)
+static size_t	ft_wordcount(char const *s, char c)
 {
+	size_t	i;
 	size_t	count;
 
 	count = 0;
-	while (str[count]) 
-		count++;
+	i = 0;
+	while (s[i] == c)
+		i++;
+	while (s[i])
+	{
+		if ((s[i - 1] != c && s[i] == c) || (s[i] != c && s[i + 1] == '\0'))
+			count++;
+		i++;
+	}
+	i = 0;
 	return (count);
 }
 
-static size_t ft_wordcount(char const *s, char c)
+static char	*ft_cpy(char const *str, char c)
 {
-	size_t i;
-	size_t count;
-
-	count = 0;
-	i = 0;
-	while(s[i] == c)
-		i++;
-	while(s[i])
-	{
-		if((s[i - 1] != c && s[i] == c) || (s[i] != c && s[i + 1] == '\0'))
-			count++;
-		i++;		
-	}
-	i = 0;
-	return (count);	
-}
-
-static char *ft_cpy(char const *str, char c)
-{
-	size_t count;
-	size_t i;
-	char *p;
+	size_t	count;
+	size_t	i;
+	char	*p;
 
 	i = 0;
 	count = 0;
-	while(str[count] != c && str[count] != '\0' )
+	while (str[count] != c && str[count] != '\0')
 		count++;
-	printf("Len:%zu\n", count);
 	p = (char *)malloc((count + 1) * sizeof(char));
 	if (!p)
 		return (NULL);
-	while(i < count && str[i] != '\0')
+	while (i < count && str[i] != '\0')
 	{
 		p[i] = str[i];
 		i++;
@@ -65,7 +53,7 @@ static char *ft_cpy(char const *str, char c)
 	return (p);
 }
 
-char **ft_freeall(char **freearr, size_t index)
+char	**ft_freeall(char **freearr, size_t index)
 {
 	while (index >= 0)
 	{
@@ -79,24 +67,24 @@ char **ft_freeall(char **freearr, size_t index)
 
 char	**ft_split(char const *s, char c)
 {
-	size_t i;
-	size_t j;
-	char **split;
+	size_t	i;
+	size_t	j;
+	char	**split;
 
 	split = (char **)malloc((ft_wordcount(s, c) + 1) * sizeof(char *));
 	if (!split)
 		return (NULL);
 	j = 0;
 	i = 0;
-	while(s[i] != '\0')
+	while (s[i] != '\0')
 	{
 		if (s[i] != c)
 		{
 			split[j] = ft_cpy(&s[i], c);
-			if(!split)
-				return(ft_freeall(split, j));
-			j++;			
-			while(s[i] != c && s[i] != '\0')
+			if (!split)
+				return (ft_freeall(split, j));
+			j++;
+			while (s[i] != c && s[i] != '\0')
 				i++;
 		}
 		i++;
@@ -105,13 +93,13 @@ char	**ft_split(char const *s, char c)
 	return (split);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	char str[] = "Wir haben viel Spas hier zusammen yaaaa juhu!"; // 8 Wörter
 	char sep = ' ';
 
 	char **split = (char **)ft_split(str, sep);
-	int i = 0;	
+	int i = 0;
 	while(split[i])
 	{
 		printf("**split[%d]: %s\n", i, split[i]);
@@ -119,4 +107,4 @@ int	main(void)
 		i++;
 	}
 	free(split);
-}
+} */

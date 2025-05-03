@@ -6,23 +6,24 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 10:39:25 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/02 11:46:51 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 11:52:54 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
 int	ft_isdigit(int str)
 {
 	if (str >= 0 && str <= 9)
-			return (1);
-	return	(0); 
+		return (1);
+	return (0);
 }
-int	main(void)
+
+/* int	main(void)
 {
-	int a = 6;
-	char b = 0;
+	int		a = 6;
+	char	b = 0;
 
 	printf("%d\n", ft_isdigit(a));
 	printf("%d", ft_isdigit(b));
-}
+} */

@@ -6,11 +6,11 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:24:40 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/02 14:24:43 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 11:29:21 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
 void ft_putchar_fd(char c, int fd)
 {
@@ -20,12 +20,12 @@ void ft_putchar_fd(char c, int fd)
 void	ft_putnbr_fd(int n, int fd)
 {
 	long int zahl;
-	
+
 	zahl = n;
 	if (zahl < 0)
 	{
 		ft_putchar_fd('-', fd);
-		zahl *= -1;		
+		zahl *= -1;
 	}
 	if (zahl >= 0 && zahl <= 9)
 	{

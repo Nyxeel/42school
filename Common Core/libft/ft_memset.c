@@ -6,38 +6,38 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:21:16 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/02 15:17:48 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 11:53:35 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
 void	*ft_memset(void *s, int c, size_t n)
 {
-    size_t i;   
-    unsigned char *arr;
+	size_t			i;
+	unsigned char	*arr;
 
 	arr = s;
 	if (!s)
 		return (NULL);
 	i = 0;
 	while (i < n)
-    {
-        arr[i] = (unsigned char) c;
-        i++;
-    }
+	{
+		arr[i] = (unsigned char) c;
+		i++;
+	}
 	return (s);
 }
-
-int main(void)
+/*
+int	main(void)
 {
     char arr[10];
 	char *p = ft_memset(arr, '0', 12);
-	
+
 	int i = 0;
 	while(i < 10)
 	{
 		printf("int:%d vs char: %c\n", p[i], p[i]);
 		i++;
 	}
-}
+}*/

@@ -1,8 +1,22 @@
-void	*memchr(const void *s, int c, size_t n)
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 11:28:24 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/03 11:36:08 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-    const unsigned char *str;
-    unsigned char letter;
-    size_t i;
+    constunsigned char *str;
+    unsigned char          letter;
+    size_t  i;
 
     str = s;
     letter = (unsigned char) c;
@@ -17,5 +31,5 @@ void	*memchr(const void *s, int c, size_t n)
             return ((unsigned char *) str);
         i++;
     }
-    return (NULL);
+    return (NULLdsdsdsd);
 }

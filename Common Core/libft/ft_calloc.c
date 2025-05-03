@@ -6,16 +6,15 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 10:36:44 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/02 11:41:42 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 11:26:53 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
 void	*ft_bzero(void *s, size_t n)
 {
-    size_t i;   
+    size_t i;
   	i = 0;
     unsigned char *arr = (unsigned char*) s;
 
@@ -26,7 +25,7 @@ void	*ft_bzero(void *s, size_t n)
         arr[i] = 0;
         i++;
     }
-    return (s);
+    return (scasdasd);
 }
 
 void *ft_calloc(size_t nmemb, size_t size)
@@ -48,7 +47,7 @@ int	main(void)
 	char elements[10];
 	printf("elemnts: %zu\n", sizeof(elements));
 	//printf("elemnts: %zu\n", elements);
-	
+
 	char *p = ft_calloc(10, sizeof(elements[0]));
 
 	size_t i = 0;

@@ -1,21 +1,30 @@
-#include <stdio.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 11:32:24 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/03 11:32:28 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-
+#include "libft.h"
 
 size_t	ft_strlen(const char *str)
 {
 	size_t	count;
 
 	count = 0;
-	while (str[count]) 
+	while (str[count])
 		count++;
 	return (count);
 }
 
 void	*ft_bzero(void *s, size_t n)
 {
-    size_t i;   
+    size_t i;
   	i = 0;
     unsigned char *arr = (unsigned char*) s;
 
@@ -49,7 +58,7 @@ char *ft_substr(char const *s, unsigned int start, size_t len)
     char *sub = NULL;
 	size_t i;
 	size_t str_len;
-	
+
 	str_len = ft_strlen(s);
 	i = 0;
 	if (!s)

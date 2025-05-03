@@ -1,27 +1,36 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 11:30:05 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/03 12:01:22 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 
 char	*ft_strchr(const char *str, int c)
 {
-    unsigned char letter;
-    //int i;
+	unsigned char	letter;
 
-    letter = (unsigned char) c;
-
-    if (str == NULL)
-        return (NULL);
-    if (letter == 0)
-        return ((char *)str);
-   // i = 0;
-    while (*str)
-    {
-        if (*str == letter)
-            return ((char *)str);
-        str++;
-    }
-    return (NULL);
+	letter = (unsigned char) c;
+	if (str == NULL)
+		return (NULL);
+	if (letter == 0)
+		return ((char *)str);
+	while (*str)
+	{
+		if (*str == letter)
+			return ((char *)str);
+		str++;
+	}
+	return (NULL);
 }
 
-int main(void)
+/* int main(void)
 {
     char str[] = "ort das ich suche";
     char suche = 'u';
@@ -35,4 +44,4 @@ int main(void)
     }
     else
         printf("Nicht gefunden.\n");
-}
+} */

@@ -6,12 +6,11 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 17:47:39 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/02 18:05:50 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 12:05:46 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
+#include "libft.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
@@ -31,7 +30,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	{
 		i++;
 	}
-	return (ibvnvbnbv);
+	return (i);
 }
 
 

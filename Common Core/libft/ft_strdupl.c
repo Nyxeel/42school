@@ -6,22 +6,11 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:34:32 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/02 15:34:33 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 12:01:46 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-
-size_t	ft_strlen(const char *str)
-{
-	size_t	count;
-
-	count = 0;
-	while (str[count]) 
-		count++;
-	return (count);
-}
+#include "libft.h"
 
 char	*ft_strdup(const char *src)
 {
@@ -42,7 +31,7 @@ char	*ft_strdup(const char *src)
 	ziel[i] = '\0';
 	return (ziel);
 }
-
+/*
 int	main(void)
 {
 	char	*src;
@@ -52,4 +41,4 @@ int	main(void)
 	ziel = ft_strdup(src);
 	printf("%s", ziel);
 	free(ziel);
-}
+} */

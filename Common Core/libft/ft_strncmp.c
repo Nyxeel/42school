@@ -6,11 +6,11 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:08:15 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/02 17:59:30 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 11:31:00 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
@@ -33,9 +33,9 @@ int	main(void)
 	int result = ft_strncmp(src, dest, n);
     	printf("Return: %d", result);
 
-		/* 
+		/*
 	0 = die ersten n Zeichen sind gleich
 	< 0  s1 kommt lexographis vor s2
-	> 0 s2 kommt vorher 
+	> 0 s2 kommt vorher
 	*/
 }

@@ -6,12 +6,10 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 10:36:15 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/02 15:18:40 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 11:52:46 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
 #include "libft.h"
 
 int	ft_atoi(const char *str)
@@ -33,19 +31,18 @@ int	ft_atoi(const char *str)
 	}
 	while (str[i] >= 48 && str[i] <= 57)
 	{
-		num = num * 10;						// 						1 = 1 * 10 = 10
-		num = num + str[i] - '0';			// 0 + 49 - 48 = 1		10 + 52 - 48 = 14
+		num = num * 10;
+		num = num + str[i] - '0';
 		i++;
 	}
 	return (minus * num);
 }
 
-int main(void)
+/* int	main(void)
 {
-    char *c = NULL;
-    int num;
+	char	*c = NULL;
+	int		num;
 
-    num = ft_atoi(c);
-    printf("Nummer: %d\n", num);
-
-}
+	num = ft_atoi(c);
+	printf("Nummer: %d\n", num);
+} */
