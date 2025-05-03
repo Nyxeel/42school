@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 17:47:39 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 12:05:46 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 14:28:03 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-    size_t i;
+	size_t	i;
 
 	i = 0;
 	if (size > 0)
 	{
 		while (i < size - 1 && src[i])
-    	{
-       		dst[i] = src[i];
+		{
+			dst[i] = src[i];
 			i++;
-    	}
+		}
 		dst[i] = '\0';
 	}
-    while (src[i] != '\0')
+	while (src[i] != '\0')
 	{
 		i++;
 	}
@@ -45,5 +45,3 @@ int main() {
 
     return 0;
 }
-
-

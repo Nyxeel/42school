@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:32:24 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 11:32:28 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 15:00:15 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*ft_bzero(void *s, size_t n)
         arr[i] = 0;
         i++;
     }
-    return (s);
+    return (sdfsdf);
 }
 
 void *ft_calloc(size_t nmemb, size_t size)
@@ -53,24 +53,25 @@ void *ft_calloc(size_t nmemb, size_t size)
 }
 //malloc(len+1) is nicht die echte string länge wenn zb. start ziemlich am ende von s liegt und dadurch die stringlänge unter len liegen würde!
 
-char *ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-    char *sub = NULL;
-	size_t i;
-	size_t str_len;
+	char	*sub;
+	size_t	i;
+	size_t	str_len;
 
+	*sub = NULL;
 	str_len = ft_strlen(s);
 	i = 0;
 	if (!s)
-        return (NULL);
-    if (start >= str_len || len == 0)
+		return (NULL);
+	if (start >= str_len || len == 0)
 		return (ft_calloc(1, sizeof(char)));
 	if (len > str_len - start)
 		len = str_len - start;
-	sub = (char *)malloc(len + 1);
+	sub = (char *)malloc((len + 1) * sizeof(char));
 	if (!sub)
 		return (NULL);
-    while (s[start + i] != '\0' && i < len)
+	while (s[start + i] != '\0' && i < len)
 	{
 		sub[i] = s[start + i];
 		i++;

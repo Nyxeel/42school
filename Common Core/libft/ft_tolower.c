@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:33:27 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 11:33:32 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 14:49:58 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int	ft_tolower(int c)
 	return (c);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	char	a = 'A';
 	int		b = -5;
 
 	printf("%c\n", ft_tolower(a));
 	printf("%d\n", ft_tolower(b));
-}
+} */

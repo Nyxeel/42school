@@ -6,39 +6,30 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 17:51:00 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 11:30:54 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 15:56:30 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	count;
-
-	count = 0;
-	while (str[count])
-		count++;
-	return (count);
-}
-
-char manipulate(unsigned int index, char c)
+/*
+static char	manipulate(unsigned int index, char c)
 {
 	if (index % 2 == 0)
 		return ('*');
 	return (c);
-}
+} */
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char *hidden;
-	unsigned int i;
+	char			*hidden;
+	unsigned int	i;
 
 	i = 0;
 	hidden = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
-	if(!hidden)
+	if (!hidden)
 		return (NULL);
-	while(s[i])
+	while (s[i])
 	{
 		hidden[i] = f(i, s[i]);
 		i++;
@@ -46,7 +37,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	hidden[i] = '\0';
 	return (hidden);
 }
-
+/*
 int	main(void)
 {
 	char const s[] = "";
@@ -55,4 +46,4 @@ int	main(void)
 	new = ft_strmapi(s, manipulate);
 	printf("%s\n", new);
 	free(new);
-}
+} */

@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:34:32 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 12:01:46 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 15:50:03 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strdup(const char *src)
 	ziel[i] = '\0';
 	return (ziel);
 }
-/*
+
 int	main(void)
 {
 	char	*src;
@@ -41,4 +41,10 @@ int	main(void)
 	ziel = ft_strdup(src);
 	printf("%s", ziel);
 	free(ziel);
-} */
+}
+
+
+
+
+
+

@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/05/03 21:54:20 by pjelinek          #+#    #+#              #
+#    Updated: 2025/05/03 21:54:32 by pjelinek         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME := libft.a          # legt den namen der zu erstellenden bibliothek fest
 
 HEADER := libft.h       # definiert die header-datei als abhängigkeit für die .o-dateien

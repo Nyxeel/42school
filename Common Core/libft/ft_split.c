@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 11:59:49 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 15:47:02 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	**ft_split(char const *s, char c)
 /* int	main(void)
 {
 	char str[] = "Wir haben viel Spas hier zusammen yaaaa juhu!"; // 8 Wörter
-	char sep = ' ';
+	char sep = '*';
 
 	char **split = (char **)ft_split(str, sep);
 	int i = 0;

@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:38:58 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 11:53:06 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 15:29:37 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*ft_itoa(int n)
 	num = n;
 	minus = 0;
 	digits = ft_countdigit(n);
+
 	printf("digits:%d\n", digits);
 	if (num < 0)
 	{
@@ -72,12 +73,12 @@ char	*ft_itoa(int n)
 	return (intarr);
 }
 
-/* int	main(void)
+int	main(void)
 {
-	long int	ascii = 0;
+	long int	ascii = -21474836999999481 ;
 	char	*converted;
 
 	converted = ft_itoa(ascii);
 	printf("%s", converted);
 	free(converted);
-} */
+}
