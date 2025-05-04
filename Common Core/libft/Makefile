@@ -6,7 +6,7 @@
 #    By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/03 21:54:20 by pjelinek          #+#    #+#              #
-#    Updated: 2025/05/03 21:54:32 by pjelinek         ###   ########.fr        #
+#    Updated: 2025/05/04 15:21:28 by pjelinek         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC := cc                 # legt den compiler fest, hier standardmäßig 'cc'
 
 FLAGS := -Wall -Wextra -Werror     # aktiviert alle warnungen und behandelt sie als fehler
 
-SRC :=\                  # listet alle quellcodedateien des projekts auf
+SRC :=\               # listet alle quellcodedateien des projekts auf
 	ft_isalnum.c\
 	ft_isalpha.c\
 	ft_isascii.c\
