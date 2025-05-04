@@ -6,19 +6,19 @@
 #    By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/03 21:54:20 by pjelinek          #+#    #+#              #
-#    Updated: 2025/05/04 15:39:04 by pjelinek         ###   ########.fr        #
+#    Updated: 2025/05/04 15:30:47 by pjelinek         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := libft.a
+NAME := libft.a          # legt den namen der zu erstellenden bibliothek fest
 
-HEADER := libft.h
+HEADER := libft.h       # definiert die header-datei als abhängigkeit für die .o-dateien
 
-CC := cc
+CC := cc                 # legt den compiler fest, hier standardmäßig 'cc'
 
-FLAGS := -Wall -Wextra -Werror
+FLAGS := -Wall -Wextra -Werror     # aktiviert alle warnungen und behandelt sie als fehler
 
-SRC :=\
+SRC :=\               # listet alle quellcodedateien des projekts auf
 	ft_isalnum.c\
 	ft_isalpha.c\
 	ft_isascii.c\
@@ -26,7 +26,6 @@ SRC :=\
 	ft_isprint.c\
 	ft_tolower.c\
 	ft_toupper.c\
-	ft_split.c\
 	ft_strlen.c\
 	ft_strlcpy.c\
 	ft_strlcat.c\
@@ -54,24 +53,24 @@ SRC :=\
 	ft_putendl_fd.c\
 	ft_putnbr_fd.c\
 
-OBJ := $(SRC:.c=.o)
+OBJ := $(SRC:.c=.o)      # ersetzt die endung .c in der src-liste durch .o und speichert sie als objektdateien
 
-RM := rm -f
+RM := rm -f              # legt den befehl zum löschen von dateien fest
 
-%.o: %.c $(HEADER)
+%.o: %.c $(HEADER)       # definiert eine regel wie eine .c-datei zu einer .o-datei kompiliert wird, abhängig vom header
 	$(CC) $(FLAGS) -c $< -o $@
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ)          # regel zur erstellung der bibliothek aus allen objektdateien
 	ar rcs $(NAME) $(OBJ)
 
-all: $(NAME)
+all: $(NAME)             # standardziel, wird ausgeführt wenn 'make' ohne argument aufgerufen wird
 
-clean:
+clean:                   # löscht alle objektdateien
 	$(RM) $(OBJ)
 
-fclean: clean
-	$(RM) $(NAME)
+fclean:          # löscht zusätzlich zur objektdateien auch die erstellte bibliothek
+$(RM) $(NAME)
 
-re: fclean all
+re: fclean all           # baut das projekt komplett neu,  führt erst fclean, dann all aus.
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re   # kennzeichnet diese ziele als künstliche targets, um fehler durch gleichnamige dateien zu vermeiden

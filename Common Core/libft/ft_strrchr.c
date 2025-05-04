@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:31:56 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 14:47:24 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:37:44 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ char	*ft_strrchr(const char *str, int c)
 	char			*tmp;
 	size_t			i;
 
-	*last = NULL;
-	*tmp = (char *) str;
+	tmp = (char *) str;
 	letter = (unsigned char) c;
 	i = 0;
 	if (tmp == NULL)
@@ -46,9 +45,9 @@ char	*ft_strrchr(const char *str, int c)
     char *p = ft_strrchr(str, suche);
     if (p != NULL)
     {
-        printf("Gefunden: '%c'\n", *p);                → s
-        printf("Ab hier: \"%s\"\n", p);                 → s wort das ich suche
-        printf("Index im String: %ld\n", p - str); 2 (weil p zeigt auf str[2])
+        printf("Gefunden: '%c'\n", *p);
+        printf("Ab hier: \"%s\"\n", p);
+		printf("Index im String: %ld\n", p - str);
     }
     else
         printf("Nicht gefunden.\n");
