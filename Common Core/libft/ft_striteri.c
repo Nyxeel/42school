@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:34:41 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 11:48:26 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:49:22 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 	if (index < 5)
 		*str = '*';
 } */
-
 
 void	ft_striteri(char *s, void (*f) (unsigned int, char*))
 {

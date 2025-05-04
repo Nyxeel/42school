@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:30:05 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 11:48:21 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:48:50 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ char	*ft_strchr(const char *str, int c)
     char *p = ft_strchr(str, suche);
     if (p != NULL)
     {
-        printf("Gefunden: '%c'\n", *p);                // → s
-        printf("Ab hier: \"%s\"\n", p);                 // → s wort das ich suche
-        printf("Index im String: %ld\n", p - str);      // → 2 (weil p zeigt auf str[2])
+        printf("Gefunden: '%c'\n", *p);               → s
+        printf("Ab hier: \"%s\"\n", p);               → s wort das ich suche
+        printf("Index im String: %ld\n", p - str);  2 (weil p zeigt auf str[2])
     }
     else
         printf("Nicht gefunden.\n");

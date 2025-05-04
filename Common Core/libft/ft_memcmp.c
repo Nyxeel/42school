@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:57:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 10:20:57 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:47:40 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	ft_memcmp(const void *ptr1, const void *ptr2, size_t num)
 
 	s1 = (unsigned char *) ptr1;
 	s2 = (unsigned char *) ptr2;
-
 	i = 0;
 	while (i < num)
 	{

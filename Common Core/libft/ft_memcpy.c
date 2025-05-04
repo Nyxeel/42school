@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:38:28 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 10:20:56 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:49:05 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 
 	if (!ziel || !quelle)
 		return (NULL);
-
-	without, it causes undefined behavior. which the original does. so its discusable
+without, it causes undefined behavior. which the original does.so its discusable
 
 
 int	main(void)

@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:34:32 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 13:09:02 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:49:57 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,3 @@ char	*ft_strdup(const char *src)
 	printf("%s", ziel);
 	free(ziel);
 } */
-
-
-
-
-
-

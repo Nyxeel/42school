@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 14:32:09 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:48:11 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*ft_cpy(char const *str, char c)
 	return (p);
 }
 
-static void ft_freeall(char **freearr, size_t index)
+static void	ft_freeall(char **freearr, size_t index)
 {
 	while (index > 0)
 	{
@@ -62,14 +62,13 @@ static void ft_freeall(char **freearr, size_t index)
 	free(freearr);
 }
 
-
 char	**ft_split(char const *s, char c)
 {
 	size_t	i;
 	size_t	j;
 	char	**split;
 
-	split = (char **) ft_calloc(ft_wordcount(s, c) + 1, sizeof(char *));
+	split = (char **)ft_calloc(ft_wordcount(s, c) + 1, sizeof(char *));
 	if (!split)
 		return (NULL);
 	i = 0;
