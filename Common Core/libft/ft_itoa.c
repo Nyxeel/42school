@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:38:58 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 15:29:37 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 09:19:30 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static	char	*ft_intochar(char *arr, long int num, int digits, int minus)
 	int	index;
 
 	index = digits + minus - 1;
-	while (index >= 0)
+	while (index >= minus)
 	{
 		arr[index] = (num % 10) + '0';
 		num = num / 10;
@@ -73,7 +73,7 @@ char	*ft_itoa(int n)
 	return (intarr);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	long int	ascii = -21474836999999481 ;
 	char	*converted;
@@ -81,4 +81,4 @@ int	main(void)
 	converted = ft_itoa(ascii);
 	printf("%s", converted);
 	free(converted);
-}
+} */

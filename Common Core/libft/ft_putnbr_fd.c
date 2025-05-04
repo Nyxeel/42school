@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:24:40 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 11:29:21 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 22:49:19 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-void ft_putchar_fd(char c, int fd)
-{
-	write(fd, &c, 1);
-}
 
 void	ft_putnbr_fd(int n, int fd)
 {
@@ -37,10 +32,10 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putnbr_fd(zahl % 10, fd);
 	}
 }
-
+/*
 int	main(void)
 {
 	long int zahl = -2147483648;
 	int fd = 1;
 	ft_putnbr_fd(zahl, fd);
-}
+} */

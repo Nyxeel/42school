@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdupl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:34:32 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 15:50:03 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 22:56:15 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strdup(const char *src)
 	return (ziel);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	char	*src;
 	char	*ziel;
@@ -41,7 +41,7 @@ int	main(void)
 	ziel = ft_strdup(src);
 	printf("%s", ziel);
 	free(ziel);
-}
+} */
 
 
 

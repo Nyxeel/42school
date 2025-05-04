@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:32:07 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 15:44:58 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 22:59:28 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	len = end - start;
 	return (ft_substr(s1, start, len));
 }
-
+//							FT_CHECK replace with ft_strchr
 /* int	main(void)
 {
 	char str[] = "     HELLO     ";

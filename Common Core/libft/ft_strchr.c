@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:30:05 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 12:01:22 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 22:55:56 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ char	*ft_strchr(const char *str, int c)
 	letter = (unsigned char) c;
 	if (str == NULL)
 		return (NULL);
-	if (letter == 0)
-		return ((char *)str);
 	while (*str)
 	{
 		if (*str == letter)
 			return ((char *)str);
 		str++;
 	}
+	if (letter == '\0')
+		return ((char *)str);
 	return (NULL);
 }
 
 /* int main(void)
 {
     char str[] = "ort das ich suche";
-    char suche = 'u';
+    char suche = '\0';
 
     char *p = ft_strchr(str, suche);
     if (p != NULL)
@@ -44,4 +44,4 @@ char	*ft_strchr(const char *str, int c)
     }
     else
         printf("Nicht gefunden.\n");
-} */
+}*/

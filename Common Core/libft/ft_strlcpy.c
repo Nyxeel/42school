@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 17:47:39 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 14:28:03 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 22:56:58 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 }
 
 
-int main() {
+/* int main() {
     char quelle[] = "abc123456";
     char ziel[5];
 
@@ -45,3 +45,4 @@ int main() {
 
     return 0;
 }
+ */

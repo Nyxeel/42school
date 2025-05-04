@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/03 11:29:00 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 21:56:54 by pjelinek         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "libft.h"
 
@@ -16,35 +5,32 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 {
 	unsigned char	*ziel;
 	unsigned char	*quelle;
+	size_t i;
 
 	ziel = (unsigned char *) dest;
 	quelle = (unsigned char *) src;
-	printf("%d\n", (*ziel > *quelle));
-	if (ziel > quelle)
-	{
-		while (n--)
-			*ziel++ = *quelle++;
-	}
-	else
-	{
-		ziel += n;
-		quelle += n;
-		while (n--)
+	i = 0;
+	if (ziel == quelle || n == 0)
+		return ((void*)dest);
+	if (ziel < quelle)
+		while (i < n)
 		{
-			*(--ziel) = *(--quelle);
-
+			ziel[i] = quelle[i];
+			i++;
 		}
-	}
-	return (dest);
+	else
+		while (n--)
+			ziel[n] = quelle[n];
+	return ((void *)dest);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	char array[] = "ABCDEFGHIJKLMNO";
 	char arr[] = "ABCDEFGHIJKLMNO";
 
-	char *p = ft_memmove(&arr[0], &arr[12], 16);
+	char *p = ft_memmove(&arr[8], &arr[3], 7);
 	printf("%s\n\n", p);
-	char *s = memmove(&array[0], &array[12], 16);
+	char *s = memmove(&array[8], &array[3], 7);
 	printf("%s\n\n", s);
-}
+} */

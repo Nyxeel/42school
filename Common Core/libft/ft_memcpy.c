@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:38:28 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 11:42:14 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 09:33:14 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,16 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 		ziel[i] = quelle[i];
 		i++;
 	}
-	return (dest);
+	return ((void *)dest);
 }
 /*
+
+	if (!ziel || !quelle)
+		return (NULL);
+
+	without, it causes undefined behavior. which the original does. so its discusable
+
+
 int	main(void)
 {
 	char *dest[35];

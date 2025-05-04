@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:34:41 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 12:03:44 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/03 22:56:28 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	ft_striteri(char *s, void (*f) (unsigned int, char*))
 	i = 0;
 	while (s[i])
 	{
-		printf("s[%d]: \n", i);
 		f(i, &s[i]);
 		i++;
 	}
