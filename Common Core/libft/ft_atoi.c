@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 10:36:15 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 08:54:39 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/04 14:41:54 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ int	ft_atoi(const char *str)
 
 /* int	main(void)
 {
-	char	*c = NULL;
+	char	*c =  "99999999999999";
 	int		num;
 
 	num = ft_atoi(c);
+	printf("Nummer: %d\n", num);
+
+	num = atoi("99999999999999");
 	printf("Nummer: %d\n", num);
 } */

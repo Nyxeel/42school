@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 10:16:33 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/04 14:32:09 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static size_t	ft_wordcount(char const *s, char c)
 			count++;
 		i++;
 	}
-	i = 0;
 	return (count);
 }
 
@@ -53,15 +52,14 @@ static char	*ft_cpy(char const *str, char c)
 	return (p);
 }
 
-static char	**ft_freeall(char **freearr, size_t index)
+static void ft_freeall(char **freearr, size_t index)
 {
-	while (index >= 0)
+	while (index > 0)
 	{
 		free(freearr[index]);
 		index--;
 	}
 	free(freearr);
-	return (NULL);
 }
 
 
@@ -71,34 +69,36 @@ char	**ft_split(char const *s, char c)
 	size_t	j;
 	char	**split;
 
-	split = (char **)malloc((ft_wordcount(s, c) + 1) * sizeof(char *));
+	split = (char **) ft_calloc(ft_wordcount(s, c) + 1, sizeof(char *));
 	if (!split)
 		return (NULL);
-	j = 0;
 	i = 0;
+	j = 0;
 	while (s[i] != '\0')
 	{
 		if (s[i] != c)
 		{
 			split[j] = ft_cpy(&s[i], c);
 			if (!split[j])
-				return (ft_freeall(split, j));
+				return (ft_freeall(split, j), NULL);
 			j++;
 			while (s[i] != c && s[i] != '\0')
 				i++;
+			if (s[i] == '\0')
+				i--;
 		}
 		i++;
 	}
-	split[j] = NULL;
 	return (split);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	char str[] = "Wir haben viel Spas hier zusammen yaaaa juhu!"; // 8 Wörter
 	char sep = ' ';
+	char **split;
 
-	char **split = (char **)ft_split(str, sep);
+	split = (char **)ft_split(str, sep);
 	int i = 0;
 	while(split[i])
 	{
@@ -107,4 +107,4 @@ int	main(void)
 		i++;
 	}
 	free(split);
-}
+} */

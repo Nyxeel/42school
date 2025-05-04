@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:23:20 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 15:49:06 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:10:34 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <string.h>
+# include <stdint.h>
 
 int		ft_atoi(const char *str);
 void	*ft_bzero(void *s, size_t n);
@@ -53,5 +54,6 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif

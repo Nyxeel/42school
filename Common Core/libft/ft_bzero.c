@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 10:36:36 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 09:11:46 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/04 10:26:23 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	*ft_bzero(void *s, size_t n)
 		i++;
 	}
 	return ((void *) s);
-}/*
+}
+/*
 int main(void)
 {
     char arr[] = "abcdefghijkl";

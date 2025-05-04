@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:44:01 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/03 12:05:37 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 13:59:41 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,30 @@
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	size_t	i;
+	size_t	dest_len;
 	size_t	j;
 	size_t	buffer;
 
-	if (ft_strlen(dst) >= size)
-		buffer = size + ft_strlen(src);
-	else
-		buffer = ft_strlen(dst) + ft_strlen(src);
-	i = 0;
-	while (dst[i] != '\0')
-		i++;
+	buffer = ft_strlen(dst) + ft_strlen(src);
+	dest_len = 0;
+	while (dst[dest_len] != '\0')
+		dest_len++;
 	j = 0;
-
-	while (src[j] != '\0' && i + j < size - 1)
+	while (src[j] != '\0' && dest_len + j + 1 < size)
 	{
-		dst[i + j] = src[j];
+		dst[dest_len + j] = src[j];
 		j++;
 	}
-	dst[i + j] = '\0';
+	dst[dest_len + j] = '\0';
 	return (buffer);
 }
 
 /* int	main(void)
 {
 	char dst[25] = "Hallo, liebe"; //12 + 1
-	char src[] = " Freunde123456789";		// 8 + 1
+	char src[] = " Freunde";		// 8 + 1
 
-	size_t result = ft_strlcat(dst, src, 18);
+	size_t result = ft_strlcat(dst, src, 16);
 	printf("%s:\n", dst);
 	printf("Komplette Stringlänge ohne \\0: %zu\n", result);
 } */
