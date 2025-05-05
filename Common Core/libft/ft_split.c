@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 15:38:50 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 20:17:11 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*ft_cpy(char const *str, char c)
 	count = 0;
 	while (str[count] != c && str[count] != '\0')
 		count++;
-	p = (char *)malloc((count + 1) * sizeof(char));
+	p = (char *)ft_calloc((count + 1), sizeof(char));
 	if (!p)
 		return (NULL);
 	while (i < count && str[i] != '\0')
@@ -84,20 +84,25 @@ char	**ft_split(char const *s, char c)
 			while (s[i] != c && s[i] != '\0')
 				i++;
 			if (s[i] == '\0')
-				i--;
+				return (split);
 		}
 		i++;
 	}
 	return (split);
 }
-
 /* int	main(void)
 {
-	char str[] = "Wir haben viel Spas hier zusammen yaaaa juhu!"; // 8 Wörter
-	char sep = ' ';
+	//char str[] = "lorem ipsum dolor sit amet, consectetur
+	adipiscing elit. Sed non risus. Suspendisse"; // 8 Wörter
+	//char sep = 'i';
 	char **split;
 
-	split = (char **)ft_split(str, sep);
+	split = (char **)ft_split("lorem ipsum dolor sit amet,
+	consectetur adipiscing elit. Sed non risus. Suspendisse
+	lectus tortor, dignissim sit amet, adipiscing nec,
+	ultricies sed, dolor. Cras elementum ultricies diam.
+	Maecenas ligula massa, varius a, semper congue, euismod non, mi.", 'i');
+
 	int i = 0;
 	while(split[i])
 	{
@@ -106,4 +111,4 @@ char	**ft_split(char const *s, char c)
 		i++;
 	}
 	free(split);
-} */
+}*/

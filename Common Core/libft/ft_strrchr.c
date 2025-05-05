@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:31:56 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 15:37:44 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:32:45 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*ft_strrchr(const char *str, int c)
 
 	tmp = (char *) str;
 	letter = (unsigned char) c;
+	last = NULL;
 	i = 0;
 	if (tmp == NULL)
 		return (NULL);
@@ -39,8 +40,8 @@ char	*ft_strrchr(const char *str, int c)
 
 /* int main(void)
 {
-    char str[] = "hahahahabcgcgedjdk";
-    char suche = 'a';
+    char str[] = "bonjour";
+    char suche = 's';
 
     char *p = ft_strrchr(str, suche);
     if (p != NULL)

@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:08:15 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 13:11:55 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:25:43 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,28 @@
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t	i;
+	size_t			i;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
+	str1 = (unsigned char *) s1;
+	str2 = (unsigned char *) s2;
 	i = 0;
 	if (n == 0)
 		return (0);
-	while (s1[i] == s2[i] && s1[i] && s2[i] && i < n - 1)
+	while (str1[i] == str2[i] && str1[i] && str2[i] && i < n - 1)
 		i++;
-	return (s1[i] - s2[i]);
+	return (str1[i] - str2[i]);
 }
-/*
-int	main(void)
+
+/* int	main(void)
 {
-	char src[] = "HallO";
-	char dest[] = "Hallo";
-	size_t n = 15;
+	char src[] = "test\200";
+	char dest[] = "test\0";
+	size_t n = 5;
 
 	int result = ft_strncmp(src, dest, n);
-    	printf("Return: %d", result);
+    	printf("Return: %d\n", result);
 
-
-	0 = die ersten n Zeichen sind gleich
-	< 0  s1 kommt lexographis vor s2
-	> 0 s2 kommt vorher
+		printf("Return: %d", strncmp(src, dest, n));
 } */

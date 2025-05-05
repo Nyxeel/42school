@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 10:36:44 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 10:27:46 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/05 19:27:53 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 	if (size != 0 && nmemb > (size_t)SIZE_MAX / size)
 		return (NULL);
+	if (size == 0 || nmemb == 0)
+		return (malloc(0));
 	total = nmemb * size;
 	p = malloc(total);
 	if (p == NULL)

@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 11:57:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 18:27:14 by pjelinek         ###   ########.fr       */
+/*   Created: 2025/05/05 20:36:30 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/05 20:43:04 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_memcmp(const void *ptr1, const void *ptr2, size_t num)
+t_list	*ft_lstnew(void *content)
 {
-	size_t			i;
-	unsigned char	*s1;
-	unsigned char	*s2;
+	t_list	*node;
 
-	s1 = (unsigned char *) ptr1;
-	s2 = (unsigned char *) ptr2;
-	i = 0;
-	while (i < num)
-	{
-		if (s1[i] != s2[i])
-			return (s1[i] - s2[i]);
-		i++;
-	}
-	return (0);
+	node = (t_list *)ft_calloc(1, sizeof(t_list));
+	if (!node)
+		return (NULL);
+	node->content = content;
+	node->next = NULL;
+	return (node);
 }
-
-/* int	main(void)
-{
-    char s1[] = "Hallo";
-    char s2[] = "Hallo";
-
-    printf("%d\n", ft_memcmp(s1, s2, 10));
-} */
