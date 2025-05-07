@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 20:45:00 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/05 21:17:05 by netrunner        ###   ########.fr       */
+/*   Created: 2025/05/05 22:02:06 by netrunner         #+#    #+#             */
+/*   Updated: 2025/05/07 11:50:39 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	new->next = *lst;
-	*lst = new;
+	t_list last;
+	last = ft_lstlast(*lst);
+	last->next = new;
 }
