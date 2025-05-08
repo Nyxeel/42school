@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:24:23 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/07 14:21:41 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:42:52 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,4 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*))
 		return ;
 	del(lst->content);
 	free(lst);
-	return ;
 }

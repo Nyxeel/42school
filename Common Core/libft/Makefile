@@ -40,26 +40,56 @@ SRC :=\
 	ft_putchar_fd.c\
 	ft_putstr_fd.c\
 	ft_putendl_fd.c\
-	ft_putnbr_fd.c\
+	ft_putnbr_fd.c
+
+BONUS :=\
+	ft_lstnew.c\
+	ft_lstadd_front.c\
+	ft_lstadd_back.c\
+	ft_lstdelone.c\
+	ft_lstclear.c\
+	ft_lstiter.c\
+	ft_lstlast.c\
+	ft_lstmap.c\
+	ft_lstsize.c
 
 OBJ := $(SRC:.c=.o)
 
+BONUS_OBJ := $(BONUS:.c=.o)
+
 RM := rm -f
+
+GREEN := \033[0;32m	#ANSI Colorcodes
+
+RED := \033[0;31m
+
+RESET := \033[0m
+
 
 %.o: %.c $(HEADER)
 	@$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
+	@echo "$(GREEN)✅ MANDATORY SUCCESS$(RESET)"
+
+bonus: $(OBJ) $(BONUS_OBJ)
+	@ar rcs $(NAME) $(BONUS_OBJ)
+	@echo "$(GREEN)✅ BONUS SUCCESS$(RESET)"
+
 
 all: $(NAME)
+	@echo "$(GREEN)✅ BUILD SUCCESS$(RESET)"
+
 
 clean:
-	@$(RM) $(OBJ)
+	@$(RM) $(OBJ) $(BONUS_OBJ)
 
 fclean: clean
 	@$(RM) $(NAME)
+	@echo "$(RED)\t🗑️  CLEANED ALL FILES$(RESET)"
 
 re: fclean all
+	@echo "$(GREEN)🔄 FULL REBUILD COMPLETE$(RESET)"
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
