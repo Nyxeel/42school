@@ -43,15 +43,15 @@ SRC :=\
 	ft_putnbr_fd.c
 
 BONUS :=\
-	ft_lstnew.c\
-	ft_lstadd_front.c\
-	ft_lstadd_back.c\
-	ft_lstdelone.c\
-	ft_lstclear.c\
-	ft_lstiter.c\
-	ft_lstlast.c\
-	ft_lstmap.c\
-	ft_lstsize.c
+	ft_lstnew_bonus.c\
+	ft_lstadd_front_bonus.c\
+	ft_lstadd_back_bonus.c\
+	ft_lstdelone_bonus.c\
+	ft_lstclear_bonus.c\
+	ft_lstiter_bonus.c\
+	ft_lstlast_bonus.c\
+	ft_lstmap_bonus.c\
+	ft_lstsize_bonus.c
 
 OBJ := $(SRC:.c=.o)
 
@@ -71,15 +71,15 @@ RESET := \033[0m
 
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
-	@echo "$(GREEN)✅ MANDATORY SUCCESS$(RESET)"
+	@echo "$(GREEN)\n\t✅ MANDATORY SUCCESS\n$(RESET)"
 
 bonus: $(OBJ) $(BONUS_OBJ)
 	@ar rcs $(NAME) $(BONUS_OBJ)
-	@echo "$(GREEN)✅ BONUS SUCCESS$(RESET)"
+	@echo "$(GREEN)\n\t✅ BONUS SUCCESS\n$(RESET)"
 
 
 all: $(NAME)
-	@echo "$(GREEN)✅ BUILD SUCCESS$(RESET)"
+	@echo "$(GREEN)\n\t✅ BUILD SUCCESS\n$(RESET)"
 
 
 clean:
@@ -87,9 +87,9 @@ clean:
 
 fclean: clean
 	@$(RM) $(NAME)
-	@echo "$(RED)\t🗑️  CLEANED ALL FILES$(RESET)"
+	@echo "$(RED)\n\t🗑️  CLEANED ALL FILES\n$(RESET)"
 
-re: fclean all
-	@echo "$(GREEN)🔄 FULL REBUILD COMPLETE$(RESET)"
+re: fclean all bonus
+	@echo "$(GREEN)\n\t🔄 FULL REBUILD COMPLETE\n$(RESET)"
 
 .PHONY: all clean fclean re bonus
