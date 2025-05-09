@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf_copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:45:21 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/09 19:19:31 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:47:00 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,41 +116,44 @@ char	*ft_itoa(int n)
 	return (intarr);
 }
 
-void	find_arg(char c, va_list ap)
+int	print_arg(char c, va_list ap)
 {
 	char			*str;
 	size_t			i;
-	char d;
 
 	str = NULL;
 	i = 0;
-	d = c;
 	if (c == 'c')
 	{
-		d = va_arg(ap, int);
-		write(1, &d, 1);
+		c = va_arg(ap, int);
+		return (write(1, &c, 1));
 	}
 	if (c == 's')
 	{
 		str = va_arg(ap, char *);
 		if (!str)
-			return ;
+			return (0);
 		write(1, str, ft_strlen(str));
+		return (ft_strlen(str));
 	}
 	if (c == 'p')
+	{
 		write(1, "xXPointerXx", 11);
+		return (11);
+	}
 	if (c == 'd' || c == 'i' || c == 'u')
 	{
 		i = va_arg(ap, int);
 		str = ft_itoa(i);
 		if (!str)
-			return ;
+			return (0);
 		write(1, str, ft_strlen(str));
 		free(str);
-
+		return (ft_strlen(str));
 	}
 	if (c == 'x' || c == 'X')
 		write(1, "--HexDez--", 10);
+	return (10);
 }
 
 int is_valid(char c)
@@ -164,37 +167,37 @@ int is_valid(char c)
 int	ft_printf(const char *str, ...)
 {
 	va_list	ap;
-	size_t	arg_count;
 	size_t	i;
+	size_t	count;
 
 	if (!str)
 		return (0);
 	va_start(ap, str);
 	i = 0;
-	arg_count = 0;
-	while (str[i] && str[i] == '%' && is_valid(str[i + 1]))
-		arg_count += 2;
-	i = 0;
+	count = 0;
 	while (str[i])
 	{
-		if (str[i] == '%' && is_valid(str[i + 1]))
+		if (str[i] == '%')
 		{
-			find_arg(str[i + 1], ap);
+			if (is_valid(str[i + 1]))
+				count = print_arg(str[i + 1], ap);
+			else
+				write(1, &str[i + 1], 1);
 			i += 2;
 		}
-		if (str[i] == '%' && !is_valid(str[i + 1]))
-		{
-			write(1, &str[i + 1], 1);
-			i += 2;
-		}
-		write(1, &str[i], 1);
-		i++;
+		if (str[i] && write(1, &str[i], 1))
+			count = i++;
 	}
 	va_end(ap);
-	return (1);
+	return (count);
 }
 int	main(void)
 {
 	char c = 'a';
-	ft_printf("Mein %s %w startet um %d Uhr!%c" , "String", 12, c);
+	char str[] = "String";
+	int i = ft_printf("Mein %s %% startet um %d Uhr! %c %c " , str, 12, c);
+	printf("%d\n", i);
+	ft_printf("%d", i);
+
+
 }

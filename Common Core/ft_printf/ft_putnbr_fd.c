@@ -1,0 +1,51 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 14:24:40 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/09 20:44:23 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <unistd.h>
+#include <stdio.h>
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+
+int	ft_putnbr_fd(int n, int fd)
+{
+	long int	zahl;
+	int count = 0;
+
+	zahl = n;
+	if (zahl < 0)
+	{
+		ft_putchar_fd('-', fd);
+		zahl *= -1;
+	}
+	if (zahl >= 0 && zahl <= 9)
+	{
+		count++;
+		ft_putchar_fd(zahl + '0', fd);
+	}
+	if (zahl > 9)
+	{
+		ft_putnbr_fd(zahl / 10, fd);
+		ft_putnbr_fd(zahl % 10, fd);
+	}
+	return (count);
+}
+
+int	main(void)
+{
+	long int zahl = -2147483648;
+	int fd = 1;
+	int count = ft_putnbr_fd(zahl, fd);
+	printf("\nCount:%d", count);
+}

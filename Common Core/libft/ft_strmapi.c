@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 17:51:00 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 13:12:33 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:10:25 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	unsigned int	i;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	hidden = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
 	if (!hidden)
 		return (NULL);
