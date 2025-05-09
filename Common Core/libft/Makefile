@@ -59,23 +59,15 @@ BONUS_OBJ := $(BONUS:.c=.o)
 
 RM := rm -f
 
-GREEN := \033[0;32m	#ANSI Colorcodes
-
-RED := \033[0;31m
-
-RESET := \033[0m
-
 
 %.o: %.c $(HEADER)
 	@$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
-	@echo "$(GREEN)\n\t✅ MANDATORY SUCCESS\n$(RESET)"
 
 bonus: $(OBJ) $(BONUS_OBJ)
-	@ar rcs $(NAME) $(BONUS_OBJ)
-	@echo "$(GREEN)\n\t✅ BONUS SUCCESS\n$(RESET)"
+	@ar rcs $(NAME) $(OBJ) $(BONUS_OBJ)
 	@touch bonus
 
 all: $(NAME)
@@ -85,9 +77,7 @@ clean:
 
 fclean: clean
 	@$(RM) $(NAME)
-	@echo "$(RED)\n\t🗑️  CLEANED ALL FILES\n$(RESET)"
 
 re: fclean all
-	@echo "$(GREEN)\n\t🔄 FULL REBUILD COMPLETE\n$(RESET)"
 
 .PHONY: all clean fclean re
