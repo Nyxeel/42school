@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 21:39:47 by netrunner         #+#    #+#             */
-/*   Updated: 2025/05/07 20:52:41 by netrunner        ###   ########.fr       */
+/*   Created: 2025/05/09 12:35:58 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/09 12:35:59 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_lstsize(t_list *lst)
+int	ft_lstsize(t_list *lst)
 {
 	if (!lst)
 		return (0);
-	return(1 + ft_lstsize(lst->next));
+	return (1 + ft_lstsize(lst->next));
 }
