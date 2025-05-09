@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:38:28 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/09 13:40:02 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/09 13:41:18 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	p = ft_memcpy(NULL, NULL, 0);
 
 	printf("%s", p);
-	/* char *c = memcpy(NULL, NULL, 2);
-	printf("%s", c);*/
-} */
+	char *c = memcpy(NULL, NULL, 2);
+	printf("%s", c);
+}*/
