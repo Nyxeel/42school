@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 20:17:11 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/09 23:40:07 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,13 @@ static char	*ft_cpy(char const *str, char c)
 
 static void	ft_freeall(char **freearr, size_t index)
 {
-	while (index > 0)
+	size_t	i;
+
+	i = 0;
+	while (i <= index)
 	{
-		free(freearr[index]);
-		index--;
+		free(freearr[i]);
+		i++;
 	}
 	free(freearr);
 }
@@ -90,18 +93,13 @@ char	**ft_split(char const *s, char c)
 	}
 	return (split);
 }
-/* int	main(void)
+int	main(void)
 {
 	//char str[] = "lorem ipsum dolor sit amet, consectetur
-	adipiscing elit. Sed non risus. Suspendisse"; // 8 Wörter
 	//char sep = 'i';
 	char **split;
 
-	split = (char **)ft_split("lorem ipsum dolor sit amet,
-	consectetur adipiscing elit. Sed non risus. Suspendisse
-	lectus tortor, dignissim sit amet, adipiscing nec,
-	ultricies sed, dolor. Cras elementum ultricies diam.
-	Maecenas ligula massa, varius a, semper congue, euismod non, mi.", 'i');
+	split = (char **)ft_split("lorem ipsum dolor sit amet,n, mi.", 'i');
 
 	int i = 0;
 	while(split[i])
@@ -111,4 +109,4 @@ char	**ft_split(char const *s, char c)
 		i++;
 	}
 	free(split);
-}*/
+}

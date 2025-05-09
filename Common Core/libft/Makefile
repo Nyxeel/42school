@@ -76,20 +76,18 @@ $(NAME): $(OBJ)
 bonus: $(OBJ) $(BONUS_OBJ)
 	@ar rcs $(NAME) $(BONUS_OBJ)
 	@echo "$(GREEN)\n\t✅ BONUS SUCCESS\n$(RESET)"
-
+	@touch bonus
 
 all: $(NAME)
-	@echo "$(GREEN)\n\t✅ BUILD SUCCESS\n$(RESET)"
-
 
 clean:
-	@$(RM) $(OBJ) $(BONUS_OBJ)
+	@$(RM) $(OBJ) $(BONUS_OBJ) bonus
 
 fclean: clean
 	@$(RM) $(NAME)
 	@echo "$(RED)\n\t🗑️  CLEANED ALL FILES\n$(RESET)"
 
-re: fclean all bonus
+re: fclean all
 	@echo "$(GREEN)\n\t🔄 FULL REBUILD COMPLETE\n$(RESET)"
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
