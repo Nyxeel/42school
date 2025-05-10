@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:24:40 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/09 20:44:23 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/10 12:34:24 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
 
-void	ft_putchar_fd(char c, int fd)
+void	ft_putchar_fd(char c)
 {
-	write(fd, &c, 1);
+	write(1, &c, 1);
 }
 
-int	ft_putnbr_fd(int n, int fd)
+int	ft_putnbr_countdigits(int n)
 {
 	long int	zahl;
 	int count = 0;
@@ -26,18 +26,18 @@ int	ft_putnbr_fd(int n, int fd)
 	zahl = n;
 	if (zahl < 0)
 	{
-		ft_putchar_fd('-', fd);
+		ft_putchar_fd('-');
 		zahl *= -1;
 	}
 	if (zahl >= 0 && zahl <= 9)
 	{
 		count++;
-		ft_putchar_fd(zahl + '0', fd);
+		ft_putchar_fd(zahl + '0');
 	}
 	if (zahl > 9)
 	{
-		ft_putnbr_fd(zahl / 10, fd);
-		ft_putnbr_fd(zahl % 10, fd);
+		count = 1 + ft_putnbr_countdigits(zahl / 10);
+		ft_putnbr_countdigits(zahl % 10);
 	}
 	return (count);
 }
@@ -45,7 +45,6 @@ int	ft_putnbr_fd(int n, int fd)
 int	main(void)
 {
 	long int zahl = -2147483648;
-	int fd = 1;
-	int count = ft_putnbr_fd(zahl, fd);
+	int count = ft_putnbr_countdigits(zahl);
 	printf("\nCount:%d", count);
 }

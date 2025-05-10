@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:45:21 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/09 20:47:00 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/10 12:48:12 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdarg.h>
+
+void	ft_putchar_fd(char c)
+{
+	write(1, &c, 1);
+}
 
 void	*ft_bzero(void *s, size_t n)
 {
@@ -77,6 +82,31 @@ static	int	ft_countdigit(int n)
 	return (digits);
 }
 
+
+int	ft_putnbr_countdigits(int n)
+{
+	long int	zahl;
+	int count = 0;
+
+	zahl = n;
+	if (zahl < 0)
+	{
+		ft_putchar_fd('-');
+		zahl *= -1;
+	}
+	if (zahl >= 0 && zahl <= 9)
+	{
+		count++;
+		ft_putchar_fd(zahl + '0');
+	}
+	if (zahl > 9)
+	{
+		count = 1 + ft_putnbr_countdigits(zahl / 10);
+		ft_putnbr_countdigits(zahl % 10);
+	}
+	return (count);
+}
+
 static	char	*ft_intochar(char *arr, long int num, int digits, int minus)
 {
 	int	index;
@@ -126,7 +156,7 @@ int	print_arg(char c, va_list ap)
 	if (c == 'c')
 	{
 		c = va_arg(ap, int);
-		return (write(1, &c, 1));
+		return (1 + write(1, &c, 1));
 	}
 	if (c == 's')
 	{
@@ -144,12 +174,7 @@ int	print_arg(char c, va_list ap)
 	if (c == 'd' || c == 'i' || c == 'u')
 	{
 		i = va_arg(ap, int);
-		str = ft_itoa(i);
-		if (!str)
-			return (0);
-		write(1, str, ft_strlen(str));
-		free(str);
-		return (ft_strlen(str));
+		return (ft_putnbr_countdigits(i));
 	}
 	if (c == 'x' || c == 'X')
 		write(1, "--HexDez--", 10);
@@ -169,6 +194,7 @@ int	ft_printf(const char *str, ...)
 	va_list	ap;
 	size_t	i;
 	size_t	count;
+	size_t sonder;
 
 	if (!str)
 		return (0);
@@ -182,7 +208,11 @@ int	ft_printf(const char *str, ...)
 			if (is_valid(str[i + 1]))
 				count = print_arg(str[i + 1], ap);
 			else
+			{
 				write(1, &str[i + 1], 1);
+				sonder = count++;
+				printf("\nSonder Count: %zu\n", sonder);
+			}
 			i += 2;
 		}
 		if (str[i] && write(1, &str[i], 1))
@@ -195,9 +225,12 @@ int	main(void)
 {
 	char c = 'a';
 	char str[] = "String";
-	int i = ft_printf("Mein %s %% startet um %d Uhr! %c %c " , str, 12, c);
-	printf("%d\n", i);
-	ft_printf("%d", i);
+	int i = ft_printf("Mein %s %% startet um %d Uhr! %c" , str, 12, c);
+	printf("\nString: %d Zeichen\n", i);
+
+	// $Mein String % startet um 12 Uhr! a$   <<-- 34 Zeichen
+
+
 
 
 }
