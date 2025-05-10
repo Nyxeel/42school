@@ -6,11 +6,11 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 10:36:44 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/09 12:33:45 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:29:04 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {

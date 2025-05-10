@@ -1,17 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   5print_arg2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 14:24:40 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/10 12:34:24 by netrunner        ###   ########.fr       */
+/*   Created: 2025/05/10 15:53:12 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/10 19:57:16 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <limits.h>
+#include <string.h>
+#include <stdint.h>
+#include <stdarg.h>
 
 void	ft_putchar_fd(char c)
 {
@@ -21,8 +26,9 @@ void	ft_putchar_fd(char c)
 int	ft_putnbr_countdigits(int n)
 {
 	long int	zahl;
-	int count = 0;
+	int			count;
 
+	count = 0;
 	zahl = n;
 	if (zahl < 0)
 	{
@@ -30,21 +36,38 @@ int	ft_putnbr_countdigits(int n)
 		zahl *= -1;
 	}
 	if (zahl >= 0 && zahl <= 9)
-	{
-		count++;
 		ft_putchar_fd(zahl + '0');
-	}
 	if (zahl > 9)
 	{
-		count = 1 + ft_putnbr_countdigits(zahl / 10);
+		ft_putnbr_countdigits(zahl / 10);
 		ft_putnbr_countdigits(zahl % 10);
 	}
 	return (count);
 }
 
-int	main(void)
+static	int	ft_countdigit(int n)
 {
-	long int zahl = -2147483648;
-	int count = ft_putnbr_countdigits(zahl);
-	printf("\nCount:%d", count);
+	int			digits;
+	long int	num;
+
+	num = n;
+	digits = 0;
+	if (num <= 0)
+	{
+		digits = 1;
+		num = -num;
+	}
+	while (num > 0)
+	{
+		num = num / 10;
+		digits++;
+	}
+	return (digits);
+}
+
+int	ft_arg_int(int i, va_list ap)
+{
+	i = va_arg(ap, int);
+	ft_putnbr_countdigits(i)
+	return (ft_countdigit(int i));
 }

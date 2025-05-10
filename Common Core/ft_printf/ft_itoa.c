@@ -6,11 +6,48 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:38:58 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/09 16:03:59 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:33:26 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <limits.h>
+#include <string.h>
+#include <stdint.h>
+#include <stdarg.h>
+
+void	*ft_bzero(void *s, size_t n)
+{
+	size_t			i;
+	unsigned char	*arr;
+
+	i = 0;
+	arr = (unsigned char *) s;
+	while (i < n)
+	{
+		arr[i] = 0;
+		i++;
+	}
+	return ((void *) s);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	unsigned char	*p;
+	size_t			total;
+
+	if (size == 0 || nmemb == 0)
+		return (malloc(0));
+	if (nmemb > (size_t)SIZE_MAX / size)
+		return (NULL);
+	total = nmemb * size;
+	p = malloc(total);
+	if (p == NULL)
+		return (NULL);
+	return (ft_bzero(p, total));
+}
 
 static	int	ft_countdigit(int n)
 {
@@ -19,15 +56,17 @@ static	int	ft_countdigit(int n)
 
 	num = n;
 	digits = 0;
-	if (num == 0)
+	if (num <= 0)
+	{
 		digits = 1;
-	if (num < 0)
 		num = -num;
+	}
 	while (num > 0)
 	{
 		num = num / 10;
 		digits++;
 	}
+	printf("\n%i\n", digits);
 	return (digits);
 }
 
@@ -70,12 +109,12 @@ char	*ft_itoa(int n)
 	return (intarr);
 }
 
-/* int	main(void)
+int	main(void)
 {
-	long int	ascii;
+	long int	ascii = 0;
 	char	*converted;
 
 	converted = ft_itoa(ascii);
 	printf("%s", converted);
 	free(converted);
-} */
+}

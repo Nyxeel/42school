@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_copy.c                                   :+:      :+:    :+:   */
+/*   ft_printf_test.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:45:21 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/10 12:48:12 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/10 19:57:19 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,72 +22,12 @@ void	ft_putchar_fd(char c)
 {
 	write(1, &c, 1);
 }
-
-void	*ft_bzero(void *s, size_t n)
-{
-	size_t			i;
-	unsigned char	*arr;
-
-	i = 0;
-	arr = (unsigned char *) s;
-	while (i < n)
-	{
-		arr[i] = 0;
-		i++;
-	}
-	return ((void *) s);
-}
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	unsigned char	*p;
-	size_t			total;
-
-	if (size == 0 || nmemb == 0)
-		return (malloc(0));
-	if (nmemb > (size_t)SIZE_MAX / size)
-		return (NULL);
-	total = nmemb * size;
-	p = malloc(total);
-	if (p == NULL)
-		return (NULL);
-	return (ft_bzero(p, total));
-}
-
-size_t	ft_strlen(const char *str)
-{
-	size_t	count;
-
-	count = 0;
-	while (str[count])
-		count++;
-	return (count);
-}
-
-static	int	ft_countdigit(int n)
-{
-	int			digits;
-	long int	num;
-
-	num = n;
-	digits = 0;
-	if (num == 0)
-		digits = 1;
-	if (num < 0)
-		num = -num;
-	while (num > 0)
-	{
-		num = num / 10;
-		digits++;
-	}
-	return (digits);
-}
-
-
 int	ft_putnbr_countdigits(int n)
 {
 	long int	zahl;
-	int count = 0;
+	int			count;
 
+	count = 0;
 	zahl = n;
 	if (zahl < 0)
 	{
@@ -107,43 +47,14 @@ int	ft_putnbr_countdigits(int n)
 	return (count);
 }
 
-static	char	*ft_intochar(char *arr, long int num, int digits, int minus)
+size_t	ft_strlen(const char *str)
 {
-	int	index;
+	size_t	count;
 
-	index = digits + minus - 1;
-	while (index >= minus)
-	{
-		arr[index] = (num % 10) + '0';
-		num = num / 10;
-		index--;
-	}
-	arr[digits + minus] = '\0';
-	if (minus == 1)
-		arr[0] = '-';
-	return (arr);
-}
-
-char	*ft_itoa(int n)
-{
-	char		*intarr;
-	int			digits;
-	int			minus;
-	long int	num;
-
-	num = n;
-	minus = 0;
-	digits = ft_countdigit(n);
-	if (num < 0)
-	{
-		num *= -1;
-		minus = 1;
-	}
-	intarr = (char *)ft_calloc((digits + minus + 1), sizeof(char));
-	if (!intarr)
-		return (NULL);
-	intarr = ft_intochar(intarr, num, digits, minus);
-	return (intarr);
+	count = 0;
+	while (str[count])
+		count++;
+	return (count);
 }
 
 int	print_arg(char c, va_list ap)
@@ -164,6 +75,7 @@ int	print_arg(char c, va_list ap)
 		if (!str)
 			return (0);
 		write(1, str, ft_strlen(str));
+		//printf("\nStrlen: %zu\n", ft_strlen(str));
 		return (ft_strlen(str));
 	}
 	if (c == 'p')
@@ -193,42 +105,51 @@ int	ft_printf(const char *str, ...)
 {
 	va_list	ap;
 	size_t	i;
-	size_t	count;
-	size_t sonder;
+	size_t	count = 0;
 
 	if (!str)
 		return (0);
 	va_start(ap, str);
 	i = 0;
-	count = 0;
 	while (str[i])
 	{
 		if (str[i] == '%')
 		{
 			if (is_valid(str[i + 1]))
-				count = print_arg(str[i + 1], ap);
+				count += print_arg(str[i + 1], ap);
 			else
-			{
-				write(1, &str[i + 1], 1);
-				sonder = count++;
-				printf("\nSonder Count: %zu\n", sonder);
-			}
+				(write(1, &str[i + 1], 1), count += 1);
 			i += 2;
 		}
 		if (str[i] && write(1, &str[i], 1))
-			count = i++;
+			(count += 1, i++);
 	}
 	va_end(ap);
 	return (count);
 }
 int	main(void)
 {
-	char c = 'a';
-	char str[] = "String";
-	int i = ft_printf("Mein %s %% startet um %d Uhr! %c" , str, 12, c);
-	printf("\nString: %d Zeichen\n", i);
+	//char c = 'a';
+	char *str2 = "String";
+
+	char *str = "Mein String % startet um 12 Uhr! a q";
+	printf("Strinlaenge: %zu\n", ft_strlen(str));
+
+	int i = ft_printf("Mein %s %% startet um %d Uhr! %u\n" , str2, 12, -42);
+
+	printf("ft_printf Return: %d Zeichen\n", i);
+
+	//printf("\nTEST Unsigned Int: %u \n", -42);
+
 
 	// $Mein String % startet um 12 Uhr! a$   <<-- 34 Zeichen
+
+
+
+	// Too many arg calls in the formatstring
+	//printf("TEST: String %s to be at home at %d o'clock %c", "needs", 4);
+
+
 
 
 

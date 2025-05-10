@@ -10,12 +10,12 @@
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.smoothScrolling": true,
     "editor.wordWrap": "on",
-    "editor.insertSpaces": true,
+    "editor.insertSpaces": false,
     "editor.tabSize": 4,
     "editor.rulers": [80],
     "editor.lineNumbers": "on",
     "editor.renderWhitespace": "selection",
-    "editor.detectIndentation": true,
+    "editor.detectIndentation": false,
     "editor.inlayHints.enabled": "off",
     "editor.minimap.enabled": false,
     "security.workspace.trust.untrustedFiles": "open",
@@ -63,5 +63,8 @@
 
     "pylint.args": [
         "--generated-members=cv2.*"
-    ],
+	],
+	"files.associations": {
+		"stdarg.h": "c"
+	},
 }
