@@ -60,6 +60,7 @@ static	int	ft_countdigit(int n)
 		num = num / 10;
 		digits++;
 	}
+	printf("Digit Count: %d\n", digits);
 	return (digits);
 }
 
@@ -74,16 +75,16 @@ int	ft_arg_int(int i, va_list ap)
 int	ft_arg_char(char c, va_list ap)
 {
 	c = va_arg(ap, int);
-	return (1 + write(1, &c, 1));
+	return (write(1, &c, 1));
 }
 
 int	ft_arg_string(char	*str, va_list ap)
 {
+	char *str;
 	str = va_arg(ap, char *);
 	if (!str)
-		return (0);
-	write(1, str, ft_strlen(str));
-	return (ft_strlen(str));
+		return (-1);
+	return (write(1, str, ft_strlen(str)));
 }
 
 int	find_arg(char c, va_list ap)
@@ -94,6 +95,10 @@ int	find_arg(char c, va_list ap)
 		return (ft_arg_string(NULL, ap));
 	if (c == 'd' || c == 'i' || c == 'u')
 		return (ft_arg_int(0, ap));
+	if (c == '%')
+		return (write(1, &c, 1));
+	if (c == 'p')
+		return (ft_arg_pointer(NULL, ap));
 	/* if (c == 'x' || c == 'X')
 		return (ft_arg_hexa(c));
 	if (c == 'p')
@@ -104,7 +109,7 @@ int	find_arg(char c, va_list ap)
 int is_valid(char c)
 {
 	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i'
-		|| c == 'u' || c == 'x' || c == 'X')
+		|| c == 'u' || c == 'x' || c == 'X' || c == '%')
 		return (1);
 	return (0);
 }
@@ -112,6 +117,8 @@ int	ft_va_start(const char *str, va_list ap)
 {
 	int	i;
 	int	count;
+	int counter = 0;
+	int zahl = 0;
 
 	count = 0;
 	i = 0;
@@ -120,14 +127,23 @@ int	ft_va_start(const char *str, va_list ap)
 		if (str[i] == '%')
 		{
 			if (is_valid(str[i + 1]))
+			{
 				count += find_arg(str[i + 1], ap);
+				printf("Zahl: %d\n", ++zahl);
+
+			}
 			else
-				(write(1, &str[i + 1], 1), count += 1);
+				return (-1);
 			i += 2;
+			counter += 2;
 		}
 		if (str[i] && write(1, &str[i], 1))
-			(count += 1, i++);
+		{
+			count += 1,
+			i++;
+		}
 	}
+	printf("While Loop Count: %d  i:%d, i-counter: %d\n", count, i, i - counter);
 	return (count);
 }
 
@@ -147,12 +163,13 @@ int	ft_printf(const char *str, ...)
 
 int	main(void)
 {
-	char c = 'a';
-	char *str2 = "String";
+	//char c = 'a';
+	//char *str2 = "Stream";
 
-	char *str = "Mein String % startet um 12 Uhr! a";
-	printf("Strinlaenge: %zu\n", ft_strlen(str));
+	char *str = "Mein c % startet um f:d Uhr! e";
+	printf("\nInput Strinlaenge: %zu\n", ft_strlen(str));
 
-	int i = ft_printf("Mein %s %% startet um %d Uhr! %c" , str2, 12, c);
+	int i = ft_printf("Mein %c %% startet um %c:%c Uhr! %c", 'c', 'f', 'd', 'e');
+	printf("ORIGINAL:Mein %c %% startet um %c:%c Uhr! %c\n", 'c', 'f', 'd', 'e');
 	printf("ft_printf Return: %d\n", i);
 }
