@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:53:12 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/10 19:57:14 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:20:20 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	find_arg(char c, va_list ap)
 	if (c == 'x' || c == 'X')
 		return (ft_arg_hexa(c, ap));
 	if (c == 'p')
-		return (ft_arg_pointer((char *) c, ap));
+		return (ft_arg_pointer(NULL, c, ap));
 	else
 		return (0);
 }

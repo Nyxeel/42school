@@ -7,10 +7,11 @@
 #include <stdint.h>
 #include <stdarg.h>
 
-void	ft_putchar_fd(char c)
+int	ft_putchar(char c)
 {
-	write(1, &c, 1);
+	return(write(1, &c, 1));
 }
+
 size_t	ft_strlen(const char *str)
 {
 	size_t	count;
@@ -21,29 +22,7 @@ size_t	ft_strlen(const char *str)
 	return (count);
 }
 
-int	ft_putnbr_countdigits(int n)
-{
-	long int	zahl;
-	int			count;
-
-	count = 0;
-	zahl = n;
-	if (zahl < 0)
-	{
-		ft_putchar_fd('-');
-		zahl *= -1;
-	}
-	if (zahl >= 0 && zahl <= 9)
-		ft_putchar_fd(zahl + '0');
-	if (zahl > 9)
-	{
-		ft_putnbr_countdigits(zahl / 10);
-		ft_putnbr_countdigits(zahl % 10);
-	}
-	return (count);
-}
-
-static	int	ft_countdigit(int n)
+int	ft_countdigit(int n)
 {
 	int			digits;
 	long int	num;
@@ -60,15 +39,76 @@ static	int	ft_countdigit(int n)
 		num = num / 10;
 		digits++;
 	}
-	printf("Digit Count: %d\n", digits);
 	return (digits);
+}
+
+int	ft_putnbr(int n)
+{
+	long int	zahl;
+
+	zahl = n;
+	if (zahl < 0)
+	{
+		ft_putchar('-');
+		zahl *= -1;
+	}
+	if (zahl >= 0 && zahl <= 9)
+		ft_putchar(zahl + '0');
+	if (zahl > 9)
+	{
+		ft_putnbr(zahl / 10);
+		ft_putnbr(zahl % 10);
+	}
+	return (ft_countdigit(zahl));
+}
+
+int	ft_hexa_convert(size_t hexanum, char Xx)
+{
+	char	*base;
+	int 	count = 0;
+	char c;
+
+	if (Xx == 'x')
+		base = "0123456789abcdef";
+	else
+		base = "0123456789ABCDEF";
+	if (hexanum >= 16)
+	{
+		ft_hexa_convert((hexanum / 16), Xx);
+		c = base[hexanum % 16];
+		write(1, &c, 1);
+	}
+	if (hexanum < 16)
+	{
+		hexanum = base[hexanum % 16];
+		write(1, &hexanum, 1);
+	}
+	return (count);
+}
+
+int	ft_arg_hexa(char c, va_list ap)
+{
+	unsigned int	hexa;
+
+	hexa = va_arg(ap, unsigned int);
+	return (ft_hexa_convert(hexa, c));
+}
+
+int	ft_arg_pointer(void *p, va_list ap)
+{
+	size_t	hexanum;
+
+	p = va_arg(ap, void *);
+	if (!p)
+		return (write(1, "(nil)", 5));
+	hexanum = (size_t) p;
+	return ((write(1, "0x", 2) + ft_hexa_convert(hexanum, 'p')));
 }
 
 int	ft_arg_int(int i, va_list ap)
 {
 	i = va_arg(ap, int);
-	ft_putnbr_countdigits(i);
-	return (ft_countdigit(i));
+	return (ft_putnbr(i));
 }
 
 
@@ -80,7 +120,6 @@ int	ft_arg_char(char c, va_list ap)
 
 int	ft_arg_string(char	*str, va_list ap)
 {
-	char *str;
 	str = va_arg(ap, char *);
 	if (!str)
 		return (-1);
@@ -97,12 +136,10 @@ int	find_arg(char c, va_list ap)
 		return (ft_arg_int(0, ap));
 	if (c == '%')
 		return (write(1, &c, 1));
+	if (c == 'x' || c == 'X')
+		return (ft_arg_hexa(c, ap));
 	if (c == 'p')
 		return (ft_arg_pointer(NULL, ap));
-	/* if (c == 'x' || c == 'X')
-		return (ft_arg_hexa(c));
-	if (c == 'p')
-		return (ft_arg_pointer((char *) c));*/
 	else
 		return (0);
 }
@@ -117,8 +154,6 @@ int	ft_va_start(const char *str, va_list ap)
 {
 	int	i;
 	int	count;
-	int counter = 0;
-	int zahl = 0;
 
 	count = 0;
 	i = 0;
@@ -127,15 +162,10 @@ int	ft_va_start(const char *str, va_list ap)
 		if (str[i] == '%')
 		{
 			if (is_valid(str[i + 1]))
-			{
 				count += find_arg(str[i + 1], ap);
-				printf("Zahl: %d\n", ++zahl);
-
-			}
 			else
 				return (-1);
 			i += 2;
-			counter += 2;
 		}
 		if (str[i] && write(1, &str[i], 1))
 		{
@@ -143,7 +173,7 @@ int	ft_va_start(const char *str, va_list ap)
 			i++;
 		}
 	}
-	printf("While Loop Count: %d  i:%d, i-counter: %d\n", count, i, i - counter);
+	printf("\nWhile Loop Count: %d  i:%d\n", count, i);
 	return (count);
 }
 
@@ -166,10 +196,12 @@ int	main(void)
 	//char c = 'a';
 	//char *str2 = "Stream";
 
-	char *str = "Mein c % startet um f:d Uhr! e";
-	printf("\nInput Strinlaenge: %zu\n", ft_strlen(str));
+	//char *str = "Mein c % startet um f:d Uhr! e";
+	//printf("\nInput Strinlaenge: %zu\n", ft_strlen(str));
+	char p[10];
 
-	int i = ft_printf("Mein %c %% startet um %c:%c Uhr! %c", 'c', 'f', 'd', 'e');
-	printf("ORIGINAL:Mein %c %% startet um %c:%c Uhr! %c\n", 'c', 'f', 'd', 'e');
-	printf("ft_printf Return: %d\n", i);
+	int i = ft_printf("%d Hexa: %p\n", 42, p);
+	//printf("ORIGINAL:Mein %c %% startet um %c:%c Uhr! %c\n", 'c', 'f', 'd', 'e');
+	printf("\nft_printf Return: %d\n", i);
+	printf("%d Hexa: %p\n", 42, NULL);
 }

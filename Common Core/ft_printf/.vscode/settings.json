@@ -65,6 +65,7 @@
         "--generated-members=cv2.*"
 	],
 	"files.associations": {
-		"stdarg.h": "c"
+		"stdarg.h": "c",
+		"stdlib.h": "c"
 	},
 }
