@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:05:14 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/12 18:00:42 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:54:08 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_printf(const char *str, ...)
 	return (result);
 }
 
-
+/*
 int	main(void)
 {
 	//char c = 'a';
@@ -40,7 +40,7 @@ int	main(void)
 	//char p[10];
 
 
-/*
+
 	i = ft_printf("%s\n", "STREAM");	 	// String Return 	WORKING
 	printf("String Laenge: %zu\nString Output: %d\n\n", ft_strlen("STREAM\n"), i);
 
@@ -52,13 +52,13 @@ int	main(void)
 	printf("Unsigned Laenge: %zu\nUnsigned Output:%d\n", ft_strlen("4294967254"), i);
 
 	int i = ft_printf("%i\n", -42);	 		// Int Return 	WORKING
-	printf("Int Laenge: %zu\nInt Output: %d\n\n", ft_strlen("-42\n"), i); */
+	printf("Int Laenge: %zu\nInt Output: %d\n\n", ft_strlen("-42\n"), i);
 
 	i = ft_printf("%s\n%i\n%d\n%x\n%u\n", "TEST", 125, 765443, 45899, -1); 			// Hexa Return
 	printf("\n\nPrintf Return: %d\n\n", i);
 	printf("ORIGINAL:%x", -21);
 
 
-/* 	i = ft_printf("Pointer: %p\n", p); 				// Pointer Return
-	printf("Pointer Laenge: %d\n\n", i); */
-}
+	i = ft_printf("Pointer: %p\n", p); 				// Pointer Return
+	printf("Pointer Laenge: %d\n\n", i);
+} */

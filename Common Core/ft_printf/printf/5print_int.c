@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:53:12 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/12 17:50:30 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:46:02 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_countdigit(int n)
 	return (digits);
 }
 
-void	ft_putnbr_unsigned(unsigned int n)
+void ft_putnbr_unsigned(unsigned int n)
 {
 	long unsigned int	zahl;
 
