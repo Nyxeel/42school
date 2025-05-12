@@ -34,7 +34,6 @@ int	ft_countdigit_unsigned(unsigned int n)
 		num = num / 10;
 		digits++;
 	}
-	printf("\nCount Unsigned Digits: %d\n", digits);
 	return (digits);
 }
 
@@ -55,7 +54,6 @@ int	ft_countdigit(int n)
 		num = num / 10;
 		digits++;
 	}
-	printf("\nCount Digits: %d\n", digits);
 	return (digits);
 }
 
@@ -91,12 +89,23 @@ void	ft_putnbr_unsigned(unsigned int n)
 		ft_putnbr(zahl % 10);
 	}
 }
+int	ft_count_hexa(size_t hexanum)
+{
+	int digits = 0;
+	while (hexanum > 0)
+	{
+		hexanum = hexanum / 16;
+		digits++;
+	}
+	return (digits);
+}
 
 int	ft_hexa_base(size_t hexanum, char Xx, int count)
 {
 	char	*base;
+	size_t	hexalen;
 
-	count++;
+	hexalen = ft_count_hexa(hexanum);
 	if (Xx == 'X')
 		base = "0123456789ABCDEF";
 	else
@@ -106,10 +115,9 @@ int	ft_hexa_base(size_t hexanum, char Xx, int count)
 		ft_hexa_base((hexanum / 16), Xx, count);
 		write(1, &base[hexanum % 16], 1);
 	}
-	//printf("Count: %d\n", count);
 	if (hexanum < 16)
-		count += (write(1, &base[hexanum % 16], 1));
-	return (printf("\n Hexa Funktion count: %d", count), count);
+		(write(1, &base[hexanum % 16], 1));
+	return (hexalen);
 }
 
 int	ft_arg_pointer(void *p)
@@ -197,7 +205,6 @@ int	ft_va_start(const char *str, va_list ap)
 			count += 1;
 		}
 	}
-	printf("\nWhile Loop Count: %d\n", count);
 	return (count);
 }
 
@@ -243,8 +250,9 @@ int	main(void)
 	int i = ft_printf("%i\n", -42);	 		// Int Return 	WORKING
 	printf("Int Laenge: %zu\nInt Output: %d\n\n", ft_strlen("-42\n"), i); */
 
-	i = ft_printf("%x", 428888); 			// Hexa Return
+	i = ft_printf("%x", -22); 			// Hexa Return
 	printf("\n\nPrintf Return: %d\n\n", i);
+	printf("%x", -22);
 
 
 /* 	i = ft_printf("Pointer: %p\n", p); 				// Pointer Return

@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:43:03 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/10 19:57:13 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:07:03 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,28 @@
 #include <stdint.h>
 #include <stdarg.h>
 
-int	ft_va_start(const char *str)
+int	ft_va_start(const char *str, va_list ap)
 {
 	int	i;
 	int	count;
 
+	count = 0;
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '%')
 		{
-			if (is_valid(str[i + 1]))
-				count += print_arg(str[i + 1], ap);
+			if (ft_strchr("cspdiuxX%", str[i + 1]))
+				count += find_arg(str[i + 1], ap);
 			else
-				(write(1, &str[i + 1], 1), count += 1);
+				return (-1);
 			i += 2;
 		}
 		if (str[i] && write(1, &str[i], 1))
-			(count += 1, i++);
+		{
+			i++;
+			count += 1;
+		}
 	}
 	return (count);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   5print_int.c                                       :+:      :+:    :+:   */
+/*   4print_str_p_hex.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:53:12 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/12 13:13:00 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:16:20 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,61 +18,52 @@
 #include <stdint.h>
 #include <stdarg.h>
 
-int	ft_countdigit_unsigned(unsigned int n)
+int	ft_count_hexa(size_t hexanum)
 {
-	int					digits;
-	long unsigned int	num;
+	int	digits;
 
-	num = n;
 	digits = 0;
-	while (num > 0)
+	while (hexanum > 0)
 	{
-		num = num / 10;
+		hexanum = hexanum / 16;
 		digits++;
 	}
 	return (digits);
 }
 
-int	ft_countdigit(int n)
+int	ft_hexa_base(size_t hexanum, char Xx, int count)
 {
-	int			digits;
-	long int	num;
+	char	*base;
+	size_t	hexalen;
 
-	num = n;
-	digits = 0;
-	if (num <= 0)
+	hexalen = ft_count_hexa(hexanum);
+	if (Xx == 'X')
+		base = "0123456789ABCDEF";
+	else
+		base = "0123456789abcdef";
+	if (hexanum >= 16)
 	{
-		digits = 1;
-		num = -num;
+		ft_hexa_base((hexanum / 16), Xx, count);
+		write(1, &base[hexanum % 16], 1);
 	}
-	while (num > 0)
-	{
-		num = num / 10;
-		digits++;
-	}
-	return (digits);
+	if (hexanum < 16)
+		(write(1, &base[hexanum % 16], 1));
+	return (hexalen);
 }
 
-void	ft_putnbr_unsigned(unsigned int n)
+int	ft_arg_pointer(void *p)
 {
-	long unsigned int	zahl;
+	size_t	hexanum;
 
-	zahl = n;
-	if (zahl > 0 && zahl <= 9)
-		ft_putchar(zahl + '0');
-	if (zahl > 9)
-	{
-		ft_putnbr(zahl / 10);
-		ft_putnbr(zahl % 10);
-	}
+	if (!p)
+		return (write(1, "(nil)", 5));
+	hexanum = (size_t) p;
+	return ((write(1, "0x", 2) + ft_hexa_base(hexanum, 'p', 0)));
 }
 
-int	ft_arg_int(int i)
+int	ft_arg_string(char	*str)
 {
-	return (ft_putnbr(i), ft_countdigit(i));
-}
-
-int	ft_arg_unsigned(unsigned int i)
-{
-	return (ft_putnbr_unsigned(i), ft_countdigit_unsigned(i));
+	if (!str)
+		return (-1);
+	return (write(1, str, ft_strlen(str)));
 }

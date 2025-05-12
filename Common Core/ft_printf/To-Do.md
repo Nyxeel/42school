@@ -10,3 +10,9 @@
 		ein eigen putnbr_unsigned zu verwenden?
 		gibt es eine Möglichkeit unsigned int und int gemeinsam zu verwenden?
 
+
+
+	FUNKTION LÖSCHEN!!
+
+	-putnbr
+

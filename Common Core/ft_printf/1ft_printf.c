@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:05:14 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/10 19:57:11 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:06:39 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_printf(const char *str, ...)
 	if (!str)
 		return (0);
 	va_start(ap, str);
-	ft_va_start(str);
+	result = ft_va_start(str, ap);
 	va_end(ap);
 	return (result);
 }
