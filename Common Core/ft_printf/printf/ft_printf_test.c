@@ -7,11 +7,6 @@
 #include <stdint.h>
 #include <stdarg.h>
 
-int	ft_putchar(char c)
-{
-	return(write(1, &c, 1));
-}
-
 size_t	ft_strlen(const char *str)
 {
 	size_t	count;
@@ -64,11 +59,11 @@ void	ft_putnbr(int n)
 	zahl = n;
 	if (zahl < 0)
 	{
-		ft_putchar('-');
+		write(1, "-", 1);
 		zahl *= -1;
 	}
 	if (zahl >= 0 && zahl <= 9)
-		ft_putchar(zahl + '0');
+		write(1, &(char){zahl + '0'}, 1);
 	if (zahl > 9)
 	{
 		ft_putnbr(zahl / 10);
@@ -82,7 +77,7 @@ void	ft_putnbr_unsigned(unsigned int n)
 
 	zahl = n;
 	if (zahl > 0 && zahl <= 9)
-		ft_putchar(zahl + '0');
+		write(1, &(char){zahl + '0'}, 1);
 	if (zahl > 9)
 	{
 		ft_putnbr(zahl / 10);
@@ -100,7 +95,7 @@ int	ft_count_hexa(size_t hexanum)
 	return (digits);
 }
 
-int	ft_hexa_base(size_t hexanum, char Xx, int count)
+int	ft_hexa_base(size_t hexanum, char Xx)
 {
 	char	*base;
 	size_t	hexalen;
@@ -112,7 +107,7 @@ int	ft_hexa_base(size_t hexanum, char Xx, int count)
 		base = "0123456789abcdef";
 	if (hexanum >= 16)
 	{
-		ft_hexa_base((hexanum / 16), Xx, count);
+		ft_hexa_base((hexanum / 16), Xx);
 		write(1, &base[hexanum % 16], 1);
 	}
 	if (hexanum < 16)
@@ -127,7 +122,7 @@ int	ft_arg_pointer(void *p)
 	if (!p)
 		return (write(1, "(nil)", 5));
 	hexanum = (size_t) p;
-	return ((write(1, "0x", 2) + ft_hexa_base(hexanum, 'p', 0)));
+	return ((write(1, "0x", 2) + ft_hexa_base(hexanum, 'p')));
 }
 
 int	ft_arg_string(char	*str)
@@ -149,7 +144,7 @@ int	ft_arg_unsigned(unsigned int i)
 int	find_arg(char c, va_list ap)
 {
 	if (c == 'c')
-		return (write(1, (char[]){va_arg(ap, int)}, 1));
+		return (write(1, &(char){va_arg(ap, int)}, 1));
 	if (c == 's')
 		return (ft_arg_string(va_arg(ap, char *)));
 	if (c == 'd' || c == 'i')
@@ -159,7 +154,7 @@ int	find_arg(char c, va_list ap)
 	if (c == '%')
 		return (write(1, &c, 1));
 	if (c == 'x' || c == 'X')
-		return (ft_hexa_base((va_arg(ap, unsigned int)), c, 0));
+		return (ft_hexa_base((va_arg(ap, unsigned int)), c));
 	if (c == 'p')
 		return (ft_arg_pointer(va_arg(ap, void *)));
 	else
@@ -250,7 +245,7 @@ int	main(void)
 	int i = ft_printf("%i\n", -42);	 		// Int Return 	WORKING
 	printf("Int Laenge: %zu\nInt Output: %d\n\n", ft_strlen("-42\n"), i); */
 
-	i = ft_printf("%s%q%s%x%u", "TEST", "HAHAH", 765443, -1); 			// Hexa Return
+	i = ft_printf("%s\n%i\n%d\n%x\n%u\n", "TEST", 125, 765443, 45899, -1); 			// Hexa Return
 	printf("\n\nPrintf Return: %d\n\n", i);
 	printf("ORIGINAL:%x", -21);
 

@@ -6,18 +6,11 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:53:12 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/12 13:14:30 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:30:50 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <limits.h>
-#include <string.h>
-#include <stdint.h>
-#include <stdarg.h>
+#include "libftprintf.h"
 
 int	find_arg(char c, va_list ap)
 {

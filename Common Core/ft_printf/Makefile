@@ -20,20 +20,20 @@ RM := rm -f
 all: $(NAME)
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 
 %.o: %.c $(HEADER)
 	@$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(LIBFT) $(OBJ)
-	ar rcs $(NAME) $(OBJ) $(LIBFT)
+	@ar rcs $(NAME) $(OBJ) $(LIBFT)
 
 clean:
-	$(MAKE) -C $(LIBFT_DIR) clean
-	rm -f $(OBJ)
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(RM) $(OBJ)
 
 fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) fclean
-	rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(RM) $(NAME)
 
 re: fclean all

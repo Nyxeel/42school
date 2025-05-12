@@ -6,17 +6,11 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:53:12 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/12 13:13:00 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:50:30 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <limits.h>
-#include <string.h>
-#include <stdint.h>
-#include <stdarg.h>
+#include "libftprintf.h"
 
 int	ft_countdigit_unsigned(unsigned int n)
 {
@@ -59,7 +53,26 @@ void	ft_putnbr_unsigned(unsigned int n)
 
 	zahl = n;
 	if (zahl > 0 && zahl <= 9)
-		ft_putchar(zahl + '0');
+		write(1, &(char){zahl + '0'}, 1);
+	if (zahl > 9)
+	{
+		ft_putnbr_unsigned(zahl / 10);
+		ft_putnbr_unsigned(zahl % 10);
+	}
+}
+
+void	ft_putnbr(int n)
+{
+	long int	zahl;
+
+	zahl = n;
+	if (zahl < 0)
+	{
+		write(1, "-", 1);
+		zahl *= -1;
+	}
+	if (zahl >= 0 && zahl <= 9)
+		write(1, &(char){zahl + '0'}, 1);
 	if (zahl > 9)
 	{
 		ft_putnbr(zahl / 10);

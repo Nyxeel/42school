@@ -6,17 +6,11 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:43:03 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/12 13:07:03 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:42:54 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <limits.h>
-#include <string.h>
-#include <stdint.h>
-#include <stdarg.h>
+#include "libftprintf.h"
 
 int	ft_va_start(const char *str, va_list ap)
 {
@@ -27,7 +21,7 @@ int	ft_va_start(const char *str, va_list ap)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '%')
+		while (str[i] == '%')
 		{
 			if (ft_strchr("cspdiuxX%", str[i + 1]))
 				count += find_arg(str[i + 1], ap);
