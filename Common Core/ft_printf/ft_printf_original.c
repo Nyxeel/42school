@@ -66,11 +66,11 @@ void	ft_putnbr(int n)
 	zahl = n;
 	if (zahl < 0)
 	{
-		write(1, "-", 1);
+		ft_putchar('-');
 		zahl *= -1;
 	}
 	if (zahl >= 0 && zahl <= 9)
-		write (1, (char[]){zahl + '0'}, 1);
+		ft_putchar(zahl + '0');
 	if (zahl > 9)
 	{
 		ft_putnbr(zahl / 10);
@@ -95,24 +95,21 @@ void	ft_putnbr_unsigned(unsigned int n)
 int	ft_hexa_base(size_t hexanum, char Xx, int count)
 {
 	char	*base;
-	char	hexabuffer[16];
-	int 	i;
 
-	i = 0;
+	count++;
 	if (Xx == 'X')
 		base = "0123456789ABCDEF";
 	else
 		base = "0123456789abcdef";
-	while (hexanum >= 16)
+	if (hexanum >= 16)
 	{
-		hexabuffer[i++] = base[hexanum % 16];
-		hexanum = (hexanum / 16);
+		count += ft_hexa_base((hexanum / 16), Xx, count);
+		count += (write(1, &base[hexanum % 16], 1));
 	}
-
-	while (--i)
-		count += write(1, &hexabuffer[i], 1);
-	count += write(1, &hexabuffer[3], 1);
-	return (count);
+	//printf("Count: %d\n", count);
+	if (hexanum < 16)
+		count += (write(1, &base[hexanum % 16], 1));
+	return (printf("\ncount: %d", count), count);
 }
 
 int	ft_arg_pointer(void *p)
@@ -125,11 +122,10 @@ int	ft_arg_pointer(void *p)
 	return ((write(1, "0x", 2) + ft_hexa_base(hexanum, 'p', 0)));
 }
 
-int	ft_arg_string(char	*str, va_list ap)
+int	ft_arg_string(char	*str)
 {
-	str = va_arg(ap, char *);
 	if (!str)
-		return (0);
+		return (-1);
 	return (write(1, str, ft_strlen(str)));
 }
 int	ft_arg_int(int i)
@@ -147,7 +143,7 @@ int	find_arg(char c, va_list ap)
 	if (c == 'c')
 		return (write(1, (char[]){va_arg(ap, int)}, 1));
 	if (c == 's')
-		return (ft_arg_string(NULL, ap));
+		return (ft_arg_string(va_arg(ap, char *)));
 	if (c == 'd' || c == 'i')
 		return (ft_arg_int(va_arg(ap, int)));
 	if (c == 'u')
@@ -227,11 +223,11 @@ int	main(void)
 	//char *str = "Mein c % startet um f:d Uhr! e";
 	//printf("ORIGINAL:Mein %c %% startet um %c:%c Uhr! %c\n", 'c', 'f', 'd', 'e');
 	//printf("\nInput Strinlaenge: %zu\n", ft_strlen(str));
+	//printf("%d Hexa: %p\n", 42, NULL);
 
 	int i;
 	//char p[10];
 
-	//printf("ORIGINAL: %ps\n", 42);
 
 /*
 	i = ft_printf("%s\n", "STREAM");	 	// String Return 	WORKING
@@ -249,7 +245,6 @@ int	main(void)
 
 	i = ft_printf("%x", 428888); 			// Hexa Return
 	printf("\n\nHexa Laenge: %d\n\n", i);
-	printf("ORIGINAL: %x", 428888);
 
 
 /* 	i = ft_printf("Pointer: %p\n", p); 				// Pointer Return
