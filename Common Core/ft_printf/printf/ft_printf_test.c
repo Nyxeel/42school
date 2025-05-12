@@ -191,7 +191,7 @@ int	ft_va_start(const char *str, va_list ap)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '%')
+		while (str[i] == '%')
 		{
 			if (ft_strchr("cspdiuxX%", str[i + 1]))
 				count += find_arg(str[i + 1], ap);
@@ -250,9 +250,9 @@ int	main(void)
 	int i = ft_printf("%i\n", -42);	 		// Int Return 	WORKING
 	printf("Int Laenge: %zu\nInt Output: %d\n\n", ft_strlen("-42\n"), i); */
 
-	i = ft_printf("%x", -22); 			// Hexa Return
+	i = ft_printf("%s%q%s%x%u", "TEST", "HAHAH", 765443, -1); 			// Hexa Return
 	printf("\n\nPrintf Return: %d\n\n", i);
-	printf("%x", -22);
+	printf("ORIGINAL:%x", -21);
 
 
 /* 	i = ft_printf("Pointer: %p\n", p); 				// Pointer Return

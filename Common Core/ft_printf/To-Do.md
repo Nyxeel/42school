@@ -14,5 +14,5 @@
 
 	FUNKTION LÖSCHEN!!
 
-	-putnbr
+	-keine angaben
 
