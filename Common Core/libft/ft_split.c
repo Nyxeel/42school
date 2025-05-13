@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 16:18:40 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:27:16 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	**ft_split(char const *s, char c)
 	}
 	return (split);
 }
-int	main(void)
+/* int	main(void)
 {
 	//char str[] = "lorem ipsum dolor sit amet, consectetur
 	//char sep = 'i';
@@ -119,4 +119,4 @@ int	main(void)
 		i++;
 	}
 	free(split);
-}
+} */

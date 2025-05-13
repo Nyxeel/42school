@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:38:58 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 16:24:00 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:42:40 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*ft_itoa(int n)
 	intarr = ft_intochar(intarr, num, digits, minus);
 	return (intarr);
 }
-
+/*
 int	main(void)
 {
 	long int	ascii = 0;
@@ -78,4 +78,4 @@ int	main(void)
 	converted = ft_itoa(ascii);
 	printf("%s", converted);
 	free(converted);
-}
+} */

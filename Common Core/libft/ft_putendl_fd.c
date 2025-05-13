@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:23:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 16:25:17 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:28:25 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	ft_putendl_fd(char *s, int fd)
 {
 	size_t	i;
 
-	if (!s)
-		return (NULL);
 	i = 0;
 	while (s[i])
 	{
