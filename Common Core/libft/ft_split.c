@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/09 23:58:19 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:18:40 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,25 @@ static void	ft_freeall(char **freearr, size_t index)
 	free(freearr);
 }
 
+char	**ft_memory(char const *str, char sep)
+{
+	char	**split;
+
+	split = (char **)ft_calloc(ft_wordcount(str, sep) + 1, sizeof(char *));
+	if (!split)
+		return (NULL);
+	return (split);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	size_t	i;
 	size_t	j;
 	char	**split;
 
-	split = (char **)ft_calloc(ft_wordcount(s, c) + 1, sizeof(char *));
-	if (!split)
+	if (!s)
 		return (NULL);
+	split = ft_memory(s, c);
 	i = 0;
 	j = 0;
 	while (s[i] != '\0')
@@ -93,7 +103,7 @@ char	**ft_split(char const *s, char c)
 	}
 	return (split);
 }
-/* int	main(void)
+int	main(void)
 {
 	//char str[] = "lorem ipsum dolor sit amet, consectetur
 	//char sep = 'i';
@@ -109,4 +119,4 @@ char	**ft_split(char const *s, char c)
 		i++;
 	}
 	free(split);
-} */
+}
