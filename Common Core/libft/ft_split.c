@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 16:27:16 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/13 20:51:53 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	ft_freeall(char **freearr, size_t index)
 	size_t	i;
 
 	i = 0;
-	while (i <= index)
+	while (i < index)
 	{
 		free(freearr[i]);
 		i++;
@@ -65,25 +65,11 @@ static void	ft_freeall(char **freearr, size_t index)
 	free(freearr);
 }
 
-char	**ft_memory(char const *str, char sep)
-{
-	char	**split;
-
-	split = (char **)ft_calloc(ft_wordcount(str, sep) + 1, sizeof(char *));
-	if (!split)
-		return (NULL);
-	return (split);
-}
-
-char	**ft_split(char const *s, char c)
+char	**ft_split_loop(char **split, char c, char const *s)
 {
 	size_t	i;
 	size_t	j;
-	char	**split;
 
-	if (!s)
-		return (NULL);
-	split = ft_memory(s, c);
 	i = 0;
 	j = 0;
 	while (s[i] != '\0')
@@ -103,6 +89,18 @@ char	**ft_split(char const *s, char c)
 	}
 	return (split);
 }
+
+
+char	**ft_split(char const *s, char c)
+{
+	char	**split;
+
+	split = (char **)ft_calloc(ft_wordcount(s, c) + 1, sizeof(char *));
+	if (!split)
+		return (NULL);
+	return (ft_split_loop(split, c, s));
+}
+
 /* int	main(void)
 {
 	//char str[] = "lorem ipsum dolor sit amet, consectetur
@@ -110,6 +108,8 @@ char	**ft_split(char const *s, char c)
 	char **split;
 
 	split = (char **)ft_split("lorem ipsum dolor sit amet,n, mi.", 'i');
+	if (!split)
+		return (0);
 
 	int i = 0;
 	while(split[i])

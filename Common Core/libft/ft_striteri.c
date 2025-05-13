@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:34:41 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 16:27:56 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/13 20:51:29 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	ft_striteri(char *s, void (*f) (unsigned int, char*))
 {
 	unsigned int	i;
 
+	if (!s)
+		return ;
 	i = 0;
 	while (s[i])
 	{

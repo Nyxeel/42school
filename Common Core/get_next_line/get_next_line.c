@@ -1,27 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 18:43:08 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/13 18:58:06 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 1
+
+#include <fcntl.h>   // open
+#include <stdlib.h>  // free
+#include <stdio.h>   // printf
 
 
 char *get_next_line(int fd)
 {
-	int 	bytes;
-	char 	*buffer;
+	int			bytes;
+	char static	*brain;
+	int static	index;
 
 	bytes = 0;
-	while (!\n && read == true)
-		buffer[bytes] = read(fd, BUFFER_SIZE);
+	while (brain[BUFFER_SIZE - 1] == '\n')
+	{
+		brain[BUFFER_SIZE] = read(fd, BUFFER_SIZE);
+		index++;
+	}
 
 
 
 		return (strdup("Zeile5")) --> malloc - Rückgabe
 }
 
-#include <fcntl.h>   // open
-#include <stdlib.h>  // free
-#include <stdio.h>   // printf
+
+
+Read liest in Buffer bis \n
+static char *brain;
+speichert aktuelle line in static char *brain.
+
+substring von start bis inklusive \n extrahiert die
+aktuelle Zeiile und returned diese
+
 
 int	main(void)
 {
-	int fd = open("anime.txt", O_RDONLY);
+	int fd = open("aot.txt", O_RDONLY);
+	if (fd == -1)
+		return (NULL);
+
 	int i = 1;
 	char *line;
 
@@ -39,3 +69,4 @@ int	main(void)
 	close(fd);
 	return (0);
 }
+#endif

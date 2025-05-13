@@ -34,12 +34,13 @@ int	ft_countdigit(size_t n, size_t basedivider)
 	}
 	return (digits);
 }
-int ft_putnbr_base(size_t hexanum, size_t basedivider, char Xx)
+
+int	ft_putnbr_base(size_t hexanum, size_t divider, char Xx)
 {
 	char	*base;
-	int 	count;
+	int		count;
 
-	count = ft_countdigit(hexanum, basedivider);
+	count = ft_countdigit(hexanum, divider);
 
 
 	if (Xx == 'X')
@@ -47,35 +48,38 @@ int ft_putnbr_base(size_t hexanum, size_t basedivider, char Xx)
 	else
 		base = "0123456789abcdef";
 
-	if (hexanum >= basedivider)
+	if (hexanum >= divider)
 	{
-		ft_putnbr_base((hexanum / basedivider), basedivider, Xx);
-		write(1, &base[hexanum % basedivider], 1);
+		ft_putnbr_base((hexanum / divider), divider, Xx);
+		write(1, &base[hexanum % divider], 1);
 	}
-	if (hexanum < basedivider)
-		write(1, &base[hexanum % basedivider], 1);
+	if (hexanum < divider)
+		write(1, &base[hexanum % divider], 1);
 	return (count);
 }
 
 int	ft_int_check(int nb)
 {
 	if (nb < 0)
-		return(write(1, "-", 1) + ft_putnbr_base((unsigned int) -nb, 10, 'n'));
+		return (write(1, "-", 1) + ft_putnbr_base((unsigned int) -nb, 10, 'n'));
 	else
-		return(ft_putnbr_base(nb, 10, 'n'));
+		return (ft_putnbr_base(nb, 10, 'n'));
 }
+
 int	ft_arg_pointer(void *p, char c)
 {
 	size_t	hexanum;
 
 	if (!p)
-		return (write(1 ,"(nil)", 5));
+		return (write(1,"(nil)", 5));
 	else
-
-	hexanum = (size_t) p;
-	return(write(1, "0x", 2) + ft_putnbr_base(hexanum, 16, c));
-
+	{
+		hexanum = (size_t) p;
+		return (write(1, "0x", 2) + ft_putnbr_base(hexanum, 16, c));
+	}
+	return (0);
 }
+
 int	ft_arg_string(char	*str)
 {
 	if (!str)
@@ -86,15 +90,15 @@ int	ft_arg_string(char	*str)
 int	find_arg(char c, va_list ap)
 {
 	if (c == 'c')
-		return(write(1, (char[]){va_arg(ap, int)}, 1));
+		return (write(1, (char[]){va_arg(ap, int)}, 1));
 	if (c == 's')
-		return(ft_arg_string(va_arg(ap, char *)));
+		return (ft_arg_string(va_arg(ap, char *)));
 	if (c == 'd' || c == 'i')
 		return (ft_int_check(va_arg(ap, int)));
 	if (c == 'u')
 		return (ft_putnbr_base(va_arg(ap, unsigned int), 10, 'z'));
 	if (c == 'p')
-		return(ft_arg_pointer(va_arg(ap, void *), c));
+		return (ft_arg_pointer(va_arg(ap, void *), c));
 	if (c == 'x' || c == 'X')
 		return (ft_putnbr_base(va_arg(ap, unsigned int), 16, c));
 	if (c == '%')
@@ -158,7 +162,7 @@ int	ft_printf(const char *str, ...)
 }
 
 
-int	main(void)
+int main(void)
 {
 	int ret1, ret2;
 
@@ -212,15 +216,15 @@ int	main(void)
 	printf("\n--- INVALID SPECIFIER ---\n");
 	ret1 = ft_printf("What happens with %%r?\n");
 	ret2 = printf("What happens with %%r?\n");
-	printf("Return values: ft: %d | original: %d\n", ret1, ret2);
+	ft_printf("Return values: ft: %d | original: %d\n", ret1, ret2);
 
 	printf("\n--- NO ARGUMENTS ---\n");
 	ret1 = ft_printf("char: %c, int: %d, string: %s\n"); // <- No Arguments!
-	printf("Return values: ft: %d\n", ret1);
+	ft_printf("Return values: ft: %d\n", ret1);
 
-	printf("\n--- TOO MANY ARGUMENTS ---\n");
+	ft_printf("\n--- TOO MANY ARGUMENTS ---\n");
 	ret1 = ft_printf("only one: %%d = %d\n", 42, 1337, "oops", NULL);
-	printf("Return values: ft: %d\n", ret1);
+	ft_printf("Return values: ft: %d\n", ret1);
 
 
 /* 	printf("\n--- TYPE WRONG ---\n");
@@ -249,18 +253,9 @@ int	main(void)
 	ret1 = ft_printf("unknown: %q\n", 42);
 	printf("Return values: ft: %d\n", ret1);
 
-
-
 	printf("\n---CHAINED---\n");
 	ret1 = ft_printf("int: %d, hex: %x, char: %c, str: %s, percent: %%\n", 42, 255, 'A', "Hallo");
 	printf("Return values: ft: %d\n", ret1);
 
-	printf("\n---ONLY 1 %%--\n");
-	ret1 = ft_printf("%");
-	printf("Return values: ft: %d\n", ret1);
-
 	return (0);
-
-
-
 }

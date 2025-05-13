@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:23:20 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/10 00:38:36 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/13 20:52:19 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define LIBFT_H
 
 # include <unistd.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
 # include <string.h>
