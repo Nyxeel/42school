@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1ft_printf.c                                       :+:      :+:    :+:   */
+/*   4print_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 19:05:14 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 00:41:53 by netrunner        ###   ########.fr       */
+/*   Created: 2025/05/10 15:53:12 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/13 00:42:06 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int	ft_printf(const char *str, ...)
+void	ft_putchar_counter(char c, int *counter)
 {
-	va_list	ap;
-	int		result;
+	write(1, &c, 1);
+	(*counter)++;
+}
+void	ft_putstr_counter(char *s, int *count)
+{
+	size_t	i;
 
+	i = 0;
+	while (s[i])
+	{
+		ft_putchar_counter(s[i], count);
+		i++;
+	}
+}
+
+void	*ft_arg_string(char	*str, int *count)
+{
 	if (!str)
-		return (0);
-	va_start(ap, str);
-	result = ft_va_start(str, ap);
-	va_end(ap);
-	return (result);
+		return (NULL);
+	ft_putstr_counter(str, count);
+	return NULL;
 }

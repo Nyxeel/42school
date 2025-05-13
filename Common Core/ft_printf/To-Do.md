@@ -6,13 +6,5 @@
 	[]Wann verwendest du -1 als Rückgabewert?
 		bei %q, also falscher Zuweisung?
 
-	[] Ist es notwendig für unsigned int
-		ein eigen putnbr_unsigned zu verwenden?
-		gibt es eine Möglichkeit unsigned int und int gemeinsam zu verwenden?
-
-
-
-	FUNKTION LÖSCHEN!!
-
-	-keine angaben
+	[] MAKEFILE relinkt noch
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libftprintf.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:21:08 by netrunner         #+#    #+#             */
-/*   Updated: 2025/05/12 17:47:27 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/13 10:16:18 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,13 @@
 
 int		ft_printf(const char *str, ...);
 int		ft_va_start(const char *str, va_list ap);
-int		find_arg(char c, va_list ap);
+void	find_arg(char c, va_list ap, int *count);
 
-int		ft_arg_string(char	*str);
-int		ft_hexa_base(size_t hexanum, char Xx, int count);
-int		ft_arg_pointer(void *p);
-
-int		ft_arg_unsigned(unsigned int i);
-int		ft_arg_int(int i);
-size_t	ft_strlen(const char *str);
-char	*ft_strchr(const char *str, int c);
+void	*ft_arg_string(char	*str, int *count);
+void ft_putnbr_base(size_t hexanum, size_t basedivider, int *counter, char Xx);
+void	ft_arg_pointer(void *p, int *count, char c);
+void	ft_putchar_counter(char c, int *counter);
+void	ft_putstr_counter(char *s, int *count);
+void	ft_int_check(int nb, int *count);
 
 #endif

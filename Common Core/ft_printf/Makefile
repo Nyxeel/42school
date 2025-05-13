@@ -5,21 +5,25 @@ CC := cc
 FLAGS := -Wall -Wextra -Werror
 
 LIBFT_DIR := libft
-LIBFT := $(LIBFT_DIR)/libft.a
+LIBFT_PATH := $(LIBFT_DIR)/libft.a
+LIBFT := libft.a
 
 SRC := \
 	printf/1ft_printf.c \
 	printf/2ft_va_start.c \
 	printf/3find_arg.c \
-	printf/4print_str_p_hex.c \
-	printf/5print_int.c
+	printf/4print_str.c \
+	printf/5print_base.c
 
 OBJ := $(SRC:.c=.o)
 RM := rm -f
 
 all: $(NAME)
 
-$(LIBFT):
+$(LIBFT): $(LIBFT_PATH)
+	@mv $(LIBFT_PATH) .
+
+$(LIBFT_PATH):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 %.o: %.c $(HEADER)
@@ -34,6 +38,6 @@ clean:
 
 fclean: clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) libft.a
 
 re: fclean all

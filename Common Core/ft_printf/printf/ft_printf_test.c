@@ -18,10 +18,22 @@ size_t	ft_strlen(const char *str)
 }
 void	ft_putchar_counter(char c, int *counter)
 {
-	write(1, &c, 1);
-	(*counter)++;
+	if (write(1, &c, 1) == 1)
+		counter = (int *)-1;
+	else
+		(*counter)++;
 }
+void	ft_putstr_counter(char *s, int *count)
+{
+	size_t	i;
 
+	i = 0;
+	while (s[i])
+	{
+		ft_putchar_counter(s[i], count);
+		i++;
+	}
+}
 void ft_putnbr_base(size_t hexanum, size_t basedivider, int *counter, char Xx)
 {
 	char	*base;
@@ -39,38 +51,55 @@ void ft_putnbr_base(size_t hexanum, size_t basedivider, int *counter, char Xx)
 	if (hexanum < basedivider)
 		ft_putchar_counter(base[hexanum % basedivider], counter);
 }
-void	ft_arg_pointer(void *p, int *count)
+
+void	ft_int_check(int nb, int *count)
+{
+	if (nb < 0)
+	{
+		ft_putchar_counter('-', count);
+		ft_putnbr_base((unsigned int) -nb, 10, count, 'n');
+	}
+	else
+		ft_putnbr_base(nb, 10, count, 'n');
+}
+void	ft_arg_pointer(void *p, int *count, char c)
 {
 	size_t	hexanum;
 
 	if (!p)
-		return (write(1, "(nil)", 5));
-	hexanum = (size_t) p;
-	ft_putchar_counter("0x", count);
-	ft_putnbr_base(hexanum, 16, count, 'p');
+		ft_putstr_counter("(nil)", count);
+	else
+	{
+		hexanum = (size_t) p;
+		ft_putstr_counter("0x", count);
+		ft_putnbr_base(hexanum, 16, count, c);
+	}
 }
 
-int	*ft_arg_string(char	*str, int *count)
+void	*ft_arg_string(char	*str, int *count)
 {
 	if (!str)
-		return ((int *)-1);
-	return (write(1, str, ft_strlen(str)));
+		return (NULL);
+	ft_putstr_counter(str, count);
+	return NULL;
 }
 
-int	find_arg(char c, va_list ap, int *count)
+void	find_arg(char c, va_list ap, int *count)
 {
 	if (c == 'c')
 		ft_putchar_counter(va_arg(ap, int), count);
 	if (c == 's')
-		return (ft_arg_string(va_arg(ap, char *), count));
+		ft_arg_string(va_arg(ap, char *), count);
 	if (c == 'd' || c == 'i')
-		ft_putnbr_base(va_arg(ap, int), 10, count, 'z');
+		ft_int_check(va_arg(ap, int), count);
 	if (c == 'u')
 		ft_putnbr_base(va_arg(ap, unsigned int), 10, count, 'z');
+	if (c == 'p')
+		ft_arg_pointer(va_arg(ap, void *), count, c);
+	if (c == 'x' || c == 'X')
+		ft_putnbr_base(va_arg(ap, unsigned int), 16, count, c);
 	if (c == '%')
 		ft_putchar_counter(c, count);
-
-	return (0);
 }
 char	*ft_strchr(const char *str, int c)
 {
@@ -100,7 +129,7 @@ int	ft_va_start(const char *str, va_list ap)
 	{
 		while (str[i] == '%')
 		{
-			if (ft_strchr("cspdiuxX%", str[i + 1]))
+			if (ft_strchr("cspdiuxX%", str[i + 1]) && str[i + 1])
 				find_arg(str[i + 1], ap, &count);
 			else
 				return (-1);
@@ -131,38 +160,16 @@ int	ft_printf(const char *str, ...)
 
 int	main(void)
 {
-	//char c = 'a';
-	//char *str2 = "Stream";
+	int ret1;
 
-	//char *str = "Mein c % startet um f:d Uhr! e";
-	//printf("ORIGINAL:Mein %c %% startet um %c:%c Uhr! %c\n", 'c', 'f', 'd', 'e');
-	//printf("\nInput Strinlaenge: %zu\n", ft_strlen(str));
-	//printf("%d Hexa: %p\n", 42, NULL);
-
-	int i;
-	//char p[10];
-
-
-/*
-	i = ft_printf("%s\n", "STREAM");	 	// String Return 	WORKING
-	printf("String Laenge: %zu\nString Output: %d\n\n", ft_strlen("STREAM\n"), i);
-
-	i = ft_printf("%c\n", 'c'); 				// Char Return  WORKING
-	printf("Char Laenge: %zu\nChar Output: %d\n\n", ft_strlen("c\n"), i);
-
-
-	i = ft_printf("%u", -42);	 		// Unsigned Return			WORKING
-	printf("Unsigned Laenge: %zu\nUnsigned Output:%d\n", ft_strlen("4294967254"), i);
-
-	int i = ft_printf("%i\n", -42);	 		// Int Return 	WORKING
-	printf("Int Laenge: %zu\nInt Output: %d\n\n", ft_strlen("-42\n"), i); */
-
-	i = ft_printf("c %s %d %x %u", "string", 452); 			// Hexa Return
-
-	printf("\n\nPrintf Return: %d", i);
+printf("\n---CHAINED---\n");
+	ret1 = ft_printf("int: %d, hex: %x, char: %c, str: %s, percent: %%\n", 42, 255, 'A', "Hallo");
+	printf("Return values: ft: %d\n", ret1);
 
 
 
-/* 	i = ft_printf("Pointer: %p\n", p); 				// Pointer Return
-	printf("Pointer Laenge: %d\n\n", i); */
+
+
+
+
 }
