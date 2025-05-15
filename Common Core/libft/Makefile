@@ -66,11 +66,11 @@ RM := rm -f
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
 
+all: $(NAME)
+
 bonus: $(OBJ) $(BONUS_OBJ)
 	@ar rcs $(NAME) $(OBJ) $(BONUS_OBJ)
 	@touch bonus
-
-all: $(NAME)
 
 clean:
 	@$(RM) $(OBJ) $(BONUS_OBJ) bonus

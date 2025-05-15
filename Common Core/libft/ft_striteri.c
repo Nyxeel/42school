@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:34:41 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 20:51:29 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:42:20 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 /* static void	f(unsigned int index, char *str)
 {
-	printf("index:%d\n", index);
 	if (index < 5)
 		*str = '*';
 } */

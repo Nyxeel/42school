@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 20:51:53 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:35:20 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	ft_freeall(char **freearr, size_t index)
 	free(freearr);
 }
 
-char	**ft_split_loop(char **split, char c, char const *s)
+char	**ft_split_loop(char **split, char const *s, char c)
 {
 	size_t	i;
 	size_t	j;
@@ -90,28 +90,27 @@ char	**ft_split_loop(char **split, char c, char const *s)
 	return (split);
 }
 
-
 char	**ft_split(char const *s, char c)
 {
 	char	**split;
 
+	if (!s)
+		return (NULL);
 	split = (char **)ft_calloc(ft_wordcount(s, c) + 1, sizeof(char *));
 	if (!split)
 		return (NULL);
-	return (ft_split_loop(split, c, s));
+	return (ft_split_loop(split, s, c));
 }
 
 /* int	main(void)
 {
-	//char str[] = "lorem ipsum dolor sit amet, consectetur
-	//char sep = 'i';
 	char **split;
+	int i = 0;
 
-	split = (char **)ft_split("lorem ipsum dolor sit amet,n, mi.", 'i');
+	split = (char **)ft_split("lorem ipsum dolor sit amet, mmn, mi. ", ' ');
+
 	if (!split)
 		return (0);
-
-	int i = 0;
 	while(split[i])
 	{
 		printf("**split[%d]: %s\n", i, split[i]);

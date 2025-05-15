@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:24:58 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 16:28:12 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:40:18 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_putstr_fd(char *s, int fd)
 {
 	size_t	i;
 
+	if (!s)
+		return ;
 	i = 0;
 	while (s[i])
 	{
@@ -26,7 +28,7 @@ void	ft_putstr_fd(char *s, int fd)
 
 /* int	main(void)
 {
-	char src[] = "Der Text zum durchleiten";
+	char *src = NULL;
 	int fd = 1;
 	ft_putstr_fd(src, fd);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:23:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 16:28:25 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:38:27 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_putendl_fd(char *s, int fd)
 {
 	size_t	i;
 
+	if (!s)
+		return ;
 	i = 0;
 	while (s[i])
 	{
@@ -27,7 +29,7 @@ void	ft_putendl_fd(char *s, int fd)
 
 /* int	main()
 {
-	char src[] = "Der Text zum durchleiten";
+	char *src = NULL;
 	int fd = 1;
 	ft_putendl_fd(src, fd);
 	return (0);
