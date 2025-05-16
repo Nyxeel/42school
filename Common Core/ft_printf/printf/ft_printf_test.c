@@ -156,15 +156,12 @@ int	ft_printf(const char *str, ...)
 	va_end(ap);
 	return (result);
 }
-
+#include <stdlib.h>
 
 int	main(void)
 {
-	int ret1;
 
-printf("\n---CHAINED---\n");
-	ret1 = ft_printf("int: %d, hex: %x, char: %c, str: %s, percent: %%\n", 42, 255, 'A', "Hallo");
-	printf("Return values: ft: %d\n", ret1);
+	printf("Return values: ft: %s\n", NULL);
 
 
 

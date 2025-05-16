@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:32:24 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 13:51:20 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:06:44 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 	size_t	str_len;
 
-	sub = NULL;
-	str_len = ft_strlen(s);
-	i = 0;
 	if (!s)
 		return (NULL);
+	sub = NULL;
+	i = 0;
+	str_len = ft_strlen(s);
 	if (start >= str_len || len == 0)
 		return (ft_calloc(1, sizeof(char)));
 	if (len > str_len - start)
@@ -41,7 +41,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 /* int main(void)
 {
-	const char str[] = "0123456789";
+	const char *str = NULL;
 	char *p = ft_substr(str, 5, 10);
 	printf("%s", p);
 	free(p);

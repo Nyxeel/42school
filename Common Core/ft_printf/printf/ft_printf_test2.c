@@ -83,7 +83,7 @@ int	ft_arg_pointer(void *p, char c)
 int	ft_arg_string(char	*str)
 {
 	if (!str)
-		return (-1);
+		return (write(1, "(null)", 6));
 	return (write(1, str, ft_strlen(str)));
 }
 
@@ -136,7 +136,7 @@ int	ft_va_start(const char *str, va_list ap)
 			if (ft_strchr("cspdiuxX%", str[i + 1]) && str[i + 1])
 				count += find_arg(str[i + 1], ap);
 			else
-				return (-1);
+				count += write(1, &str[i + 1], 1);
 			i += 2;
 		}
 		if (str[i] && write(1, &str[i], 1))
@@ -154,7 +154,7 @@ int	ft_printf(const char *str, ...)
 	int		result;
 
 	if (!str)
-		return (0);
+		return (-1);
 	va_start(ap, str);
 	result = ft_va_start(str, ap);
 	va_end(ap);
@@ -252,6 +252,7 @@ int main(void)
 	printf("\n---UNKNOWN FORMATSIGN---\n");
 	ret1 = ft_printf("unknown: %q\n", 42);
 	printf("Return values: ft: %d\n", ret1);
+
 
 	printf("\n---CHAINED---\n");
 	ret1 = ft_printf("int: %d, hex: %x, char: %c, str: %s, percent: %%\n", 42, 255, 'A', "Hallo");

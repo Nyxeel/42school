@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:34:41 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/15 14:42:20 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:24:00 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	ft_striteri(char *s, void (*f) (unsigned int, char*))
 	}
 }
 
-/* int	main(void)
+/* #include <stdio.h>
+int	main(void)
 {
 	char src[] = "Der manipulierende Text"; 	// "*****anipulierende Text";
 

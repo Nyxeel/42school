@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 10:20:52 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 13:56:19 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:45:53 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	unsigned char	*ziel;
-	unsigned char	*quelle;
+	unsigned char	*dst;
+	unsigned char	*source;
 	size_t			i;
 
-	ziel = (unsigned char *) dest;
-	quelle = (unsigned char *) src;
+	dst = (unsigned char *) dest;
+	source = (unsigned char *) src;
 	i = 0;
-	if (!ziel || !quelle)
+	if (!dst || !source)
 		return (NULL);
-	if (ziel == quelle || n == 0)
+	if (dst == source || n == 0)
 		return ((void *)dest);
-	if (ziel < quelle)
+	if (dst < source)
 	{
 		while (i < n)
 		{
-			ziel[i] = quelle[i];
+			dst[i] = source[i];
 			i++;
 		}
 	}
 	else
 		while (n--)
-			ziel[n] = quelle[n];
+			dst[n] = source[n];
 	return ((void *)dest);
 }
 
@@ -44,8 +44,8 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	char array[] = "ABCDEFGHIJKLMNO";
 	char arr[] = "ABCDEFGHIJKLMNO";
 
-	char *p = ft_memmove(&arr[8], &arr[3], 0);
+	char *p = ft_memmove(&arr[8], &arr[3], 5);
 	printf("%s\n\n", p);
-	char *s = memmove(&array[8], &array[3], 0);
+	char *s = memmove(&array[8], &array[3], 5);
 	printf("%s\n\n", s);
 } */

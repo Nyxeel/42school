@@ -40,7 +40,9 @@ SRC :=\
 	ft_putchar_fd.c\
 	ft_putstr_fd.c\
 	ft_putendl_fd.c\
-	ft_putnbr_fd.c\
+	ft_putnbr_fd.c
+
+BONUS :=\
 	ft_lstnew_bonus.c\
 	ft_lstadd_front_bonus.c\
 	ft_lstadd_back_bonus.c\
@@ -53,7 +55,10 @@ SRC :=\
 
 OBJ := $(SRC:.c=.o)
 
+BONUS_OBJ := $(BONUS:.c=.o)
+
 RM := rm -f
+
 
 %.o: %.c $(HEADER)
 	@$(CC) $(FLAGS) -c $< -o $@
@@ -63,8 +68,12 @@ $(NAME): $(OBJ)
 
 all: $(NAME)
 
+bonus: $(OBJ) $(BONUS_OBJ)
+	@ar rcs $(NAME) $(OBJ) $(BONUS_OBJ)
+	@touch bonus
+
 clean:
-	@$(RM) $(OBJ) $(BONUS_OBJ)
+	@$(RM) $(OBJ) $(BONUS_OBJ) bonus
 
 fclean: clean
 	@$(RM) $(NAME)

@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 10:36:15 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 14:41:54 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:19:30 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	ft_atoi(const char *str)
 {
-	int	minus;
-	int	num;
-	int	i;
+	int		minus;
+	int		num;
+	size_t	i;
 
 	i = 0;
 	minus = 1;
@@ -40,12 +40,12 @@ int	ft_atoi(const char *str)
 
 /* int	main(void)
 {
-	char	*c =  "99999999999999";
+	char	*c =  "-2147483648";
 	int		num;
 
 	num = ft_atoi(c);
 	printf("Nummer: %d\n", num);
 
-	num = atoi("99999999999999");
+	num = atoi("-2147483648");
 	printf("Nummer: %d\n", num);
 } */
