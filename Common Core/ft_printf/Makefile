@@ -2,7 +2,7 @@ NAME := libftprintf.a
 HEADER := libftprintf.h
 
 CC := cc
-FLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror
 
 SRC := \
 	printf/1ft_printf.c \
@@ -16,7 +16,7 @@ OBJ := $(SRC:.c=.o)
 RM := rm -f
 
 %.o: %.c $(HEADER)
-	@$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
