@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1ft_printf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:05:14 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 00:41:53 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/16 19:40:50 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_printf(const char *str, ...)
 	int		result;
 
 	if (!str)
-		return (0);
+		return (-1);
 	va_start(ap, str);
 	result = ft_va_start(str, ap);
 	va_end(ap);

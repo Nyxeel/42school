@@ -1,63 +1,72 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   4print_str_p_hex.c                                 :+:      :+:    :+:   */
+/*   4print_base.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:53:12 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/12 19:19:21 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:30:51 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int	ft_count_hexa(size_t hexanum)
+int	ft_countbase(size_t n, size_t basedivider)
 {
-	int	digits;
+	int			digits;
+	long int	num;
 
+	num = n;
 	digits = 0;
-	while (hexanum > 0)
+	if (num == 0)
+		digits = 1;
+	while (num > 0)
 	{
-		hexanum = hexanum / 16;
+		num = num / basedivider;
 		digits++;
 	}
 	return (digits);
 }
 
-int	ft_hexa_base(size_t hexanum, char Xx, int count)
+int	ft_putnbr_base(size_t hexanum, size_t divider, char Xx)
 {
 	char	*base;
-	size_t	hexalen;
+	int		count;
 
-	hexalen = ft_count_hexa(hexanum);
+	count = ft_countbase(hexanum, divider);
 	if (Xx == 'X')
 		base = "0123456789ABCDEF";
 	else
 		base = "0123456789abcdef";
-	if (hexanum >= 16)
+	if (hexanum >= divider)
 	{
-		ft_hexa_base((hexanum / 16), Xx, count);
-		write(1, &base[hexanum % 16], 1);
+		ft_putnbr_base((hexanum / divider), divider, Xx);
+		write(1, &base[hexanum % divider], 1);
 	}
-	if (hexanum < 16)
-		(write(1, &base[hexanum % 16], 1));
-	return (hexalen);
+	if (hexanum < divider)
+		write(1, &base[hexanum % divider], 1);
+	return (count);
 }
 
-int	ft_arg_pointer(void *p)
+int	ft_arg_pointer(void *p, char c)
 {
 	size_t	hexanum;
 
 	if (!p)
 		return (write(1, "(nil)", 5));
-	hexanum = (size_t) p;
-	return ((write(1, "0x", 2) + ft_hexa_base(hexanum, 'p', 0)));
+	else
+	{
+		hexanum = (size_t) p;
+		return (write(1, "0x", 2) + ft_putnbr_base(hexanum, 16, c));
+	}
+	return (0);
 }
 
-int	ft_arg_string(char	*str)
+int	ft_int_check(int nb)
 {
-	if (!str)
-		return (-1);
-	return (write(1, str, ft_strlen(str)));
+	if (nb < 0)
+		return (write(1, "-", 1) + ft_putnbr_base((unsigned int) -nb, 10, 'n'));
+	else
+		return (ft_putnbr_base(nb, 10, 'n'));
 }

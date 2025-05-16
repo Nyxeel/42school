@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:43:08 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/14 23:45:19 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:21:19 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 	size_t	str_len;
 
-	sub = NULL;
-	str_len = ft_strlen(s);
-	i = 0;
 	if (!s)
 		return (NULL);
+	sub = NULL;
+	i = 0;
+	str_len = ft_strlen(s);
 	if (start >= str_len || len == 0)
 		return (ft_calloc(1, sizeof(char)));
 	if (len > str_len - start)
@@ -104,10 +104,10 @@ size_t	find_line(char const *brain, char const newline)
 	while (brain[i] != '\0')
 	{
 		if (brain[i] == newline)
-			return (i);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -137,47 +137,66 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (join);
 }
 
-char	*ft_new(int fd)
+char	*ft_newline(int fd, char *brain)
 {
 	int			bytes;
-	char static	*brain;
 	char		*buffer;
-	int			index;
 
-	if (!brain)
-		brain = ft_calloc(0, 0);
 	bytes = 0;
+	//int i = 0;
 	while (find_line(brain, '\n'))
 	{
-		buffer = (char *)malloc(BUFFER_SIZE + 1);
+		buffer = (char *)ft_calloc(BUFFER_SIZE + 1, 1);
 		if (!buffer)
 			return (NULL);
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (!bytes)
-			return (free(buffer), ft_substr(brain, 0, index - 1));
+		{
+			free(buffer);
+			return (NULL);
+		}
+		//printf("NUMBER: %d\n", bytes);													/////////////
 		buffer[bytes] = '\0';
 		brain = ft_strjoin(brain, buffer);
 		free(buffer);
 	}
-	index = find_line(brain, '\n');
-	char *line = ft_substr(brain, 0, index - 1);
-	char *rest = ft_substr(brain, index, ft_strlen(brain) - (index - 1));
-	free(brain);
-	brain = rest;
-	return (line);
+	//printf("TEST: %s\n", brain);																	/////////
+	return (brain);
+}
+
+size_t	calc_len(char *line)
+{
+	size_t len;
+
+	len = 0;
+	while (line[len] || line[len] == '\n')
+		len++;
+	return (len);
 }
 
 char	*get_next_line(int fd)
 {
 	char		*newline;
+	static char	*brain;
+	char		*line;
+	size_t		line_len;
+	char		*rest;
 
+	if (!brain)
+		brain = ft_calloc(0, 0);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	newline = ft_new(fd);
+	newline = ft_newline(fd, brain);
 	if (!newline)
 		return (NULL);
-	//ft_trim(newline);
-	return (newline);
+	line_len = calc_len(newline);
+	//printf("LEN: %zu\n", line_len);																	/////////
+	line = ft_substr(newline, 0, line_len);
+	//printf("LEN: %zu\n", ft_strlen(line));													//////
+	rest = ft_substr(newline, line_len, ft_strlen(newline));
+	free(brain);
+	brain = rest;
+	return (line);
 }
 
 int	main(void)
@@ -187,15 +206,14 @@ int	main(void)
 			return (0);
 		char *line;
 
-		int i = 0;
+		int i = 1;
+		line = NULL;
 
 
-		while ((i < 2))
+		while ((line = get_next_line(fd)))
 		{
-			line = get_next_line(fd);
-			if (!line)
-				return (0);
-			printf("%s", line);
+			if (i == 40)
+				printf("%s", line);
 			free(line);
 			i++;
 		}

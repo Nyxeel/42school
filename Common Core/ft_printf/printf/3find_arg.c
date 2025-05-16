@@ -3,29 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   3find_arg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:53:12 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 10:17:15 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/16 21:31:17 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void	find_arg(char c, va_list ap, int *count)
+int	find_arg(char c, va_list ap)
 {
 	if (c == 'c')
-		ft_putchar_counter(va_arg(ap, int), count);
+		return (write(1, (char []){va_arg(ap, int)}, 1));
 	if (c == 's')
-		ft_arg_string(va_arg(ap, char *), count);
+		return (ft_arg_string(va_arg(ap, char *)));
 	if (c == 'd' || c == 'i')
-		ft_int_check(va_arg(ap, int), count);
+		return (ft_int_check(va_arg(ap, int)));
 	if (c == 'u')
-		ft_putnbr_base(va_arg(ap, unsigned int), 10, count, 'z');
+		return (ft_putnbr_base(va_arg(ap, unsigned int), 10, 'z'));
 	if (c == 'p')
-		ft_arg_pointer(va_arg(ap, void *), count, c);
+		return (ft_arg_pointer(va_arg(ap, void *), c));
 	if (c == 'x' || c == 'X')
-		ft_putnbr_base(va_arg(ap, unsigned int), 16, count, c);
+		return (ft_putnbr_base(va_arg(ap, unsigned int), 16, c));
 	if (c == '%')
-		ft_putchar_counter(c, count);
+		return (write(1, &c, 1));
+	return (0);
 }

@@ -18,10 +18,8 @@ size_t	ft_strlen(const char *str)
 }
 void	ft_putchar_counter(char c, int *counter)
 {
-	if (write(1, &c, 1) == 1)
-		counter = (int *)-1;
-	else
-		(*counter)++;
+	write(1, &c, 1);
+	(*counter)++;
 }
 void	ft_putstr_counter(char *s, int *count)
 {
@@ -76,12 +74,12 @@ void	ft_arg_pointer(void *p, int *count, char c)
 	}
 }
 
-void	*ft_arg_string(char	*str, int *count)
+void	ft_arg_string(char	*str, int *count)
 {
 	if (!str)
-		return (NULL);
+		return ();
 	ft_putstr_counter(str, count);
-	return NULL;
+	return (NULL);
 }
 
 void	find_arg(char c, va_list ap, int *count)
@@ -101,7 +99,7 @@ void	find_arg(char c, va_list ap, int *count)
 	if (c == '%')
 		ft_putchar_counter(c, count);
 }
-char	*ft_strchr(const char *str, int c)
+char	*find_specifier(const char *str, int c)
 {
 	unsigned char	letter;
 
@@ -129,7 +127,7 @@ int	ft_va_start(const char *str, va_list ap)
 	{
 		while (str[i] == '%')
 		{
-			if (ft_strchr("cspdiuxX%", str[i + 1]) && str[i + 1])
+			if (find_specifier("cspdiuxX%", str[i + 1]) && str[i + 1])
 				find_arg(str[i + 1], ap, &count);
 			else
 				return (-1);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   2ft_va_start.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:43:03 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/13 10:39:49 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/16 20:09:09 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-char	*ft_strchr(const char *str, int c)
+char	*find_specifier(const char *str, int c)
 {
 	unsigned char	letter;
 
@@ -41,8 +41,8 @@ int	ft_va_start(const char *str, va_list ap)
 	{
 		while (str[i] == '%')
 		{
-			if (ft_strchr("cspdiuxX%", str[i + 1]) && str[i + 1])
-				find_arg(str[i + 1], ap, &count);
+			if (find_specifier("cspdiuxX%", str[i + 1]) && str[i + 1])
+				count += find_arg(str[i + 1], ap);
 			else
 				return (-1);
 			i += 2;

@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   4print_str_base.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 14:23:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/15 14:38:27 by pjelinek         ###   ########.fr       */
+/*   Created: 2025/05/10 15:53:12 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/16 19:54:05 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libftprintf.h"
 
-void	ft_putendl_fd(char *s, int fd)
+size_t	ft_strlen(const char *str)
 {
-	size_t	i;
+	size_t	count;
 
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-	{
-		ft_putchar_fd(s[i], fd);
-		i++;
-	}
-	ft_putchar_fd('\n', fd);
+	count = 0;
+	while (str[count])
+		count++;
+	return (count);
 }
 
-/* int	main()
+int	ft_arg_string(char	*str)
 {
-	char *src = NULL;
-	int fd = 1;
-	ft_putendl_fd(src, fd);
-	return (0);
-} */
+	if (!str)
+		return (write(1, "(null)", 6));
+	return (write(1, str, ft_strlen(str)));
+}
