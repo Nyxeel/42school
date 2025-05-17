@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   TEST_get_next_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:43:08 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/17 20:54:17 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/17 20:23:05 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 80000
-
+#endif
 
 # include <fcntl.h>   // open
 # include <stdlib.h>  // free
@@ -52,8 +52,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	unsigned char	*p;
 	size_t			total;
 
-	if (size == 0 || nmemb == 0)
-		return (malloc(0));
+
 	if (nmemb > (size_t)SIZE_MAX / size)
 		return (NULL);
 	total = nmemb * size;
@@ -76,7 +75,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	str_len = ft_strlen(s);
 	if (start >= str_len || len == 0)
-		return (NULL);
+		return (ft_calloc(0,0));
 	if (len > str_len - start)
 		len = str_len - start;
 	sub = (char *)ft_calloc((len + 1), sizeof(char));
@@ -114,22 +113,6 @@ size_t	find_line(const char *str, char const c)
 	return (1);
 }
 
-/* size_t	find_line(char const *brain, char const newline)
-{
-	size_t	i;
-
-	i = 0;
-	if (newline == '\0')
-		return (0);
-	while (brain[i] != '\0')
-	{
-		if (brain[i] == newline)
-			return (0);
-		i++;
-	}
-
-	return (1);
-}*/
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -166,7 +149,7 @@ char	*ft_newline(int fd, char *brain)
 
 	tmp_brain = NULL;
 	bytes = 0;
-	while ((find_line(brain, '\n')) || find_line(brain, '\0') )
+	while ((find_line(brain, '\n')))
 	{
 		buffer = (char *)ft_calloc(BUFFER_SIZE + 1, 1);
 		if (!buffer)
@@ -222,7 +205,7 @@ char	*get_next_line(int fd)
 
 	if (!brain)
 	{
-		brain = ft_calloc(0, 0);
+		brain = ft_calloc(1, 1);
 		if (!brain)
 			return (NULL);
 	}
@@ -263,6 +246,7 @@ int	main(void)
 		line = NULL;
 		while ((line = get_next_line(fd)))
 		{
+
 			if (i == 40)
 			{
 				printf("LINE %s\n", line);
@@ -277,4 +261,3 @@ int	main(void)
 	return (0);
 }
 
-#endif

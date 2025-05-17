@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   TEST_Line 40 klappt.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:43:08 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/17 20:54:17 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/17 21:13:08 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	str_len = ft_strlen(s);
 	if (start >= str_len || len == 0)
-		return (NULL);
+		return (ft_calloc(0,0));
 	if (len > str_len - start)
 		len = str_len - start;
 	sub = (char *)ft_calloc((len + 1), sizeof(char));

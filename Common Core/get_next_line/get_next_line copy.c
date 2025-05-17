@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line copy.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:43:08 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/17 20:54:17 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/17 21:38:13 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	str_len = ft_strlen(s);
 	if (start >= str_len || len == 0)
-		return (NULL);
+		return (ft_calloc(0,0));
 	if (len > str_len - start)
 		len = str_len - start;
 	sub = (char *)ft_calloc((len + 1), sizeof(char));
@@ -165,37 +165,36 @@ char	*ft_newline(int fd, char *brain)
 	char		*tmp_brain;
 
 	tmp_brain = NULL;
-	bytes = 0;
-	while ((find_line(brain, '\n')) || find_line(brain, '\0') )
+	while ((find_line(tmp_brain, '\n')) || find_line(tmp_brain, '\0') )
 	{
 		buffer = (char *)ft_calloc(BUFFER_SIZE + 1, 1);
 		if (!buffer)
 		{
-			free(brain);
+			free(tmp_brain);
 			return (NULL);
 		}
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (!bytes)
 		{
 			free(buffer);
-			free(brain);
+			free(tmp_brain);
 			return (NULL);
 		}
 		//printf("NUMBER: %d\n", bytes);													/////////////
 		buffer[bytes] = '\0';
-		tmp_brain = ft_strjoin(brain, buffer);
+		if (!tmp_brain)
+			
+		tmp_brain = ft_strjoin(tmp_brain, buffer);
 		if (!tmp_brain)
 		{
 			free(buffer);
-			free(brain);
+			free(tmp_brain);
 			return (NULL);
 		}
 		free(buffer);
-		free(brain);
-		brain = tmp_brain;
 	}
 	//printf("TEST: %s\n", brain);																	/////////
-	return (brain);
+	return (tmp_brain);
 }
 
 size_t	calc_len(char *line)
@@ -220,12 +219,6 @@ char	*get_next_line(int fd)
 	size_t		line_len;
 	char		*rest;
 
-	if (!brain)
-	{
-		brain = ft_calloc(0, 0);
-		if (!brain)
-			return (NULL);
-	}
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	newline = ft_newline(fd, brain);
@@ -263,7 +256,7 @@ int	main(void)
 		line = NULL;
 		while ((line = get_next_line(fd)))
 		{
-			if (i == 40)
+			if (i == 39)
 			{
 				printf("LINE %s\n", line);
 				//printf("Stringlaenge: %zu", ft_strlen(line));

@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   testline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:43:08 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/17 20:54:17 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/17 21:54:53 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 80000
-
 
 # include <fcntl.h>   // open
 # include <stdlib.h>  // free
@@ -52,8 +51,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	unsigned char	*p;
 	size_t			total;
 
-	if (size == 0 || nmemb == 0)
-		return (malloc(0));
+
 	if (nmemb > (size_t)SIZE_MAX / size)
 		return (NULL);
 	total = nmemb * size;
@@ -76,7 +74,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	str_len = ft_strlen(s);
 	if (start >= str_len || len == 0)
-		return (NULL);
+		return (ft_calloc(1, sizeof(char)));
 	if (len > str_len - start)
 		len = str_len - start;
 	sub = (char *)ft_calloc((len + 1), sizeof(char));
@@ -162,37 +160,25 @@ char	*ft_newline(int fd, char *brain)
 {
 	int			bytes;
 	char		*buffer;
-	char		*tmp_brain;
 
-	tmp_brain = NULL;
 	bytes = 0;
 	while ((find_line(brain, '\n')) || find_line(brain, '\0') )
 	{
 		buffer = (char *)ft_calloc(BUFFER_SIZE + 1, 1);
 		if (!buffer)
-		{
-			free(brain);
 			return (NULL);
-		}
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (!bytes)
 		{
 			free(buffer);
-			free(brain);
 			return (NULL);
 		}
 		//printf("NUMBER: %d\n", bytes);													/////////////
 		buffer[bytes] = '\0';
-		tmp_brain = ft_strjoin(brain, buffer);
-		if (!tmp_brain)
-		{
-			free(buffer);
-			free(brain);
+		brain = ft_strjoin(brain, buffer);
+		if (!brain)
 			return (NULL);
-		}
 		free(buffer);
-		free(brain);
-		brain = tmp_brain;
 	}
 	//printf("TEST: %s\n", brain);																	/////////
 	return (brain);
@@ -221,11 +207,7 @@ char	*get_next_line(int fd)
 	char		*rest;
 
 	if (!brain)
-	{
-		brain = ft_calloc(0, 0);
-		if (!brain)
-			return (NULL);
-	}
+		brain = malloc(0);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	newline = ft_newline(fd, brain);
@@ -235,19 +217,12 @@ char	*get_next_line(int fd)
 	//printf("LEN: %zu\n", line_len);																	/////////
 	line = ft_substr(newline, 0, line_len);
 	if(!line)
-	{
-		free (newline);
 		return(NULL);
-	}
 	//printf("Trimmed Line Laenge: %zu\n", ft_strlen(line));													//////
 	rest = ft_substr(newline, line_len + 1, ft_strlen(newline));
 	if(!rest)
-	{
-		free(newline);
-		free(line);
 		return (NULL);
-	}
-	free(newline);
+	free(brain);
 	brain = rest;
 	return (line);
 }
@@ -261,8 +236,11 @@ int	main(void)
 
 		int i = 1;
 		line = NULL;
+
+
 		while ((line = get_next_line(fd)))
 		{
+
 			if (i == 40)
 			{
 				printf("LINE %s\n", line);
@@ -276,5 +254,4 @@ int	main(void)
 	close(fd);
 	return (0);
 }
-
 #endif
