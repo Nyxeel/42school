@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:43:08 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/16 20:21:19 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/17 13:45:46 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1
+# define BUFFER_SIZE 80
 
 # include <fcntl.h>   // open
 # include <stdlib.h>  // free
@@ -32,7 +32,7 @@ size_t	ft_strlen(const char *str)
 	return (count);
 }
 
-void	*ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
 	size_t			i;
 	unsigned char	*arr;
@@ -44,7 +44,6 @@ void	*ft_bzero(void *s, size_t n)
 		arr[i] = 0;
 		i++;
 	}
-	return ((void *) s);
 }
 
 void	*ft_calloc(size_t nmemb, size_t size)
@@ -60,7 +59,8 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	p = malloc(total);
 	if (p == NULL)
 		return (NULL);
-	return (ft_bzero(p, total));
+	ft_bzero(p, total);
+	return (p);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
@@ -69,7 +69,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 	size_t	str_len;
 
-	if (!s)
+	if (!s || *s == '\0')
 		return (NULL);
 	sub = NULL;
 	i = 0;
@@ -78,7 +78,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_calloc(1, sizeof(char)));
 	if (len > str_len - start)
 		len = str_len - start;
-	sub = (char *)malloc((len + 1) * sizeof(char));
+	sub = (char *)ft_calloc((len + 1), sizeof(char));
 	if (!sub)
 		return (NULL);
 	while (s[start + i] != '\0' && i < len)
@@ -107,6 +107,8 @@ size_t	find_line(char const *brain, char const newline)
 			return (0);
 		i++;
 	}
+	/* if (brain[i + 1] == '\0')
+		return (0); */
 	return (1);
 }
 
@@ -119,7 +121,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	join = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	join = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
 	if (!join)
 		return (NULL);
 	while (s1[i])
@@ -144,7 +146,7 @@ char	*ft_newline(int fd, char *brain)
 
 	bytes = 0;
 	//int i = 0;
-	while (find_line(brain, '\n'))
+	while (find_line(brain, '\n') || find_line(brain, '\0') )
 	{
 		buffer = (char *)ft_calloc(BUFFER_SIZE + 1, 1);
 		if (!buffer)
@@ -169,8 +171,12 @@ size_t	calc_len(char *line)
 	size_t len;
 
 	len = 0;
-	while (line[len] || line[len] == '\n')
+	while (line[len])
+	{
+		if (line[len] == '\n')
+			return (len);
 		len++;
+	}
 	return (len);
 }
 
@@ -183,7 +189,7 @@ char	*get_next_line(int fd)
 	char		*rest;
 
 	if (!brain)
-		brain = ft_calloc(0, 0);
+		brain = ft_calloc(1, 1);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	newline = ft_newline(fd, brain);
@@ -192,8 +198,8 @@ char	*get_next_line(int fd)
 	line_len = calc_len(newline);
 	//printf("LEN: %zu\n", line_len);																	/////////
 	line = ft_substr(newline, 0, line_len);
-	//printf("LEN: %zu\n", ft_strlen(line));													//////
-	rest = ft_substr(newline, line_len, ft_strlen(newline));
+	//printf("Trimmed Line Laenge: %zu\n", ft_strlen(line));													//////
+	rest = ft_substr(newline, line_len + 1, ft_strlen(newline));
 	free(brain);
 	brain = rest;
 	return (line);
@@ -212,8 +218,13 @@ int	main(void)
 
 		while ((line = get_next_line(fd)))
 		{
-			if (i == 40)
-				printf("%s", line);
+			if (i == 27)
+			{
+				printf("OUTPUT: %s\n", line);
+				//printf("Stringlaenge: %zu", ft_strlen(line));
+				free(line);
+				break;
+			}	
 			free(line);
 			i++;
 		}
