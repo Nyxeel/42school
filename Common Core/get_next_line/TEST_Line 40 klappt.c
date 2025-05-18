@@ -6,12 +6,12 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:43:08 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/17 21:13:08 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/18 23:01:54 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 80000
+# define BUFFER_SIZE 1
 
 
 # include <fcntl.h>   // open
@@ -263,7 +263,7 @@ int	main(void)
 		line = NULL;
 		while ((line = get_next_line(fd)))
 		{
-			if (i == 40)
+			if (i == 35)
 			{
 				printf("LINE %s\n", line);
 				//printf("Stringlaenge: %zu", ft_strlen(line));
@@ -273,6 +273,7 @@ int	main(void)
 			free(line);
 			i++;
 		}
+	//free(line);
 	close(fd);
 	return (0);
 }

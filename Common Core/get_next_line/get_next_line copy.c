@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:43:08 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/17 21:38:13 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:32:19 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ char	*ft_newline(int fd, char *brain)
 		//printf("NUMBER: %d\n", bytes);													/////////////
 		buffer[bytes] = '\0';
 		if (!tmp_brain)
-			
+
 		tmp_brain = ft_strjoin(tmp_brain, buffer);
 		if (!tmp_brain)
 		{
@@ -199,7 +199,8 @@ char	*ft_newline(int fd, char *brain)
 
 size_t	calc_len(char *line)
 {
-	size_t len;
+	size_t len;char	*get_next_line(int fd)
+{
 
 	len = 0;
 	while (line[len])
