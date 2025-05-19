@@ -6,15 +6,16 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:41:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/17 00:06:09 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/19 02:36:06 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1
+# define BUFFER_SIZE 42000
+#endif
 
 # include <fcntl.h>   // open
 # include <stdlib.h>  // free
@@ -25,10 +26,12 @@
 # include <string.h>
 # include <stdint.h>
 
+char	*ft_strdup(const char *src);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*trim_the_line(char const *s, unsigned int start, size_t len);
+size_t	ft_strlen(const char *str);
+char	*get_next_line(int fd);
 
 
-void	*ft_calloc(size_t nmemb, size_t size);
-
-#endif
 #endif
 

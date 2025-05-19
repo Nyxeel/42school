@@ -1,260 +1,86 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 18:43:08 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/17 20:54:17 by pjelinek         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 80000
 
 
-# include <fcntl.h>   // open
-# include <stdlib.h>  // free
-# include <stdio.h>   // printf
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include <string.h>
-# include <stdint.h>
+#include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	count;
-
-	count = 0;
-	while (str[count])
-		count++;
-	return (count);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	size_t			i;
-	unsigned char	*arr;
-
-	i = 0;
-	arr = (unsigned char *) s;
-	while (i < n)
-	{
-		arr[i] = 0;
-		i++;
-	}
-}
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	unsigned char	*p;
-	size_t			total;
-
-	if (size == 0 || nmemb == 0)
-		return (malloc(0));
-	if (nmemb > (size_t)SIZE_MAX / size)
-		return (NULL);
-	total = nmemb * size;
-	p = malloc(total);
-	if (p == NULL)
-		return (NULL);
-	ft_bzero(p, total);
-	return (p);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*sub;
-	size_t	i;
-	size_t	str_len;
-
-	if (!s || *s == '\0')
-		return (NULL);
-	sub = NULL;
-	i = 0;
-	str_len = ft_strlen(s);
-	if (start >= str_len || len == 0)
-		return (NULL);
-	if (len > str_len - start)
-		len = str_len - start;
-	sub = (char *)ft_calloc((len + 1), sizeof(char));
-	if (!sub)
-		return (NULL);
-	while (s[start + i] != '\0' && i < len)
-	{
-		sub[i] = s[start + i];
-		i++;
-	}
-	sub[i] = '\0';
-	return (sub);
-}
-
-/* char	*ft_trim(char *newline)
-{
-
-
-} */
-size_t	find_line(const char *str, char const c)
+ssize_t	find_line(const char *str, int c)
 {
 	unsigned char	letter;
 
 	letter = (unsigned char) c;
+	int i = 0;
 	if (str == NULL)
-		return (1);
-	while (*str)
-	{
-		if (*str == letter)
-			return (0);
-		str++;
-	}
-	if (letter == '\0')
 		return (0);
-	return (1);
-}
-
-/* size_t	find_line(char const *brain, char const newline)
-{
-	size_t	i;
-
-	i = 0;
-	if (newline == '\0')
-		return (0);
-	while (brain[i] != '\0')
+	while (str[i])
 	{
-		if (brain[i] == newline)
-			return (0);
+		if (str[i] == letter)
+			return (i);
 		i++;
 	}
-
-	return (1);
-}*/
-
-char	*ft_strjoin(char const *s1, char const *s2)
+	return (-1);
+}
+void	save_the_rest(char **brain, size_t len)
 {
-	char	*join;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	if (!s1 || !s2)
-		return (NULL);
-	join = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
-	if (!join)
-		return (NULL);
-	while (s1[i])
-	{
-		join[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2[j])
-	{
-		join[i + j] = s2[j];
-		j++;
-	}
-	join[i + j] = '\0';
-	return (join);
+	char *tmp;
+	if(!*brain)
+		return ;
+	tmp = *brain;
+	*brain = trim_the_line(*brain, len, ft_strlen(*brain) - len);
+	free(tmp);
 }
 
-char	*ft_newline(int fd, char *brain)
-{
-	int			bytes;
-	char		*buffer;
-	char		*tmp_brain;
 
-	tmp_brain = NULL;
+ssize_t	newline(char **brain, int fd)
+{
+	char	*buffer;
+	size_t	bytes;
+
 	bytes = 0;
-	while ((find_line(brain, '\n')) || find_line(brain, '\0') )
+	if (!(*brain))
+		*brain = ft_strdup("");
+	while (((find_line(*brain, '\n')) == -1))
 	{
-		buffer = (char *)ft_calloc(BUFFER_SIZE + 1, 1);
+		buffer = (char *)malloc(BUFFER_SIZE + 1);
 		if (!buffer)
-		{
-			free(brain);
-			return (NULL);
-		}
+			return (0);
 		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (!bytes)
-		{
-			free(buffer);
-			free(brain);
-			return (NULL);
-		}
-		//printf("NUMBER: %d\n", bytes);													/////////////
+		if (bytes == 0)
+			return (free(buffer), 0);
 		buffer[bytes] = '\0';
-		tmp_brain = ft_strjoin(brain, buffer);
-		if (!tmp_brain)
-		{
-			free(buffer);
-			free(brain);
-			return (NULL);
-		}
+		*brain = ft_strjoin(*brain, buffer);
+		if (!*brain)
+			return 0;
 		free(buffer);
-		free(brain);
-		brain = tmp_brain;
 	}
-	//printf("TEST: %s\n", brain);																	/////////
-	return (brain);
+	return (1);
 }
 
-size_t	calc_len(char *line)
-{
-	size_t len;
-
-	len = 0;
-	while (line[len])
-	{
-		if (line[len] == '\n')
-			return (len);
-		len++;
-	}
-	return (len);
-}
 
 char	*get_next_line(int fd)
 {
-	char		*newline;
 	static char	*brain;
 	char		*line;
-	size_t		line_len;
-	char		*rest;
-
-	if (!brain)
+	ssize_t		line_len;
+	if (!newline(&brain, fd) || fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+		return (free(brain), NULL);
+	line_len = find_line(brain, '\n');
+	if (line_len > 0)
 	{
-		brain = ft_calloc(0, 0);
-		if (!brain)
-			return (NULL);
+		line = trim_the_line(brain, 0, line_len);
+		save_the_rest(&brain, line_len + 1);
 	}
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	newline = ft_newline(fd, brain);
-	if (!newline)
-		return (NULL);
-	line_len = calc_len(newline);
-	//printf("LEN: %zu\n", line_len);																	/////////
-	line = ft_substr(newline, 0, line_len);
-	if(!line)
+	else
 	{
-		free (newline);
-		return(NULL);
+		line = trim_the_line(brain, 0, BUFFER_SIZE);
+		free(brain);
+		brain = NULL;
 	}
-	//printf("Trimmed Line Laenge: %zu\n", ft_strlen(line));													//////
-	rest = ft_substr(newline, line_len + 1, ft_strlen(newline));
-	if(!rest)
-	{
-		free(newline);
-		free(line);
-		return (NULL);
-	}
-	free(newline);
-	brain = rest;
+	if (line_len <= 0)
+		return (free(line), NULL);
 	return (line);
 }
-
 int	main(void)
 {
-		int fd = open("aot.txt", O_RDONLY);
+		int fd = open("leer.txt", O_RDONLY);
 		if (fd == -1)
 			return (0);
 		char *line;
@@ -263,12 +89,11 @@ int	main(void)
 		line = NULL;
 		while ((line = get_next_line(fd)))
 		{
-			if (i == 40)
+			if (i == 26)
 			{
-				printf("LINE %s\n", line);
-				//printf("Stringlaenge: %zu", ft_strlen(line));
-				free(line);
-				break;
+				printf("LINE: %s\n", line);
+				printf("OUT: Stringlaenge: %zu", ft_strlen(line));
+
 			}
 			free(line);
 			i++;
@@ -276,5 +101,3 @@ int	main(void)
 	close(fd);
 	return (0);
 }
-
-#endif

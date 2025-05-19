@@ -3,105 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:38:47 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/14 19:34:38 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/19 02:56:03 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	*ft_bzero(void *s, size_t n)
-{
-	size_t			i;
-	unsigned char	*arr;
+#include "get_next_line.h"
 
+size_t	ft_strlen(const char *str)
+{
+	size_t	count;
+
+	count = 0;
+	while (str[count])
+		count++;
+	return (count);
+}
+
+char	*trim_the_line(char const *s, unsigned int start, size_t len)
+{
+	char	*sub;
+	size_t	i;
+	size_t	str_len;
+
+	if (!s)
+		return (NULL);
+	sub = NULL;
 	i = 0;
-	arr = (unsigned char *) s;
-	while (i < n)
+	str_len = ft_strlen(s);
+	if (start >= str_len || len == 0)
+		return (NULL);
+	if (len > str_len - start)
+		len = str_len - start;
+	sub = (char *)malloc((len + 1) * sizeof(char));
+	if (!sub)
+		return (free((void *)s), NULL);
+	while (s[start + i] != '\0' && i < len)
 	{
-		arr[i] = 0;
+		sub[i] = s[start + i];
 		i++;
 	}
-	return ((void *) s);
+	sub[i] = '\0';
+	return (sub);
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	unsigned char	*p;
-	size_t			total;
-
-	if (size == 0 || nmemb == 0)
-		return (malloc(0));
-	if (nmemb > (size_t)SIZE_MAX / size)
-		return (NULL);
-	total = nmemb * size;
-	p = malloc(total);
-	if (p == NULL)
-		return (NULL);
-	return (ft_bzero(p, total));
-}
-
-
-
-int	ft_newline(char const *brain, char const newline)
-{
-	int	i;
-
-	i = 0;
-	while (brain[i] != '\0')
-	{
-		if (brain[i] == newline)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-char	*ft_strjoin_free(char const *buffer, char const *brain)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*join;
 	size_t	i;
 	size_t	j;
 
+	if (!s1 || !s2)
+		return (NULL);
 	i = 0;
-	if (!buffer || !brain)
-		return (NULL);
-	join = (char *)ft_calloc(ft_strlen(buffer) + ft_strlen(brain) + 1);
+	join = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!join)
-		return (NULL);
-	while (buffer[i])
+		return (free((void *)s1), free((void *) s2), NULL);
+	while (s1[i])
 	{
-		join[i] = buffer[i];
+		join[i] = s1[i];
 		i++;
 	}
 	j = 0;
-	while (brain[j])
+	while (s2[j])
 	{
-		join[i + j] = brain[j];
+		join[i + j] = s2[j];
 		j++;
 	}
 	join[i + j] = '\0';
-	free(buffer);
+	free((void *)s1);
 	return (join);
 }
-
-char	*ft_strdup_free(const char *buffer)
+char	*ft_strdup(const char *src)
 {
 	int		i;
-	char	*brain;
+	char	*dest;
 
 	if (src == NULL)
 		return (NULL);
-	brain = (char *)ft_calloc(sizeof(char) * (ft_strlen(buffer) + 1));
-	if (brain == NULL)
-		return (NULL);
+	dest = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
+	if (dest == NULL)
+		return (free((void *)src), NULL);
 	i = 0;
 	while (src[i] != 0)
 	{
-		brain[i] = src[i];
+		dest[i] = src[i];
 		i++;
 	}
-	brain[i] = '\0';
-	free(buffer);
-	return (brain);
+	dest[i] = '\0';
+	return (dest);
 }

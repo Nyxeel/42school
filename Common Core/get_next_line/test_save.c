@@ -22,37 +22,6 @@ size_t	ft_strlen(const char *str)
 	return (count);
 }
 
-void	ft_bzero(void *s, size_t n)
-{
-	size_t			i;
-	unsigned char	*arr;
-
-	i = 0;
-	arr = (unsigned char *) s;
-	while (i < n)
-	{
-		arr[i] = 0;
-		i++;
-	}
-}
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	unsigned char	*p;
-	size_t			total;
-
-	if (size == 0 || nmemb == 0)
-		return (malloc(0));
-	if (nmemb > (size_t)SIZE_MAX / size)
-		return (NULL);
-	total = nmemb * size;
-	p = malloc(total);
-	if (p == NULL)
-		return (NULL);
-	ft_bzero(p, total);
-	return (p);
-}
-
 ssize_t	find_line(const char *str, int c)
 {
 	unsigned char	letter;
@@ -67,8 +36,6 @@ ssize_t	find_line(const char *str, int c)
 			return (i);
 		i++;
 	}
-	if (letter == '\0')
-		return (i);
 	return (-1);
 }
 char	*trim_the_line(char const *s, unsigned int start, size_t len)
@@ -88,7 +55,7 @@ char	*trim_the_line(char const *s, unsigned int start, size_t len)
 		len = str_len - start;
 	sub = (char *)malloc((len + 1) * sizeof(char));
 	if (!sub)
-		return (NULL);
+		return (free((void *)s), NULL);
 	while (s[start + i] != '\0' && i < len)
 	{
 		sub[i] = s[start + i];
@@ -107,9 +74,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	i = 0;
-	join = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	join = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!join)
-		return (NULL);
+		return (free((void *)s1), NULL);
 	while (s1[i])
 	{
 		join[i] = s1[i];
@@ -132,9 +99,9 @@ char	*ft_strdup(const char *src)
 
 	if (src == NULL)
 		return (NULL);
-	dest = (char *)malloc(sizeof(char) * (ft_strlen(src) + 1));
+	dest = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
 	if (dest == NULL)
-		return (NULL);
+		return (free((void *)src), NULL);
 	i = 0;
 	while (src[i] != 0)
 	{
@@ -160,21 +127,21 @@ ssize_t	newline(char **brain, int fd)
 	char	*buffer;
 	size_t	bytes;
 
-
 	bytes = 0;
-	printf("BRAIN:%s\n", *brain);
 	if (!(*brain))
 		*brain = ft_strdup("");
-	while (((find_line(*brain, '\n')) == -1) || (find_line(*brain, '\0')) == -1 )
+	while (((find_line(*brain, '\n')) == -1))
 	{
-		buffer = (char *)ft_calloc(BUFFER_SIZE + 1, 1);
+		buffer = (char *)malloc(BUFFER_SIZE + 1);
 		if (!buffer)
 			return (0);
 		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (!bytes)
+		if (bytes == 0)
 			return (free(buffer), 0);
 		buffer[bytes] = '\0';
 		*brain = ft_strjoin(*brain, buffer);
+		if (!*brain)
+			return 0;
 		free(buffer);
 	}
 	return (1);
@@ -185,27 +152,23 @@ char	*get_next_line(int fd)
 {
 	static char	*brain;
 	char		*line;
-	size_t		line_len;
-	if (!newline(&brain, fd) || fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
+	ssize_t		line_len;
+	if (!newline(&brain, fd) || fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+		return (free(brain), NULL);
 	line_len = find_line(brain, '\n');
-	printf("Line_len: %zu\n", line_len);
-	if (line_len >= 0)
+	if (line_len > 0)
 	{
 		line = trim_the_line(brain, 0, line_len);
 		save_the_rest(&brain, line_len + 1);
 	}
 	else
 	{
-		line = trim_the_line(brain, 0, ft_strlen(brain));
+		line = trim_the_line(brain, 0, BUFFER_SIZE);
 		free(brain);
 		brain = NULL;
 	}
-	if (line_len == 0)
-	{
-		free(line);
-		return (NULL);
-	}
+	if (line_len <= 0)
+		return (free(line), NULL);
 	return (line);
 }
 int	main(void)
