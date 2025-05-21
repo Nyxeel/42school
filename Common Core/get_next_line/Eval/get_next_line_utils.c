@@ -6,12 +6,11 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:38:47 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/21 14:36:45 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/21 22:53:58 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 
 size_t	ft_strlen(const char *str)
 {
@@ -26,9 +25,12 @@ size_t	ft_strlen(const char *str)
 ssize_t	find_line(const char *str, int c)
 {
 	unsigned char	letter;
+	size_t			i;
 
 	letter = (unsigned char) c;
-	size_t i = 0;
+	i = 0;
+	if (str[0] == '\n')
+		return (1);
 	if (str == NULL)
 		return (0);
 	while (str[i])
@@ -39,6 +41,7 @@ ssize_t	find_line(const char *str, int c)
 	}
 	return (-1);
 }
+
 char	*trim_the_line(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
@@ -47,6 +50,8 @@ char	*trim_the_line(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
+	/* if (s[0] == '\n')
+		len = 1; */
 	sub = NULL;
 	i = 0;
 	str_len = ft_strlen(s);
@@ -93,6 +98,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	free((void *)s1);
 	return (join);
 }
+
 char	*ft_strdup(const char *src)
 {
 	size_t	i;
@@ -110,6 +116,5 @@ char	*ft_strdup(const char *src)
 		i++;
 	}
 	dest[i] = '\0';
-
 	return (dest);
 }

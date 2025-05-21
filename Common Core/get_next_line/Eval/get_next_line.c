@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/21 14:39:35 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/05/21 22:54:37 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "get_next_line.h"
 
 static int	save_the_rest(char **brain, size_t len)
 {
-	char *tmp;
-	if(!*brain)
+	char	*tmp;
+
+	if (!*brain)
 		return (-1);
 	tmp = *brain;
-	*brain = trim_the_line(*brain, len, ft_strlen(*brain) - len);
+	*brain = trim_the_line(*brain, len + 1, ft_strlen(*brain) - len);
 	if (!*brain)
 		return (free(tmp), -1);
 	free(tmp);
@@ -20,7 +32,7 @@ static int	newline(char **brain, int fd)
 	size_t	bytes;
 
 	bytes = 0;
-	if (!(*brain))
+	if (fd < 0 || BUFFER_SIZE <= 0 || !(*brain))
 	{
 		*brain = ft_strdup("");
 		if (!*brain)
@@ -48,7 +60,8 @@ char	*get_next_line(int fd)
 	static char	*brain;
 	char		*line;
 	ssize_t		line_len;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0 || newline(&brain, fd) == 0)
+
+	if (newline(&brain, fd) == 0)
 		return (free(brain), NULL);
 	line_len = find_line(brain, '\n');
 	if (line_len > 0)
@@ -56,7 +69,7 @@ char	*get_next_line(int fd)
 		line = trim_the_line(brain, 0, line_len);
 		if (!line)
 			return (free(brain), NULL);
-		if (save_the_rest(&brain, line_len + 1) == -1)
+		if (save_the_rest(&brain, line_len) == -1)
 			return (free(line), NULL);
 	}
 	else
@@ -65,37 +78,38 @@ char	*get_next_line(int fd)
 		if (!line)
 			return (free(brain), NULL);
 		free(brain);
-		brain = NULL;
 	}
 	if (line_len < 0)
 		return (free(line), NULL);
 	return (line);
 }
 
-/*
 # include <fcntl.h>   // open
 # include <stdio.h>   // printf
 
 int	main(void)
 {
-		int fd = open("aot.txt", O_RDONLY);
+		int fd = open("file.txt", O_RDONLY);
 		if (fd == -1)
 			return (0);
 		char *line;
 
 		size_t i = 1;
 		line = NULL;
+	/* 	printf("012345\n\n");
+		printf("012345"); */
+		printf("\n");
 		while ((line = get_next_line(fd)))
 		{
-			if (i == 40)
+			if (i == 3)
 			{
 				printf("%s\n", line);
 			}
 			free(line);
 			i++;
 		}
-	if(!line)
+	if (!line)
 		free(line);
 	close(fd);
 	return (0);
-} */
+}
