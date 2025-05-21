@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:38:47 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/21 22:53:58 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/21 23:45:57 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ ssize_t	find_line(const char *str, int c)
 
 	letter = (unsigned char) c;
 	i = 0;
-	if (str[0] == '\n')
-		return (1);
+/* 	if (str[0] == '\n')
+		return (1); */
 	if (str == NULL)
 		return (0);
 	while (str[i])

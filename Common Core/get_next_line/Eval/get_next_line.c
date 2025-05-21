@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:39:35 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/21 22:54:37 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/21 23:54:05 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	save_the_rest(char **brain, size_t len)
 	if (!*brain)
 		return (-1);
 	tmp = *brain;
-	*brain = trim_the_line(*brain, len + 1, ft_strlen(*brain) - len);
+	*brain = trim_the_line(*brain, len, ft_strlen(*brain) - len);
 	if (!*brain)
 		return (free(tmp), -1);
 	free(tmp);
@@ -64,12 +64,12 @@ char	*get_next_line(int fd)
 	if (newline(&brain, fd) == 0)
 		return (free(brain), NULL);
 	line_len = find_line(brain, '\n');
-	if (line_len > 0)
+	if (line_len >= 0)
 	{
 		line = trim_the_line(brain, 0, line_len);
 		if (!line)
 			return (free(brain), NULL);
-		if (save_the_rest(&brain, line_len) == -1)
+		if (save_the_rest(&brain, line_len + 1) == -1)
 			return (free(line), NULL);
 	}
 	else
@@ -96,9 +96,8 @@ int	main(void)
 
 		size_t i = 1;
 		line = NULL;
-	/* 	printf("012345\n\n");
-		printf("012345"); */
-		printf("\n");
+		printf("TEST:012345\n");
+		//printf("012345"); 
 		while ((line = get_next_line(fd)))
 		{
 			if (i == 3)
