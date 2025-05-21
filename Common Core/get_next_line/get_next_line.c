@@ -1,42 +1,31 @@
 
-
 #include "get_next_line.h"
 
-ssize_t	find_line(const char *str, int c)
-{
-	unsigned char	letter;
-
-	letter = (unsigned char) c;
-	int i = 0;
-	if (str == NULL)
-		return (0);
-	while (str[i])
-	{
-		if (str[i] == letter)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-void	save_the_rest(char **brain, size_t len)
+static int	save_the_rest(char **brain, size_t len)
 {
 	char *tmp;
 	if(!*brain)
-		return ;
+		return (-1);
 	tmp = *brain;
 	*brain = trim_the_line(*brain, len, ft_strlen(*brain) - len);
+	if (!*brain)
+		return (free(tmp), -1);
 	free(tmp);
+	return (0);
 }
 
-
-ssize_t	newline(char **brain, int fd)
+static int	newline(char **brain, int fd)
 {
 	char	*buffer;
 	size_t	bytes;
 
 	bytes = 0;
 	if (!(*brain))
+	{
 		*brain = ft_strdup("");
+		if (!*brain)
+			return (0);
+	}
 	while (((find_line(*brain, '\n')) == -1))
 	{
 		buffer = (char *)malloc(BUFFER_SIZE + 1);
@@ -48,56 +37,63 @@ ssize_t	newline(char **brain, int fd)
 		buffer[bytes] = '\0';
 		*brain = ft_strjoin(*brain, buffer);
 		if (!*brain)
-			return 0;
+			return (free(buffer), 0);
 		free(buffer);
 	}
 	return (1);
 }
-
 
 char	*get_next_line(int fd)
 {
 	static char	*brain;
 	char		*line;
 	ssize_t		line_len;
-	if (!newline(&brain, fd) || fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0 || newline(&brain, fd) == 0)
 		return (free(brain), NULL);
 	line_len = find_line(brain, '\n');
 	if (line_len > 0)
 	{
 		line = trim_the_line(brain, 0, line_len);
-		save_the_rest(&brain, line_len + 1);
+		if (!line)
+			return (free(brain), NULL);
+		if (save_the_rest(&brain, line_len + 1) == -1)
+			return (free(line), NULL);
 	}
 	else
 	{
-		line = trim_the_line(brain, 0, BUFFER_SIZE);
+		line = trim_the_line(brain, 0, ft_strlen(brain));
+		if (!line)
+			return (free(brain), NULL);
 		free(brain);
 		brain = NULL;
 	}
-	if (line_len <= 0)
+	if (line_len < 0)
 		return (free(line), NULL);
 	return (line);
 }
+
+/* 
+# include <fcntl.h>   // open
+# include <stdio.h>   // printf
+
 int	main(void)
 {
-		int fd = open("leer.txt", O_RDONLY);
+		int fd = open("aot.txt", O_RDONLY);
 		if (fd == -1)
 			return (0);
 		char *line;
 
-		int i = 1;
+		size_t i = 1;
 		line = NULL;
 		while ((line = get_next_line(fd)))
 		{
-			if (i == 26)
+			if (i == 40)
 			{
-				printf("LINE: %s\n", line);
-				printf("OUT: Stringlaenge: %zu", ft_strlen(line));
-
+				printf("%s\n", line);
 			}
 			free(line);
 			i++;
 		}
 	close(fd);
 	return (0);
-}
+} */

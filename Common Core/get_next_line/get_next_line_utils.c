@@ -6,11 +6,12 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:38:47 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/19 02:56:03 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/21 13:07:15 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
 
 size_t	ft_strlen(const char *str)
 {
@@ -22,6 +23,22 @@ size_t	ft_strlen(const char *str)
 	return (count);
 }
 
+ssize_t	find_line(const char *str, int c)
+{
+	unsigned char	letter;
+
+	letter = (unsigned char) c;
+	size_t i = 0;
+	if (str == NULL)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == letter)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
 char	*trim_the_line(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
@@ -33,13 +50,13 @@ char	*trim_the_line(char const *s, unsigned int start, size_t len)
 	sub = NULL;
 	i = 0;
 	str_len = ft_strlen(s);
-	if (start >= str_len || len == 0)
+	if (start > str_len)
 		return (NULL);
 	if (len > str_len - start)
 		len = str_len - start;
 	sub = (char *)malloc((len + 1) * sizeof(char));
 	if (!sub)
-		return (free((void *)s), NULL);
+		return (NULL);
 	while (s[start + i] != '\0' && i < len)
 	{
 		sub[i] = s[start + i];
@@ -60,7 +77,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	join = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!join)
-		return (free((void *)s1), free((void *) s2), NULL);
+		return (free((void *)s1), NULL);
 	while (s1[i])
 	{
 		join[i] = s1[i];
@@ -78,7 +95,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 }
 char	*ft_strdup(const char *src)
 {
-	int		i;
+	size_t	i;
 	char	*dest;
 
 	if (src == NULL)
@@ -93,5 +110,6 @@ char	*ft_strdup(const char *src)
 		i++;
 	}
 	dest[i] = '\0';
+
 	return (dest);
 }
