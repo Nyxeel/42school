@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:39:35 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/21 23:54:05 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/22 00:10:17 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,10 @@ static int	newline(char **brain, int fd)
 	size_t	bytes;
 
 	bytes = 0;
-	if (fd < 0 || BUFFER_SIZE <= 0 || !(*brain))
-	{
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	if (!*brain)
 		*brain = ft_strdup("");
-		if (!*brain)
-			return (0);
-	}
 	while (((find_line(*brain, '\n')) == -1))
 	{
 		buffer = (char *)malloc(BUFFER_SIZE + 1);
@@ -100,7 +98,7 @@ int	main(void)
 		//printf("012345"); 
 		while ((line = get_next_line(fd)))
 		{
-			if (i == 3)
+			if (i == 2)
 			{
 				printf("%s\n", line);
 			}

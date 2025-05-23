@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:38:47 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/21 23:45:57 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/22 00:00:33 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ ssize_t	find_line(const char *str, int c)
 
 	letter = (unsigned char) c;
 	i = 0;
-/* 	if (str[0] == '\n')
-		return (1); */
 	if (str == NULL)
 		return (0);
 	while (str[i])
@@ -50,8 +48,6 @@ char	*trim_the_line(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	/* if (s[0] == '\n')
-		len = 1; */
 	sub = NULL;
 	i = 0;
 	str_len = ft_strlen(s);
