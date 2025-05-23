@@ -6,12 +6,11 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:38:47 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/21 14:36:45 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/23 19:21:03 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 
 size_t	ft_strlen(const char *str)
 {
@@ -26,9 +25,10 @@ size_t	ft_strlen(const char *str)
 ssize_t	find_line(const char *str, int c)
 {
 	unsigned char	letter;
+	size_t			i;
 
 	letter = (unsigned char) c;
-	size_t i = 0;
+	i = 0;
 	if (str == NULL)
 		return (0);
 	while (str[i])
@@ -39,6 +39,7 @@ ssize_t	find_line(const char *str, int c)
 	}
 	return (-1);
 }
+
 char	*trim_the_line(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
@@ -77,7 +78,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	join = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!join)
-		return (free((void *)s1), NULL);
+		return (free_function((void *)s1), NULL);
 	while (s1[i])
 	{
 		join[i] = s1[i];
@@ -90,9 +91,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	join[i + j] = '\0';
-	free((void *)s1);
+	free_function((void *)s1);
 	return (join);
 }
+
 char	*ft_strdup(const char *src)
 {
 	size_t	i;
@@ -102,7 +104,7 @@ char	*ft_strdup(const char *src)
 		return (NULL);
 	dest = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
 	if (dest == NULL)
-		return (free((void *)src), NULL);
+		return (NULL);
 	i = 0;
 	while (src[i] != 0)
 	{
@@ -110,6 +112,5 @@ char	*ft_strdup(const char *src)
 		i++;
 	}
 	dest[i] = '\0';
-
 	return (dest);
 }
