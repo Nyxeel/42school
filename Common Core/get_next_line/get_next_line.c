@@ -6,19 +6,21 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:39:35 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/23 20:53:14 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:50:29 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	free_function(void *p)
+void	free_function(char **p)
 {
-	if (!p)
+	if (!*p)
 		return ;
 	else
-		free(p);
-	return ;
+	{
+		free(*p);
+		*p = NULL;
+	}
 }
 
 static int	save_the_rest(char **brain, size_t len)
@@ -30,15 +32,15 @@ static int	save_the_rest(char **brain, size_t len)
 	tmp = *brain;
 	*brain = trim_the_line(*brain, len, ft_strlen(*brain) - len);
 	if (!*brain)
-		return (free_function(tmp), -1);
-	free_function(tmp);
+		return (free_function(&tmp), -1);
+	free_function(&tmp);
 	return (0);
 }
 
 static int	newline(char **brain, int fd)
 {
 	char	*buffer;
-	size_t	bytes;
+	ssize_t	bytes;
 
 	bytes = 0;
 	if (!(*brain))
@@ -51,13 +53,13 @@ static int	newline(char **brain, int fd)
 		if (!buffer)
 			return (0);
 		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes == 0)
-			return (free_function(buffer), 0);
+		if (bytes <= 0)
+			return (free_function(&buffer), 0);
 		buffer[bytes] = '\0';
 		*brain = ft_strjoin(*brain, buffer);
 		if (!*brain)
-			return (free_function(buffer), 0);
-		free_function(buffer);
+			return (free_function(&buffer), 0);
+		free_function(&buffer);
 	}
 	return (1);
 }
@@ -69,29 +71,29 @@ char	*get_next_line(int fd)
 	ssize_t		line_len;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || newline(&brain, fd) == 0)
-		return (free_function(brain), NULL);
+		return (free_function(&brain), NULL);
 	line_len = find_line(brain, '\n');
 	if (line_len >= 0)
 	{
 		line = trim_the_line(brain, 0, line_len);
 		if (!line)
-			return (free_function(brain), NULL);
+			return (free_function(&brain), NULL);
 		if (save_the_rest(&brain, line_len + 1) == -1)
-			return (free_function(line), NULL);
+			return (free_function(&line), NULL);
 	}
 	else
 	{
 		line = trim_the_line(brain, 0, ft_strlen(brain));
 		if (!line)
-			return (free_function(brain), NULL);
-		free_function(brain);
+			return (free_function(&brain), NULL);
+		free_function(&brain);
 	}
 	if (line_len < 0)
-		return (free_function(line), NULL);
+		return (free_function(&line), NULL);
 	return (line);
 }
-
-/* # include <fcntl.h>   // open
+/*
+# include <fcntl.h>   // open
 # include <stdio.h>   // printf
 
 int	main(void)
@@ -105,15 +107,14 @@ int	main(void)
 		line = NULL;
 		while ((line = get_next_line(fd)))
 		{
-			if (i == 12)
+			if (i == 40)
 			{
 				printf("%s\n", line);
 			}
 			free(line);
 			i++;
 		}
-	if(!line)
-		free(line);
+	//if(!line)
 	close(fd);
 	return (0);
 } */

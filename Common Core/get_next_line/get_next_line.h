@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:41:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/23 19:42:24 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:28:18 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ ssize_t	find_line(const char *str, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*trim_the_line(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *str);
-void	free_function(void *p);
+void	free_function(char **p);
 
 #endif

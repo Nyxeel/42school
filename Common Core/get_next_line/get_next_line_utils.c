@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:38:47 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/23 19:21:03 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:17:53 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	join = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!join)
-		return (free_function((void *)s1), NULL);
+		return (free_function((void *)&s1), NULL);
 	while (s1[i])
 	{
 		join[i] = s1[i];
@@ -91,7 +91,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	join[i + j] = '\0';
-	free_function((void *)s1);
+	free_function((void *)&s1);
 	return (join);
 }
 
