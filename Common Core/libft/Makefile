@@ -4,7 +4,7 @@ HEADER := libft.h
 
 CC := cc
 
-FLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror
 
 SRC :=\
 	ft_isalnum.c\
@@ -61,7 +61,7 @@ RM := rm -f
 
 
 %.o: %.c $(HEADER)
-	@$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
