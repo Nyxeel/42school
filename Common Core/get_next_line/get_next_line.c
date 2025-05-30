@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:39:35 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/30 21:47:29 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/31 00:53:47 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@ void	free_function(char **p)
 {
 	if (!*p)
 		return ;
-	else
-	{
-		free(*p);
-		*p = NULL;
-	}
+	free(*p);
+	*p = NULL;
 }
 
 static int	save_the_rest(char **brain, size_t len)
@@ -47,7 +44,7 @@ static int	newline(char **brain, int fd)
 		*brain = ft_strdup("");
 	if (!(*brain))
 		return (0);
-	while (((find_line(*brain, '\n')) == 0))
+	while (((find_line(*brain, '\n')) == -1))
 	{
 		buffer = (char *)malloc(BUFFER_SIZE + 1);
 		if (!buffer)
@@ -83,17 +80,18 @@ char	*get_next_line(int fd)
 		if (save_the_rest(&brain, line_len + 1) == -1)
 			return (free_function(&line), NULL);
 	}
-	else
+	else if (brain != NULL && *brain)
 	{
 		line = trim_the_line(brain, 0, ft_strlen(brain));
 		if (!line)
 			return (free_function(&brain), NULL);
 		free_function(&brain);
 	}
-	if (line_len < 0)
-		return (free_function(&line), NULL);
+	else
+		return (free_function(&brain), NULL);
 	return (line);
 }
+
 
 # include <fcntl.h>   // open
 # include <stdio.h>   // printf
@@ -109,10 +107,7 @@ int	main(void)
 		line = NULL;
 		while ((line = get_next_line(fd)))
 		{
-			if (i == 40)
-			{
-				printf("%s", line);
-			}
+			printf("%s", line);
 			free(line);
 			i++;
 		}

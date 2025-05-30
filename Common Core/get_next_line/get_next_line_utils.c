@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:38:47 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/30 21:39:03 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/31 00:14:31 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ ssize_t	find_line(const char *str, int c)
 			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 char	*trim_the_line(char const *s, unsigned int start, size_t len)
