@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:39:35 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/28 19:50:57 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:47:29 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,16 @@ static int	newline(char **brain, int fd)
 		*brain = ft_strdup("");
 	if (!(*brain))
 		return (0);
-	while (((find_line(*brain, '\n')) == -1))
+	while (((find_line(*brain, '\n')) == 0))
 	{
 		buffer = (char *)malloc(BUFFER_SIZE + 1);
 		if (!buffer)
 			return (0);
 		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes <= 0)
+		if (bytes < 0)
 			return (free_function(&buffer), 0);
+		if (bytes == 0)
+			return (free_function(&buffer), 1);
 		buffer[bytes] = '\0';
 		*brain = ft_strjoin(*brain, buffer);
 		if (!*brain)
@@ -75,7 +77,7 @@ char	*get_next_line(int fd)
 	line_len = find_line(brain, '\n');
 	if (line_len >= 0)
 	{
-		line = trim_the_line(brain, 0, line_len);
+		line = trim_the_line(brain, 0, line_len + 1);
 		if (!line)
 			return (free_function(&brain), NULL);
 		if (save_the_rest(&brain, line_len + 1) == -1)
@@ -92,7 +94,7 @@ char	*get_next_line(int fd)
 		return (free_function(&line), NULL);
 	return (line);
 }
-/*
+
 # include <fcntl.h>   // open
 # include <stdio.h>   // printf
 
@@ -109,7 +111,7 @@ int	main(void)
 		{
 			if (i == 40)
 			{
-				printf("%s\n", line);
+				printf("%s", line);
 			}
 			free(line);
 			i++;
@@ -117,4 +119,4 @@ int	main(void)
 	//if(!line)
 	close(fd);
 	return (0);
-} */
+}
