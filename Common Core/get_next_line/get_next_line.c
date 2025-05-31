@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:39:35 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/31 00:53:47 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/31 16:56:01 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ int	main(void)
 		line = NULL;
 		while ((line = get_next_line(fd)))
 		{
-			printf("%s", line);
+			if ( i == 4)
+				printf("%s", line);
 			free(line);
 			i++;
 		}
