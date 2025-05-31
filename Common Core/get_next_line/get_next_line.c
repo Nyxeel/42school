@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:39:35 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/31 16:56:01 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/05/31 18:31:13 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*get_next_line(int fd)
 }
 
 
-# include <fcntl.h>   // open
+/* # include <fcntl.h>   // open
 # include <stdio.h>   // printf
 
 int	main(void)
@@ -115,4 +115,4 @@ int	main(void)
 	//if(!line)
 	close(fd);
 	return (0);
-}
+} */
