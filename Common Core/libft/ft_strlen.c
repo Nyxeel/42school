@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 17:50:02 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 12:00:01 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/04 22:26:09 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 size_t	ft_strlen(const char *str)
 {
 	size_t	count;
-
+	if (!str)
+		return (0);
 	count = 0;
 	while (str[count])
 		count++;
