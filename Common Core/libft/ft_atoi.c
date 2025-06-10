@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 10:36:15 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/15 14:19:30 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/07 00:47:36 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_atoi(const char *str)
 {
 	int		minus;
-	int		num;
+	size_t	num;
 	size_t	i;
 
 	i = 0;
@@ -37,8 +37,8 @@ int	ft_atoi(const char *str)
 	}
 	return (minus * num);
 }
-
-/* int	main(void)
+/* #include <stdio.h>
+int	main(void)
 {
 	char	*c =  "-2147483648";
 	int		num;

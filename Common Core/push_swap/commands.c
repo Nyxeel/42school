@@ -1,31 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 17:50:02 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/06/07 00:47:48 by netrunner        ###   ########.fr       */
+/*   Created: 2025/05/30 14:17:48 by netrunner         #+#    #+#             */
+/*   Updated: 2025/05/31 00:16:51 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-size_t	ft_strlen(const char *str)
-{
-	size_t	count;
-	if (!str)
-		return (0);
-	count = 0;
-	while (str[count])
-		count++;
-	return (count);
-}
-/*
-int	main(void)
-{
-	char src[] = "aaaabbbbccccddddee";
-
-	printf("Count: %zu", ft_strlen(src));
-} */
+#include "push_swap.h"
