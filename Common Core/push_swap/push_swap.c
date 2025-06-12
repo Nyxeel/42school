@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/10 21:50:12 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:58:21 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 #include <stdio.h>
 
 
-long long int	ft_atoi(const char *str)
+void	add_list(stack *a, int num)
+{
+
+}
+
+long	ft_atoi(const char *str)
 {
 	int		minus;
-	size_t	num;
+	long	num;
 	size_t	i;
 
 	i = 0;
@@ -42,9 +47,9 @@ long long int	ft_atoi(const char *str)
 }
 
 
-void	ft_error(t_stack **lst)
+void	ft_error(stack **lst)
 {
-	t_stack	*tmp;
+	stack	*tmp;
 
 	printf("ERROR\n"); /////////////////////////////////////////////////////////
 	if (!lst || !*lst)
@@ -58,11 +63,24 @@ void	ft_error(t_stack **lst)
 	*lst = NULL;
 }
 
+int	doubles(stack *a, int num)
+{
+	while (a != NULL)
+	{
+		if (a->value == num)
+			return (1);
+		a = a->next;
+	}
+	return (0);
+}
+
 int	input_check(char *str)
 {
 	int	i;
 
 	i = 0;
+	if (str[i] == '-' || str[i] == '+' )
+		i++;
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
@@ -72,7 +90,7 @@ int	input_check(char *str)
 	return (0);
 }
 
-void	create_stack(t_stack **a, char **av, int ac)
+void	*create_stack(stack **a, char **av, int ac)
 {
 	int		i;
 	long	num;
@@ -81,20 +99,23 @@ void	create_stack(t_stack **a, char **av, int ac)
 	while (i < ac)
 	{
 		if (input_check(av[i]))
-			ft_error(a);
+			return (ft_error(a), NULL);
 		num = ft_atoi(av[i]);
-		if (num < INT_MIN && num > 2147483647)
-			ft_error(a);
-		/*if (doubles(*av[i]) == true)
-			ft_error(&a[i], i);
-		add_node(&a, (int)num); */
+		printf("NUM:%li\n", num);//////////////////////////////////////
+		if (num < INT_MIN || num > INT_MAX)
+			return (ft_error(a), NULL);
+		if (doubles(*a, num))
+			return (ft_error(a), NULL);
+		add_list(&a, (int)num);
 		i++;
 	}
+	printf("PASS\n");
+	return (NULL);
 }
 
 int	main(int argc, char **argv)
 {
-	t_stack	*a;
+	stack	*a;
 	size_t	i;
 
 	i = 0;

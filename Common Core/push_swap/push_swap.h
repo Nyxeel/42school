@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/10 21:43:13 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:07:56 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ typedef struct s_stack
 	struct s_stack	*prev;
 	struct s_stack	*target;
 	bool			first_half;
-}	t_stack;
-
-
+}	stack;
 
 #endif
