@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/11 20:07:56 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/12 20:09:47 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,18 @@ typedef struct s_stack
 	struct s_stack	*prev;
 	struct s_stack	*target;
 	bool			first_half;
-}	stack;
+}	list
+
+typedef struct s_stackmeta
+{
+	stack	*head;
+	stack	*tail;
+	stack	*min; 		///kleinster Wert im Stack
+	stack	*max;		///größter Wert im Stack
+	int		size;		/// Listengröße
+	bool	sorted;		///Sortiert ? Yes : No
+	char	id;
+}	stack
+
 
 #endif

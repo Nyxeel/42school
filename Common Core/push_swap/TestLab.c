@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/10 21:11:04 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:41:52 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 #include <stdio.h>
 
-void	ft_error(t_stack **lst)
+void	free_list(stack **lst)
 {
-	t_stack	*tmp;
-	printf("ERROR\n");
+	stack	*tmp;
+
+	printf("ERROR\n"); /////////////////////////////////////////////////////////
 	if (!lst || !*lst)
 		return ;
 	while (*lst)
@@ -27,13 +28,107 @@ void	ft_error(t_stack **lst)
 		*lst = tmp;
 	}
 	*lst = NULL;
+	exit(1);
 }
+
+int	add_back(stack **a, stack **tail, int num)
+{
+	stack	*curr;
+
+	curr = malloc(sizeof(stack));
+	if (!curr)
+		return (1);
+	curr->value = num;
+	curr->prev = *tail;
+	curr->next = NULL;
+
+	if (*tail != NULL)
+		(*tail)->next = curr;
+	else
+		*a = curr;
+	*tail = curr;
+	printf("Tail hinzugefügt\n"); //////////////////////////////////////////
+	return (0);
+}
+
+stack	*create_head(stack **head, stack **tail, int num)
+{
+	stack	*new;
+
+	new = malloc(sizeof(stack));
+	if (!head)
+		return (NULL);
+	new->value = num;
+	new->prev = NULL;
+	new->next = NULL;
+	*tail = new;
+	*head = new;
+	printf("Head erstellt\n"); ////////////////////////////////////////////////
+	return (*head);
+}
+
+void	add_list(stack **a, int num)
+{
+	stack	*head;
+	stack	*tail;
+
+	head = NULL;
+	tail = NULL;
+
+	if (!a || !*a)
+		*a = create_head(&head, &tail, num);
+	else if (add_back(&tail, num))
+		free_list(a);
+
+}
+
+long	ft_atoi(const char *str)
+{
+	int		minus;
+	long	num;
+	size_t	i;
+
+	i = 0;
+	minus = 1;
+	num = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			minus = minus * (-1);
+		i++;
+	}
+	while (str[i] >= 48 && str[i] <= 57)
+	{
+		num = num * 10;
+		num = num + str[i] - '0';
+		i++;
+	}
+	return (minus * num);
+}
+
+
+
+
+/* int	doubles(stack *a, int num)
+{
+	while (a != NULL)
+	{
+		if (a->value == num)
+			return (1);
+		a = a->next;
+	}
+	return (0);
+} */
 
 int	input_check(char *str)
 {
 	int	i;
 
 	i = 0;
+	if (str[i] == '-' || str[i] == '+' )
+		i++;
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
@@ -43,33 +138,47 @@ int	input_check(char *str)
 	return (0);
 }
 
-void	create_stack(t_stack **a, char **av, int ac)
+void	create_stack(stack **a, char **av, int ac)
 {
-	int	i;
-	//size_t	num;
+	int		i;
+	long	num;
 
 	i = 1;
-	printf("1. INPUT OK\n");
 	while (i < ac)
 	{
 		if (input_check(av[i]))
-			ft_error(a);
+			free_list(a);
+		num = ft_atoi(av[i]);
+		printf("NUM:%li\n", num);//////////////////////////////////////
+		if (num < INT_MIN || num > INT_MAX)
+			free_list(a);
+		/* if (doubles(*a, num))
+			free_list(&a); */
+		add_list(a, (int)num);
 		i++;
 	}
-	printf("INPUT OK\n");
+	printf("PASS\n");
+
 }
 
 int	main(int argc, char **argv)
 {
-	t_stack	*a;
-	size_t	i;
+	stack	*a;
 
-	i = 0;
 	a = NULL;
-	if (argc < 2 || !argv[1])
-		return (write(1, "FAIL\n", 5));
+	if (argc < 2 || !argv[1][0])
+		return (0);
 	//stack_a = ft_split(argv[1][0], ' ');
 	create_stack(&a, argv, argc);
+	/* if (!sorted(a))
+	{
+		if (size(a) == 2)
+			sort_two(a);
+		else if (size(a) == 3)
+			sort_three(a);
+		else
+			start_algorithm(a);
+	}
+	free(a); */
 	return (0);
 }
-
