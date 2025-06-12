@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/12 14:58:21 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:34:30 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,46 @@
 #include <stdio.h>
 
 
-void	add_list(stack *a, int num)
+void *addback(stack **tail, int num)
 {
+	stack *new_node = malloc(sizeof(stack));
+	if (!new_node)
+		return (NULL);
+	new_node->value = num;
+	new_node->prev = *tail;
+	new_node->next = NULL;
 
+	(*tail)->next = new_node;
+	*tail = new_node;
+	printf("Tail hinzugefügt\n"); /////////////////////////////////////////////////////////
+}
+
+stack	*create_head(stack *head, stack *tail, int num)
+{
+	head = malloc(sizeof(stack));
+	if(!head)
+		return (NULL);
+	head->value = num;
+	head->prev = NULL;
+	head->next = NULL;
+	*tail = *head;
+	printf("Head erstellt\n"); /////////////////////////////////////////////////////////
+	return (head);	
+}
+
+void	add_list(stack **a, int num)
+{
+	stack *head;
+	stack *tail;
+
+	head = NULL;
+	tail = NULL;
+
+	if (!a || !*a)
+		a = create_head(&head, &tail, num);
+	else if (addback(&tail, num) == NULL);
+		free_list(&a);
+	
 }
 
 long	ft_atoi(const char *str)
@@ -47,7 +84,7 @@ long	ft_atoi(const char *str)
 }
 
 
-void	ft_error(stack **lst)
+void	free_list(stack **lst)
 {
 	stack	*tmp;
 
@@ -61,9 +98,10 @@ void	ft_error(stack **lst)
 		*lst = tmp;
 	}
 	*lst = NULL;
+	exit(1);
 }
 
-int	doubles(stack *a, int num)
+/* int	doubles(stack *a, int num)
 {
 	while (a != NULL)
 	{
@@ -72,7 +110,7 @@ int	doubles(stack *a, int num)
 		a = a->next;
 	}
 	return (0);
-}
+} */
 
 int	input_check(char *str)
 {
@@ -90,7 +128,7 @@ int	input_check(char *str)
 	return (0);
 }
 
-void	*create_stack(stack **a, char **av, int ac)
+void	create_stack(stack **a, char **av, int ac)
 {
 	int		i;
 	long	num;
@@ -99,18 +137,18 @@ void	*create_stack(stack **a, char **av, int ac)
 	while (i < ac)
 	{
 		if (input_check(av[i]))
-			return (ft_error(a), NULL);
+			free_list(&a);
 		num = ft_atoi(av[i]);
 		printf("NUM:%li\n", num);//////////////////////////////////////
 		if (num < INT_MIN || num > INT_MAX)
-			return (ft_error(a), NULL);
-		if (doubles(*a, num))
-			return (ft_error(a), NULL);
-		add_list(&a, (int)num);
+			free_list(&a);
+		/* if (doubles(*a, num))
+			free_list(&a); */
+		add_list(a, (int)num);
 		i++;
 	}
 	printf("PASS\n");
-	return (NULL);
+	
 }
 
 int	main(int argc, char **argv)
