@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/12 20:09:47 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/12 20:32:05 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <limits.h>
 
-typedef struct s_stack
+typedef struct s_node
 {
 	int				value;
 	int				index;
@@ -29,18 +29,18 @@ typedef struct s_stack
 	struct s_stack	*prev;
 	struct s_stack	*target;
 	bool			first_half;
-}	list
+}	t_node
 
 typedef struct s_stackmeta
 {
-	stack	*head;
-	stack	*tail;
-	stack	*min; 		///kleinster Wert im Stack
-	stack	*max;		///größter Wert im Stack
+	node	*head;
+	node	*tail;
+	node	*min; 		///kleinster Wert im Stack
+	node	*max;		///größter Wert im Stack
 	int		size;		/// Listengröße
 	bool	sorted;		///Sortiert ? Yes : No
 	char	id;
-}	stack
+}	t_stack
 
 
 #endif

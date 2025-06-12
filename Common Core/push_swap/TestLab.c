@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/12 18:41:52 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/12 20:12:08 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 #include <stdio.h>
 
-void	free_list(stack **lst)
+void	free_list(list **lst)
 {
-	stack	*tmp;
+	list	*tmp;
 
 	printf("ERROR\n"); /////////////////////////////////////////////////////////
 	if (!lst || !*lst)
@@ -31,11 +31,11 @@ void	free_list(stack **lst)
 	exit(1);
 }
 
-int	add_back(stack **a, stack **tail, int num)
+int	add_back(list **tail, int num)
 {
-	stack	*curr;
+	list	*curr;
 
-	curr = malloc(sizeof(stack));
+	curr = malloc(sizeof(list));
 	if (!curr)
 		return (1);
 	curr->value = num;
@@ -44,18 +44,16 @@ int	add_back(stack **a, stack **tail, int num)
 
 	if (*tail != NULL)
 		(*tail)->next = curr;
-	else
-		*a = curr;
 	*tail = curr;
 	printf("Tail hinzugefügt\n"); //////////////////////////////////////////
 	return (0);
 }
 
-stack	*create_head(stack **head, stack **tail, int num)
+list	*create_head(list **head, list **tail, int num)
 {
-	stack	*new;
+	list	*new;
 
-	new = malloc(sizeof(stack));
+	new = malloc(sizeof(list));
 	if (!head)
 		return (NULL);
 	new->value = num;
@@ -67,10 +65,10 @@ stack	*create_head(stack **head, stack **tail, int num)
 	return (*head);
 }
 
-void	add_list(stack **a, int num)
+void	add_list(list **a, int num)
 {
-	stack	*head;
-	stack	*tail;
+	list	*head;
+	list	*tail;
 
 	head = NULL;
 	tail = NULL;
@@ -111,7 +109,7 @@ long	ft_atoi(const char *str)
 
 
 
-/* int	doubles(stack *a, int num)
+/* int	doubles(list *a, int num)
 {
 	while (a != NULL)
 	{
@@ -138,7 +136,7 @@ int	input_check(char *str)
 	return (0);
 }
 
-void	create_stack(stack **a, char **av, int ac)
+void	create_list(list **a, char **av, int ac)
 {
 	int		i;
 	long	num;
@@ -168,7 +166,7 @@ int	main(int argc, char **argv)
 	a = NULL;
 	if (argc < 2 || !argv[1][0])
 		return (0);
-	//stack_a = ft_split(argv[1][0], ' ');
+	//list_a = ft_split(argv[1][0], ' ');
 	create_stack(&a, argv, argc);
 	/* if (!sorted(a))
 	{
