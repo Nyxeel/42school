@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/12 20:09:58 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:06:31 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,113 +14,60 @@
 
 #include <stdio.h>
 
-void	free_list(list **lst)
+void	stack_clear(t_stack **a)
 {
-	list	*tmp;
+	t_node	*curr;
 
-	printf("ERROR\n"); /////////////////////////////////////////////////////////
-	if (!lst || !*lst)
-		return ;
-	while (*lst)
+	if (!(*a)->head)
+		exit(1);
+	curr = (*a)->head;
+	while (curr->next != NULL)
 	{
-		tmp = (*lst)->next;
-		free(*lst);
-		*lst = tmp;
+		curr = curr->next;
+		free(curr->prev);
 	}
-	*lst = NULL;
-	exit(1);
+	free(curr);
+	free (*a);
 }
 
-int	add_back(list **tail, int num)
+t_node	*create_node(int value)
 {
-	list	*curr;
+	t_node	*new_node;
 
-	curr = malloc(sizeof(list));
-	if (!curr)
-		return (1);
-	curr->value = num;
-	curr->prev = *tail;
-	curr->next = NULL;
-
-	if (*tail != NULL)
-		(*tail)->next = curr;
-	*tail = curr;
-	printf("Tail hinzugefügt\n"); //////////////////////////////////////////
-	return (0);
-}
-
-list	*create_head(list **head, list **tail, int num)
-{
-	list	*new;
-
-	new = malloc(sizeof(list));
-	if (!head)
+	new_node = malloc(sizeof(t_node));
+	if (!new_node)
 		return (NULL);
-	new->value = num;
-	new->prev = NULL;
-	new->next = NULL;
-	*tail = new;
-	*head = new;
-	printf("Head erstellt\n"); ////////////////////////////////////////////////
-	return (*head);
-}
-
-void	add_list(list **a, int num)
-{
-	list	*head;
-	list	*tail;
-
-	head = NULL;
-	tail = NULL;
-
-	if (!a || !*a)
-		*a = create_head(&head, &tail, num);
-	else if (add_back(&tail, num))
-		free_list(a);
-
-}
-
-long	ft_atoi(const char *str)
-{
-	int		minus;
-	long	num;
-	size_t	i;
-
-	i = 0;
-	minus = 1;
-	num = 0;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			minus = minus * (-1);
-		i++;
-	}
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		num = num * 10;
-		num = num + str[i] - '0';
-		i++;
-	}
-	return (minus * num);
+	new_node->value = value;
+	new_node->next = NULL;
+	new_node->prev = NULL;
+	return (new_node);
 }
 
 
-
-
-/* int	doubles(list *a, int num)
+bool	add_node(t_stack **a, int value)
 {
-	while (a != NULL)
-	{
-		if (a->value == num)
-			return (1);
-		a = a->next;
-	}
-	return (0);
-} */
+	t_node	*curr;
 
-int	input_check(char *str)
+	curr = create_node(value);
+	if (!curr)
+		return (false);
+	if (!(*a)->head)
+	{
+
+		(*a)->head = curr;
+		(*a)->tail = curr;
+	}
+	else
+	{
+		(*a)->tail->next = curr;
+		curr->prev = (*a)->tail;
+		(*a)->tail = curr;
+	}
+	(*a)->size++;
+	return (true);
+}
+
+bool	number_check(char *str)
 {
 	int	i;
 
@@ -130,53 +77,75 @@ int	input_check(char *str)
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (1);
+			return (false);
 		i++;
 	}
-	return (0);
+	return (true);
 }
 
-void	create_list(list **a, char **av, int ac)
+bool	doubles(t_stack **a, int num)
 {
-	int		i;
+	t_node	*curr;
+
+	curr = (*a)->head;
+	while (curr != NULL)
+	{
+		if (curr->value == num)
+			return (false);
+		curr = curr->next;
+	}
+	return (true);
+}
+
+bool	input_check(t_stack **a, char **av)
+{
+	size_t	i;
 	long	num;
 
 	i = 1;
-	while (i < ac)
+	while (av[i])
 	{
-		if (input_check(av[i]))
-			free_list(a);
+		if (!number_check(av[i]))
+			return (false);
 		num = ft_atoi(av[i]);
-		printf("NUM:%li\n", num);//////////////////////////////////////
 		if (num < INT_MIN || num > INT_MAX)
-			free_list(a);
-		/* if (doubles(*a, num))
-			free_list(&a); */
-		add_list(a, (int)num);
+			return (false);
+		if ((*a)->head && !doubles(a, num))
+			return (false);
+		if (!add_node(a, num))
+			return (false);
+		//while ((*a)->head->value < (*a)->head->next->value)
+		// IMPLEMENT SORTED CHECK !!!///////////////////////////////////////////
+
 		i++;
 	}
-	printf("PASS\n");
-
+	return (true);
 }
 
 int	main(int argc, char **argv)
 {
-	list	*a;
+	t_stack	*a;
+	t_stack	*b;
+	//int i = 0;
 
-	a = NULL;
-	if (argc < 2 || !argv[1][0])
-		return (0);
-	//list_a = ft_split(argv[1][0], ' ');
-	create_list(&a, argv, argc);
-	/* if (!sorted(a))
+	a = ft_calloc(1, sizeof(t_stack));
+	if (!a)
+		return (write(2, "ERROR\n", 6));
+	b = a;
+
+	if (argc < 2 || !argv[1])
+		return (write(2, "ERROR\n", 6));
+	//stack_a = ft_split(argv[1][0], ' ');
+	if (!input_check(&a, argv))
+		return (stack_clear(&a), write(1, "ERROR\n", 6));
+
+	start_sorting(&a, &b);
+/* 	while (a->head)
 	{
-		if (size(a) == 2)
-			sort_two(a);
-		else if (size(a) == 3)
-			sort_three(a);
-		else
-			start_algorithm(a);
-	}
-	free(a); */
+		printf("Liste[%i]: %i\n", i, a->head->value);
+		a->head = a->head->next;
+		i++;
+	} */
+	stack_clear(&a);
 	return (0);
 }

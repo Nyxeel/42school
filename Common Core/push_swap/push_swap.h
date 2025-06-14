@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/12 21:14:55 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/06/14 15:39:04 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+# include <stdint.h>
 
 typedef struct s_node
 {
@@ -25,22 +26,25 @@ typedef struct s_node
 	int				index;
 	int				cheapest;
 	int				operations;
-	struct s_stack	*next;
-	struct s_stack	*prev;
-	struct s_stack	*target;
+	struct s_node	*next;
+	struct s_node	*prev;
+	struct s_node	*target;
 	bool			first_half;
 }	t_node;
 
 typedef struct s_stack
 {
-	node	*head;
-	node	*tail;
-	node	*min; 		///kleinster Wert im Stack
-	node	*max;		///größter Wert im Stack
+	t_node	*head;
+	t_node	*tail;
+	t_node	*min; 		///kleinster Wert im Stack
+	t_node	*max;		///größter Wert im Stack
 	int		size;		/// Listengröße
 	bool	sorted;		///Sortiert ? Yes : No
 	char	id;
-}	t_stack
+}	t_stack;
 
+void	*ft_bzero(void *s, size_t n);
+long	ft_atoi(const char *str);
+void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif
