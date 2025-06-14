@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/12 20:32:05 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:14:55 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ typedef struct s_node
 	struct s_stack	*prev;
 	struct s_stack	*target;
 	bool			first_half;
-}	t_node
+}	t_node;
 
-typedef struct s_stackmeta
+typedef struct s_stack
 {
 	node	*head;
 	node	*tail;
