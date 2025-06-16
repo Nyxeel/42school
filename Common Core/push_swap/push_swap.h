@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/14 15:39:04 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/16 12:31:04 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
-# include <stdint.h>
 
 typedef struct s_node
 {
@@ -28,7 +27,7 @@ typedef struct s_node
 	int				operations;
 	struct s_node	*next;
 	struct s_node	*prev;
-	struct s_node	*target;
+	struct s_node 	*target;
 	bool			first_half;
 }	t_node;
 
@@ -43,8 +42,7 @@ typedef struct s_stack
 	char	id;
 }	t_stack;
 
-void	*ft_bzero(void *s, size_t n);
+void	ft_bzero(void *s, size_t n);
 long	ft_atoi(const char *str);
-void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif
