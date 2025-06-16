@@ -6,13 +6,11 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/14 19:06:31 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:58:17 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-#include <stdio.h>
 
 void	stack_clear(t_stack **a)
 {
@@ -122,6 +120,21 @@ bool	input_check(t_stack **a, char **av)
 	return (true);
 }
 
+void	print_stack(t_stack *a)
+{
+	size_t	i;
+	t_node *curr;
+
+	curr = a->head;
+	i = 0;
+	while (curr)
+	{
+		printf("Liste[%zu]: %i\n", i, curr->value);
+		curr = curr->next;
+		i++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_stack	*a;
@@ -131,7 +144,9 @@ int	main(int argc, char **argv)
 	a = ft_calloc(1, sizeof(t_stack));
 	if (!a)
 		return (write(2, "ERROR\n", 6));
-	b = a;
+	b = ft_calloc(1, sizeof(t_stack));
+	if (!b)
+		return (write(2, "ERROR\n", 6));
 
 	if (argc < 2 || !argv[1])
 		return (write(2, "ERROR\n", 6));
@@ -139,13 +154,15 @@ int	main(int argc, char **argv)
 	if (!input_check(&a, argv))
 		return (stack_clear(&a), write(1, "ERROR\n", 6));
 
-	start_sorting(&a, &b);
-/* 	while (a->head)
-	{
-		printf("Liste[%i]: %i\n", i, a->head->value);
-		a->head = a->head->next;
-		i++;
-	} */
-	stack_clear(&a);
+	// start_sorting(&a, &b);
+
+	print_stack(a);
+	push('b', &a, &b);
+	print_stack(a);
+	printf("___________________\n");
+	print_stack(b);
+
+
+	//stack_clear(&a);
 	return (0);
 }

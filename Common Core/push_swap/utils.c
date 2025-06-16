@@ -6,13 +6,13 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/14 16:49:43 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:17:59 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	*ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
 	size_t			i;
 	unsigned char	*arr;
@@ -24,7 +24,6 @@ void	*ft_bzero(void *s, size_t n)
 		arr[i] = 0;
 		i++;
 	}
-	return ((void *) s);
 }
 
 void	*ft_calloc(size_t nmemb, size_t size)
@@ -40,7 +39,8 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	p = malloc(total);
 	if (p == NULL)
 		return (NULL);
-	return (ft_bzero(p, total));
+	ft_bzero(p, total);
+	return (p);
 }
 
 long	ft_atoi(const char *str)

@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   TestLab.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/14 12:42:21 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/06/16 18:48:37 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-#include <stdio.h>
-
 void	stack_clear(t_stack **a)
 {
-	if (!a || !*a)
-		return ;
-	t_node *curr;
+	t_node	*curr;
 
+	if (!(*a)->head)
+		exit(1);
 	curr = (*a)->head;
 	while (curr->next != NULL)
 	{
@@ -27,14 +25,12 @@ void	stack_clear(t_stack **a)
 		free(curr->prev);
 	}
 	free(curr);
-	(*a)->head = NULL;
-	(*a)->tail = NULL;
-	exit(1);
+	exit;
 }
 
 t_node	*create_node(int value)
 {
-	t_node *new_node;
+	t_node	*new_node;
 
 	new_node = malloc(sizeof(t_node));
 	if (!new_node)
@@ -48,13 +44,14 @@ t_node	*create_node(int value)
 
 bool	add_node(t_stack **a, int value)
 {
-	t_node *curr;
-	
+	t_node	*curr;
+
 	curr = create_node(value);
 	if (!curr)
 		return (false);
 	if (!(*a)->head)
 	{
+
 		(*a)->head = curr;
 		(*a)->tail = curr;
 	}
@@ -84,6 +81,20 @@ bool	number_check(char *str)
 	return (true);
 }
 
+bool	doubles(t_stack **a, int num)
+{
+	t_node	*curr;
+
+	curr = (*a)->head;
+	while (curr != NULL)
+	{
+		if (curr->value == num)
+			return (false);
+		curr = curr->next;
+	}
+	return (true);
+}
+
 bool	input_check(t_stack **a, char **av)
 {
 	size_t	i;
@@ -95,41 +106,67 @@ bool	input_check(t_stack **a, char **av)
 		if (!number_check(av[i]))
 			return (false);
 		num = ft_atoi(av[i]);
-		printf("NUM:%li\n", num);//////////////////////////////////////
 		if (num < INT_MIN || num > INT_MAX)
 			return (false);
-		if (!add_node(a, (int)num))
+		if ((*a)->head && !doubles(a, num))
 			return (false);
-		//if (sorted)
-		
-		//if (doubles)
+		if (!add_node(a, num))
+			return (false);
+		//while ((*a)->head->value < (*a)->head->next->value)
+		// IMPLEMENT SORTED CHECK !!!///////////////////////////////////////////
 
 		i++;
 	}
-	printf("INPUT CHECK PASS\n");
 	return (true);
+}
+
+void	print_stack(t_stack *a)
+{
+	size_t	i;
+	t_node *curr;
+
+	curr = a->head;
+	i = 0;
+	while (curr)
+	{
+		printf("Liste[%zu]: %i\n", i, curr->value);
+		curr = curr->next;
+		i++;
+	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_stack	*a;
-	t_stack *b;
+	t_stack	*b;
+	//int i = 0;
 
-	a = NULL;
-	b = a;
-	a->id = 'a';
-	b->id = 'b';
-	a->size = 0;
-	b->size = 0;
-	a->sorted = true;
-	b->sorted = true;
+	a = ft_calloc(1, sizeof(t_stack));
+	if (!a)
+		return (write(2, "ERROR\n", 6));
+	b =  ft_calloc(1, sizeof(t_stack));
+	if (!b)
+		return (write(2, "ERROR\n", 6));
 
 	if (argc < 2 || !argv[1])
-		return (write(1, "ERROR\n", 6));
-	//a = ft_split(argv[1][0], ' ');
-
+		return (write(2, "ERROR\n", 6));
+	//stack_a = ft_split(argv[1][0], ' ');
 	if (!input_check(&a, argv))
-		stack_clear(&a);
+		return (stack_clear(&a), write(1, "ERROR\n", 6));
 
+	// start_sorting(&a, &b);
+
+	print_stack(a);
+	push('b', &a, &b);
+	print_stack(a);
+	printf("___________________\n");
+	print_stack(b);
+
+
+
+	stack_clear(&a);
+	stack_clear(&b);
+	free(a);
+	free(b);
 	return (0);
 }
