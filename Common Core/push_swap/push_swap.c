@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/27 20:55:50 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/28 00:25:30 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ bool	doubles(t_stack **a, int num)
 	while (curr != NULL)
 	{
 		if (curr->value == num)
-			return (write(2, "DOUBLES\n", 8), false);
+			return (write(2, "DOUBLES\n", 8), false); ///////////////////////////////////////////
 		curr = curr->next;
 	}
 	return (true);
@@ -128,7 +128,7 @@ void	print_stack(t_stack *a)
 	i = 0;
 	while (curr)
 	{
-		printf("Node[%zu]: %i\n", i, curr->value);
+		printf("Node[%zu]: %i - Target in B: \n", i, curr->value);
 		curr = curr->next;
 		i++;
 	}
@@ -171,7 +171,7 @@ int	main(int argc, char **argv)
 	print_stack(b);
 	printf("\n");
 
-
+	printf("Node[0]: 99 - Target in B = %i", a->head->target->value);
 
 	stack_clear(&a);
 	stack_clear(&b);

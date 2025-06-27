@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TestLab.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/27 21:06:50 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/28 00:20:47 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	start_algorithm(t_stack *a, t_stack *b)
 {
 	push('b', &a, &b);
 	push('b', &a, &b);
+	push('b', &a, &b);
+	push('b', &a, &b);
+	push('b', &a, &b);
 	set_max(b);
 	set_min(b);
 
@@ -43,6 +46,8 @@ void	start_algorithm(t_stack *a, t_stack *b)
 		// find_cheapest(a, b);
 
 		// EXECUTE OPERATIONS
+
+		a->size -= 1;
 
 	}
 
