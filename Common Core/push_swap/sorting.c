@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   TestLab.c                                          :+:      :+:    :+:   */
+/*   sorting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/27 21:06:50 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:59:27 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,10 @@ void	start_algorithm(t_stack *a, t_stack *b)
 	set_max(b);
 	set_min(b);
 
-	printf("MAX VALUE: %i\n", b->max->value);///////////////////////////////////
-	printf("MIN VALUE: %i\n", b->min->value);///////////////////////////////////
+	printf("MAX VALUE: %i\n", b->max->value);
+	printf("MIN VALUE: %i\n", b->min->value);
 
-	while(a->size != 3)
-	{
-		set_targets(a, b);
 
-		// FIND CHEAPEST NODE
-		// find_cheapest(a, b);
-
-		// EXECUTE OPERATIONS
-
-	}
 
 }
 

@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:17:48 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/16 18:21:26 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:08:32 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	push(char id, t_stack **from, t_stack **to)
 	(*to)->head = top;
 	(*from)->size -= 1;
 	(*to)->size += 1;
+	(*from)->operations += 1;
 	if (id == 'a')
 		write(1, "pa\n", 3);
 	else if (id == 'b')
@@ -45,7 +46,7 @@ void	swap(char id, t_stack **stack)
 
 	if (!(*stack)->head)
 	{
-		printf("FAIL");
+		printf("FAIL"); //////////////////////////////////////////////////////////////
 		return ;
 	}
 	first = (*stack)->head;
@@ -59,7 +60,7 @@ void	swap(char id, t_stack **stack)
 	second->next = first;
 	second->prev = NULL;
 	(*stack)->head = second;
-	// AUSGABE
+	(*stack)->operations += 1;
 	if (id == 'a')
 		write(1, "sa\n", 3);
 	else if (id == 'b')
@@ -77,7 +78,7 @@ void	rotate(char id, t_stack **stack)
 		return ;
 	if ((*stack)->size == 2)
 	{
-		swap(id, stack);
+		swap(id, stack);            /// ONE LINER return (swap(id, stack);
 		return ;
 	}
 	(*stack)->head = first->next;
@@ -86,6 +87,7 @@ void	rotate(char id, t_stack **stack)
 	first->prev = last;
 	last->next = first;
 	last = first;
+	(*stack)->operations += 1;
 	if (id == 'a')
 		write(1, "ra\n", 3);
 	else if (id == 'b')
@@ -107,6 +109,7 @@ void	r_rotate(char id, t_stack **stack)
 	last->prev = NULL;
 	first->prev = last;
 	(*stack)->head = last;
+	(*stack)->operations += 1;
 	if (id == 'a')
 		write(1, "rra\n", 4);
 	else if (id == 'b')

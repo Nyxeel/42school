@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/16 18:21:49 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:01:07 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,20 @@
 # include <limits.h>
 # include <stdint.h>
 
+
+
 typedef struct s_node
 {
 	int				value;
 	int				index;
 	int				cheapest;
-	int				operations;
 	struct s_node	*next;
 	struct s_node	*prev;
 	struct s_node	*target;
 	bool			first_half;
 }	t_node;
+
+
 
 typedef struct s_stack
 {
@@ -41,17 +44,32 @@ typedef struct s_stack
 	int		size;		/// Listengröße
 	bool	sorted;		///Sortiert ? Yes : No
 	char	id;
+	int		operations;
 }	t_stack;
+
+
+
 
 /// UTILS
 void	ft_bzero(void *s, size_t n);
 long	ft_atoi(const char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
 
+
+
 ///	COMANDS
 void	swap(char id, t_stack **stack);
 void	push(char id, t_stack **from, t_stack **to);
 void	rotate(char id, t_stack **stack);
 void	r_rotate(char id, t_stack **stack);
+
+
+
+// SORTING
+void	start_sorting(t_stack *a, t_stack *b);
+void	set_max(t_stack *stack);
+void	set_min(t_stack *stack);
+bool	sorted(t_stack *a);
+
 
 #endif

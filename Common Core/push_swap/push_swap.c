@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/16 17:58:17 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:55:50 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	stack_clear(t_stack **a)
 	t_node	*curr;
 
 	if (!(*a)->head)
-		exit(1);
+		return ;
 	curr = (*a)->head;
 	while (curr->next != NULL)
 	{
@@ -25,7 +25,6 @@ void	stack_clear(t_stack **a)
 		free(curr->prev);
 	}
 	free(curr);
-	free (*a);
 }
 
 t_node	*create_node(int value)
@@ -89,7 +88,7 @@ bool	doubles(t_stack **a, int num)
 	while (curr != NULL)
 	{
 		if (curr->value == num)
-			return (false);
+			return (write(2, "DOUBLES\n", 8), false);
 		curr = curr->next;
 	}
 	return (true);
@@ -109,7 +108,7 @@ bool	input_check(t_stack **a, char **av)
 		if (num < INT_MIN || num > INT_MAX)
 			return (false);
 		if ((*a)->head && !doubles(a, num))
-			return (false);
+			return (printf("false\n"), false);
 		if (!add_node(a, num))
 			return (false);
 		//while ((*a)->head->value < (*a)->head->next->value)
@@ -129,11 +128,19 @@ void	print_stack(t_stack *a)
 	i = 0;
 	while (curr)
 	{
-		printf("Liste[%zu]: %i\n", i, curr->value);
+		printf("Node[%zu]: %i\n", i, curr->value);
 		curr = curr->next;
 		i++;
 	}
 }
+
+
+/* void	start_sorting(t_stack *a, t_stack *b)
+{
+
+} */
+
+
 
 int	main(int argc, char **argv)
 {
@@ -143,26 +150,32 @@ int	main(int argc, char **argv)
 
 	a = ft_calloc(1, sizeof(t_stack));
 	if (!a)
-		return (write(2, "ERROR\n", 6));
+		return (write(2, "1ERROR\n", 7));
 	b = ft_calloc(1, sizeof(t_stack));
-	if (!b)
-		return (write(2, "ERROR\n", 6));
-
-	if (argc < 2 || !argv[1])
-		return (write(2, "ERROR\n", 6));
-	//stack_a = ft_split(argv[1][0], ' ');
+	if (!b || argc < 2 || !argv[1])
+		return (stack_clear(&a), free(a), write(2, "2ERROR\n", 7));
+	/* if (argc == 2)
+		argv = ft_split(argv[1][0], ' '); */
 	if (!input_check(&a, argv))
-		return (stack_clear(&a), write(1, "ERROR\n", 6));
+		return (stack_clear(&a), stack_clear(&b), free(a), free(b), write(1, "3ERROR\n", 7));
 
-	// start_sorting(&a, &b);
 
+	start_sorting(a, b);
+
+	printf("\n-------SORTED-------\n");
+	printf("\n_________A_________\n");
 	print_stack(a);
-	push('b', &a, &b);
-	print_stack(a);
-	printf("___________________\n");
+
+	printf("--------------------\n");
+	printf("\n_________B_________\n");
 	print_stack(b);
+	printf("\n");
 
 
-	//stack_clear(&a);
+
+	stack_clear(&a);
+	stack_clear(&b);
+	free(a);
+	free(b);
 	return (0);
 }
