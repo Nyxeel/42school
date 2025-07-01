@@ -6,49 +6,56 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/01 16:39:36 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/01 23:47:44 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 
-void	start_algorithm(t_stack *a, t_stack *b)
-{
-	push('b', &a, &b);
-	push('b', &a, &b);
-	push('b', &a, &b);
-	push('b', &a, &b);
-	push('b', &a, &b);
-
-	set_max(b);
-	set_min(b);
-
-	printf("MAX VALUE: %i\n", b->max->value);///////////////////////////////////
-	printf("MIN VALUE: %i\n", b->min->value);///////////////////////////////////
-
-	set_targets(a, b);
-
-	// FIND CHEAPEST NODE
-
-	find_cheapest(a, b);
-
-		// EXECUTE OPERATIONS
-
-}
-
 
 void	sort_three(t_stack *a)
 {
 	set_max(a);
 	if (a->max == a->head)
-		rotate('a', &a);
+	rotate('a', &a);
 	else if (a->max == a->head->next)
-		r_rotate('a', &a);
+	r_rotate('a', &a);
 	if (!sorted(a))
-		swap('a', &a);
+	swap('a', &a);
 }
 
+
+void	start_algorithm(t_stack *a, t_stack *b)
+{
+	push('b', &a, &b);
+	push('b', &a, &b);
+
+	int i = 0;
+
+
+
+	while (i < 4)
+	{
+	////////////////////////////////////////////
+		set_max(b);
+		set_min(b);
+
+		// SET TARGET NODE IN B
+		set_targets(a, b);
+
+		set_index(a);
+		set_index(b);
+		// FIND CHEAPEST NODE
+
+
+		// EXECUTE OPERATIONS
+		operation_exec(a, b);
+
+		i++;
+	}
+	//sort_three(a);
+}
 
 void	start_sorting(t_stack *a, t_stack *b)
 {
@@ -62,7 +69,7 @@ void	start_sorting(t_stack *a, t_stack *b)
 			start_algorithm(a, b);
 	}
 	else
-		printf("SORTED!!!\n");
+		exit(1);
 
 	// PUSH BACK FROM B TO A
 

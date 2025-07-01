@@ -3,45 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   sorting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/28 01:30:11 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/01 18:27:29 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/* void	turk_sort(a, b);
-{
-	// FIND TARGET
-
-	// FIND CHEAPEST
-
-	// EXECUTE OPERATIONS
-
-	// SET MAX & SET MIN
-}
- */
 
 
 void	start_algorithm(t_stack *a, t_stack *b)
 {
 	push('b', &a, &b);
 	push('b', &a, &b);
-	
+	push('b', &a, &b);
+	push('b', &a, &b);
+	push('b', &a, &b);
+
+
+
+	////////////////////////////////////////////
+
 	set_max(b);
 	set_min(b);
 
 	printf("MAX VALUE: %i\n", b->max->value);///////////////////////////////////
 	printf("MIN VALUE: %i\n", b->min->value);///////////////////////////////////
 
+	// SET TARGET NODE IN B
 	set_targets(a, b);
 
 	// FIND CHEAPEST NODE
-	find_cheapest(a, b);
+	find_cheapest(a);
 
-		// EXECUTE OPERATIONS
+	// EXECUTE OPERATIONS
+
 
 }
 

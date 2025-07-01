@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/01 16:47:31 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/01 23:43:43 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 //////				CALC CHEAPEST NODE
 
-int	cost_double_operations(int costA, int costB)
+int	find_max(int costA, int costB)
 {
 	if (costA < costB)
 		return (costB);
@@ -53,13 +53,13 @@ void	set_index(t_stack *stack)
 	}
 }
 
-void	find_cheapest(t_stack *a, t_stack *b)
+t_node	*find_cheapest(t_stack *a, t_stack *b)
 {
 	t_node	*node;
 	long	min_cost;
+	//int costs = 0;
 
-	set_index(a);
-	set_index(b);
+
 	node = a->head;
 	min_cost = INT_MAX;
 	while (node)
@@ -68,17 +68,20 @@ void	find_cheapest(t_stack *a, t_stack *b)
 		node->target->cost = calc(node->target, b);
 		if ((node->first_half == true && node->target->first_half == true)
 			|| (node->first_half == false && node->target->first_half == false))
-			node->cost = cost_double_operations(node->cost, node->target->cost);
+			node->cost = find_max(node->cost, node->target->cost);
 		else
 			node->cost = node->cost + node->target->cost;
 		if (node->next && node->cost < min_cost)
 		{
 			min_cost = node->cost;
 			a->cheapest = node;
-			a->cheapest->cost = node->cost;
+		/* 	a->cheapest->cost = node->cost;
+			a->cheapest->target = node->target;
+			a->cheapest->target->cost = node->target->cost; */
 		}
 		node = node->next;
 	}
+	return (a->cheapest);
 }
 
 

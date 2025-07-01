@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/01 16:43:46 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/01 22:31:13 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,6 @@ bool	input_check(t_stack **a, char **av)
 			return (printf("false\n"), false);
 		if (!add_node(a, num))
 			return (false);
-		//while ((*a)->head->value < (*a)->head->next->value)
-		// IMPLEMENT SORTED CHECK !!!///////////////////////////////////////////
-
 		i++;
 	}
 	return (true);
@@ -124,22 +121,25 @@ void	print_stack_a(t_stack *a)
 	size_t	i;
 	t_node *curr;
 
+
 	curr = a->head;
+	
+
 	i = 0;
 	while (curr)
 	{
-		printf("Node[%zu]: %i\tTarget in B: %i\t\tCOST: %i\n", i, curr->value, curr->target->value, curr->cost);
+		printf("Node[%zu]: %i\t\tTarget in B: %i \tCOSTS: %i\n", i, curr->value, curr->target->value, a->cheapest->cost + a->cheapest->target->cost);
 		curr = curr->next;
 		i++;
 	}
 }
 
-void	print_stack_b(t_stack *a)
+void	print_stack_b(t_stack *b)
 {
 	size_t	i;
 	t_node *curr;
 
-	curr = a->head;
+	curr = b->head;
 	i = 0;
 	while (curr)
 	{
@@ -174,7 +174,6 @@ int	main(int argc, char **argv)
 	if (!input_check(&a, argv))
 		return (stack_clear(&a), stack_clear(&b), free(a), free(b), write(1, "3ERROR\n", 7));
 
-
 	start_sorting(a, b);
 
 	printf("\n_________A_________\n");
@@ -185,7 +184,9 @@ int	main(int argc, char **argv)
 	print_stack_b(b);
 	printf("\n");
 
-	printf("CHEAPEST: %i - COSTS: %i\n",  a->cheapest->value, a->cheapest->cost);
+	printf("CHEAPEST in A: %i - COSTS to TOP: %i\n",  a->cheapest->value, a->cheapest->cost);
+	printf("TARGET in B: %i - COSTS to TOP: %i\n",  a->cheapest->target->value, a->cheapest->target->cost);
+	printf("TOTAL COSTS: %i \n", a->cheapest->target->cost + a->cheapest->cost);
 
 	stack_clear(&a);
 	stack_clear(&b);

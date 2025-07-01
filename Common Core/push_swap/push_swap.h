@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/01 16:47:18 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/01 23:49:02 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_node
 	struct s_node	*next;
 	struct s_node	*prev;
 	struct s_node	*target;
+	struct s_node	*cheapest;
 	bool			first_half;
 }	t_node;
 
@@ -41,7 +42,6 @@ typedef struct s_stack
 	t_node	*tail;
 	t_node	*min;		///kleinster Wert im Stack
 	t_node	*max;		///größter Wert im Stack
-	t_node	*cheapest;	/// Node mit cheapest Operations Kosten
 	int		size;		/// Listengröße
 	bool	sorted;		///Sortiert ? Yes : No
 	char	id;
@@ -74,7 +74,12 @@ bool	sorted(t_stack *a);
 void	set_targets(t_stack *a, t_stack *b);
 
 
-void	find_cheapest(t_stack *a, t_stack *b);
+t_node	*find_cheapest(t_stack *a, t_stack *b);
 void	set_index(t_stack *stack);
+void	operation_exec(t_stack *a, t_stack *b);
+
+
+void	print_stack_a(t_stack *a);
+void	print_stack_b(t_stack *a);
 
 #endif
