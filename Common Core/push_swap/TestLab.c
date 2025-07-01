@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TestLab.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/28 03:56:40 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/01 16:39:36 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	start_algorithm(t_stack *a, t_stack *b)
 {
 	push('b', &a, &b);
 	push('b', &a, &b);
-	
+	push('b', &a, &b);
+	push('b', &a, &b);
+	push('b', &a, &b);
+
 	set_max(b);
 	set_min(b);
 
@@ -27,9 +30,8 @@ void	start_algorithm(t_stack *a, t_stack *b)
 	set_targets(a, b);
 
 	// FIND CHEAPEST NODE
-	set_index(a);
-	set_index(b);
-	//find_cheapest(a, b);
+
+	find_cheapest(a, b);
 
 		// EXECUTE OPERATIONS
 

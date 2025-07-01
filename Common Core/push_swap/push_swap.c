@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/01 10:53:02 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/01 16:43:46 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ bool	doubles(t_stack **a, int num)
 	while (curr != NULL)
 	{
 		if (curr->value == num)
-			return (write(2, "DOUBLES\n", 8), false); ///////////////////////////////////////////
+			return (write(2, "DOUBLES\n", 8), false); /////////////////
 		curr = curr->next;
 	}
 	return (true);
@@ -128,7 +128,7 @@ void	print_stack_a(t_stack *a)
 	i = 0;
 	while (curr)
 	{
-		printf("Node[%zu]: %i - Target in B: %i\n", i, curr->value, curr->target->value);
+		printf("Node[%zu]: %i\tTarget in B: %i\t\tCOST: %i\n", i, curr->value, curr->target->value, curr->cost);
 		curr = curr->next;
 		i++;
 	}
@@ -177,7 +177,6 @@ int	main(int argc, char **argv)
 
 	start_sorting(a, b);
 
-	printf("\n-------SORTED-------\n");
 	printf("\n_________A_________\n");
 	print_stack_a(a);
 
@@ -186,7 +185,7 @@ int	main(int argc, char **argv)
 	print_stack_b(b);
 	printf("\n");
 
-	printf("CHEAPEST: %i",  a->cheapest->cost);
+	printf("CHEAPEST: %i - COSTS: %i\n",  a->cheapest->value, a->cheapest->cost);
 
 	stack_clear(&a);
 	stack_clear(&b);

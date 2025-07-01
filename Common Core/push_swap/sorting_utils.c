@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/01 11:07:21 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/01 16:47:31 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,13 @@
 
 //////				CALC CHEAPEST NODE
 
-
+int	cost_double_operations(int costA, int costB)
+{
+	if (costA < costB)
+		return (costB);
+	else
+		return (costA);
+}
 
 int	calc(t_node *node, t_stack *stack)
 {
@@ -38,6 +44,10 @@ void	set_index(t_stack *stack)
 	while (node)
 	{
 		node->index = idx;
+		if (node->index <= stack->size / 2)
+			node->first_half = true;
+		else
+			node->first_half = false;
 		idx++;
 		node = node->next;
 	}
@@ -47,17 +57,20 @@ void	find_cheapest(t_stack *a, t_stack *b)
 {
 	t_node	*node;
 	long	min_cost;
-	int		cost;
 
 	set_index(a);
 	set_index(b);
-	cost = 0;
 	node = a->head;
 	min_cost = INT_MAX;
 	while (node)
 	{
-		cost = calc(node, a) + calc(node->target, b);
-		node->cost = cost;	
+		node->cost = calc(node, a);
+		node->target->cost = calc(node->target, b);
+		if ((node->first_half == true && node->target->first_half == true)
+			|| (node->first_half == false && node->target->first_half == false))
+			node->cost = cost_double_operations(node->cost, node->target->cost);
+		else
+			node->cost = node->cost + node->target->cost;
 		if (node->next && node->cost < min_cost)
 		{
 			min_cost = node->cost;
@@ -95,9 +108,9 @@ void	set_targets(t_stack *a, t_stack *b)
 			}
 			node_b = node_b->next;
 		}
-	if (!node_a->target)
-		node_a->target = b->max;		
-	node_a = node_a->next;
+		if (!node_a->target)
+			node_a->target = b->max;
+		node_a = node_a->next;
 	}
 }
 
