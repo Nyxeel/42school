@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/28 00:25:30 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/01 10:53:02 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ bool	input_check(t_stack **a, char **av)
 	return (true);
 }
 
-void	print_stack(t_stack *a)
+void	print_stack_a(t_stack *a)
 {
 	size_t	i;
 	t_node *curr;
@@ -128,7 +128,22 @@ void	print_stack(t_stack *a)
 	i = 0;
 	while (curr)
 	{
-		printf("Node[%zu]: %i - Target in B: \n", i, curr->value);
+		printf("Node[%zu]: %i - Target in B: %i\n", i, curr->value, curr->target->value);
+		curr = curr->next;
+		i++;
+	}
+}
+
+void	print_stack_b(t_stack *a)
+{
+	size_t	i;
+	t_node *curr;
+
+	curr = a->head;
+	i = 0;
+	while (curr)
+	{
+		printf("Node[%zu]: %i\n", i, curr->value);
 		curr = curr->next;
 		i++;
 	}
@@ -150,7 +165,7 @@ int	main(int argc, char **argv)
 
 	a = ft_calloc(1, sizeof(t_stack));
 	if (!a)
-		return (write(2, "1ERROR\n", 7));
+		return (write(2, "ERROR\n", 7));
 	b = ft_calloc(1, sizeof(t_stack));
 	if (!b || argc < 2 || !argv[1])
 		return (stack_clear(&a), free(a), write(2, "2ERROR\n", 7));
@@ -164,14 +179,14 @@ int	main(int argc, char **argv)
 
 	printf("\n-------SORTED-------\n");
 	printf("\n_________A_________\n");
-	print_stack(a);
+	print_stack_a(a);
 
 	printf("--------------------\n");
 	printf("\n_________B_________\n");
-	print_stack(b);
+	print_stack_b(b);
 	printf("\n");
 
-	printf("Node[0]: 99 - Target in B = %i", a->head->target->value);
+	printf("CHEAPEST: %i",  a->cheapest->cost);
 
 	stack_clear(&a);
 	stack_clear(&b);

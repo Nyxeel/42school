@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/27 20:59:27 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/06/28 01:30:11 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,19 @@ void	start_algorithm(t_stack *a, t_stack *b)
 {
 	push('b', &a, &b);
 	push('b', &a, &b);
+	
 	set_max(b);
 	set_min(b);
 
-	printf("MAX VALUE: %i\n", b->max->value);
-	printf("MIN VALUE: %i\n", b->min->value);
+	printf("MAX VALUE: %i\n", b->max->value);///////////////////////////////////
+	printf("MIN VALUE: %i\n", b->min->value);///////////////////////////////////
 
+	set_targets(a, b);
 
+	// FIND CHEAPEST NODE
+	find_cheapest(a, b);
+
+		// EXECUTE OPERATIONS
 
 }
 

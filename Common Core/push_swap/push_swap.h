@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/06/28 00:16:53 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/01 11:06:26 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_node
 {
 	int				value;
 	int				index;
-	int				cheapest;
+	int				cost;
 	struct s_node	*next;
 	struct s_node	*prev;
 	struct s_node	*target;
@@ -41,6 +41,7 @@ typedef struct s_stack
 	t_node	*tail;
 	t_node	*min;		///kleinster Wert im Stack
 	t_node	*max;		///größter Wert im Stack
+	t_node	*cheapest;	/// Node mit cheapest Operations Kosten
 	int		size;		/// Listengröße
 	bool	sorted;		///Sortiert ? Yes : No
 	char	id;
@@ -72,5 +73,8 @@ void	set_min(t_stack *stack);
 bool	sorted(t_stack *a);
 void	set_targets(t_stack *a, t_stack *b);
 
+
+void	find_cheapest(t_stack *a, t_stack *b);
+void	set_index(t_stack *stack);
 
 #endif
