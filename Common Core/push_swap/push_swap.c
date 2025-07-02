@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/01 22:31:13 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/02 02:22:20 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	print_stack_a(t_stack *a)
 	i = 0;
 	while (curr)
 	{
-		printf("Node[%zu]: %i\t\tTarget in B: %i \tCOSTS: %i\n", i, curr->value, curr->target->value, a->cheapest->cost + a->cheapest->target->cost);
+		printf("Node[%zu]: %i\t\tTarget in B: %i\n", i, curr->value, curr->target->value);
 		curr = curr->next;
 		i++;
 	}
@@ -184,10 +184,10 @@ int	main(int argc, char **argv)
 	print_stack_b(b);
 	printf("\n");
 
-	printf("CHEAPEST in A: %i - COSTS to TOP: %i\n",  a->cheapest->value, a->cheapest->cost);
-	printf("TARGET in B: %i - COSTS to TOP: %i\n",  a->cheapest->target->value, a->cheapest->target->cost);
-	printf("TOTAL COSTS: %i \n", a->cheapest->target->cost + a->cheapest->cost);
-
+	printf("CHEAPEST in A: %i - COSTS to TOP: %i\n",  a->head->cheapest->value, a->head->cheapest->cost);
+	printf("TARGET in B: %i - COSTS to TOP: %i\n",  a->head->target->value, a->head->target->cost);
+	printf("TOTAL COSTS: %i \n", a->head->target->cost + a->head->cheapest->cost);
+  
 	stack_clear(&a);
 	stack_clear(&b);
 	free(a);
