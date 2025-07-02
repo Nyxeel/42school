@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 11:59:27 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/02 12:25:02 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ int	calc(t_node *node, t_stack *stack)
 	return (cost);
 }
 
-void	set_index(t_stack **stack)
+void	set_index(t_stack *stack)
 {
 	t_node	*node;
 	int		idx;
 
 	idx = 0;
-	node = (*stack)->head;
+	node = stack->head;
 	while (node)
 	{
 		node->index = idx;
-		if (node->index <= (*stack)->size / 2)
+		if (node->index <= stack->size / 2)
 			node->first_half = true;
 		else
 			node->first_half = false;
@@ -53,19 +53,19 @@ void	set_index(t_stack **stack)
 	}
 }
 
-void	find_cheapest(t_stack **a, t_stack **b)
+void	find_cheapest(t_stack *a, t_stack *b)
 {
 	t_node	*node;
 	long	min_cost;
 	int cost = 0;
 
 
-	node = (*a)->head;
+	node = a->head;
 	min_cost = INT_MAX;
 	while (node)
 	{
-		node->cost = calc(node, *a);
-		node->target->cost = calc(node->target, *b);
+		node->cost = calc(node, a);
+		node->target->cost = calc(node->target, b);
 		if ((node->first_half == true && node->target->first_half == true)
 			|| (node->first_half == false && node->target->first_half == false))
 			cost = find_max(node->cost, node->target->cost);
@@ -88,18 +88,18 @@ void	find_cheapest(t_stack **a, t_stack **b)
 
 
 
-void	set_targets(t_stack **a, t_stack **b)
+void	set_targets(t_stack *a, t_stack *b)
 {
 	t_node	*node_a;
 	t_node	*node_b;
 	long	max_value;
 
-	node_a = (*a)->head;
+	node_a = a->head;
 	while (node_a)
 	{
 		node_a->target = NULL;
 		max_value = INT_MIN;
-		node_b = (*b)->head;
+		node_b = b->head;
 		while (node_b)
 		{
 			if (node_b->value < node_a->value && node_b->value > max_value)
@@ -110,44 +110,44 @@ void	set_targets(t_stack **a, t_stack **b)
 			node_b = node_b->next;
 		}
 		if (!node_a->target)
-			node_a->target = (*b)->max;
+			node_a->target = b->max;
 		node_a = node_a->next;
 	}
 }
 
-void	set_max(t_stack **stack)
+void	set_max(t_stack *stack)
 {
 	t_node	*curr;
 
-	(*stack)->max = (*stack)->head;
-	curr = (*stack)->head;
+	stack->max = stack->head;
+	curr = stack->head;
 	while (curr)
 	{
-		if (curr->value > (*stack)->max->value)
-			(*stack)->max = curr;
+		if (curr->value > stack->max->value)
+			stack->max = curr;
 		curr = curr->next;
 	}
 }
 
-void	set_min(t_stack **stack)
+void	set_min(t_stack *stack)
 {
 	t_node	*curr;
 
-	(*stack)->min = (*stack)->head;
-	curr = (*stack)->head;
+	stack->min = stack->head;
+	curr = stack->head;
 	while (curr)
 	{
-		if (curr->value < (*stack)->min->value)
-			(*stack)->min = curr;
+		if (curr->value < stack->min->value)
+			stack->min = curr;
 		curr = curr->next;
 	}
 }
 
-bool	sorted(t_stack **a)
+bool	sorted(t_stack *a)
 {
 	t_node	*curr;
 
-	curr = (*a)->head;
+	curr = a->head;
 	while (curr != NULL)
 	{
 		if (curr->next && curr->value > curr->next->value)
