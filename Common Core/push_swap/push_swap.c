@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 02:22:20 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/02 03:06:54 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ bool	input_check(t_stack **a, char **av)
 	}
 	return (true);
 }
-
 void	print_stack_a(t_stack *a)
 {
 	size_t	i;
@@ -150,12 +149,6 @@ void	print_stack_b(t_stack *b)
 }
 
 
-/* void	start_sorting(t_stack *a, t_stack *b)
-{
-
-} */
-
-
 
 int	main(int argc, char **argv)
 {
@@ -176,17 +169,8 @@ int	main(int argc, char **argv)
 
 	start_sorting(a, b);
 
-	printf("\n_________A_________\n");
-	print_stack_a(a);
+	
 
-	printf("--------------------\n");
-	printf("\n_________B_________\n");
-	print_stack_b(b);
-	printf("\n");
-
-	printf("CHEAPEST in A: %i - COSTS to TOP: %i\n",  a->head->cheapest->value, a->head->cheapest->cost);
-	printf("TARGET in B: %i - COSTS to TOP: %i\n",  a->head->target->value, a->head->target->cost);
-	printf("TOTAL COSTS: %i \n", a->head->target->cost + a->head->cheapest->cost);
   
 	stack_clear(&a);
 	stack_clear(&b);

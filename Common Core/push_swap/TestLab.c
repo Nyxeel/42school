@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 02:57:18 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/02 03:19:47 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@ void	start_algorithm(t_stack *a, t_stack *b)
 	int i = 0;
 
 
-	t_node *curr;
-	curr = a->head;
-
-
 	while (i < 10)
 	{
 	////////////////////////////////////////////
@@ -53,28 +49,24 @@ void	start_algorithm(t_stack *a, t_stack *b)
 		// FIND CHEAPEST NODE
 		find_cheapest(&a, &b);
 		
-	printf("\n_________A_________\n");
-	print_stack_a(a);
+		printf("\n_________A_________\n");
+		print_stack_a(a);
 
-	printf("--------------------\n");
-	printf("\n_________B_________\n");
-	print_stack_b(b);
-	printf("\n");
+		printf("--------------------\n");
+		printf("\n_________B_________\n");
+		print_stack_b(b);
+		printf("\n");
 
-	printf("CHEAPEST in A: %i - COSTS to TOP: %i\n",  curr->cheapest->value, curr->cheapest->cost);
-	printf("TARGET in B: %i - COSTS to TOP: %i\n",  curr->target->value, curr->target->cost);
-	printf("TOTAL COSTS: %i \n", curr->target->cost + curr->cheapest->cost);
+		printf("CHEAPEST in A: %i - COSTS to TOP: %i\n",  a->head->cheapest->value, a->head->cheapest->cost);
+		printf("TARGET in B: %i - COSTS to TOP: %i\n",  a->head->target->value, a->head->target->cost);
+		printf("TOTAL COSTS: %i \n", a->head->target->cost + a->head->cheapest->cost);
  
-		
-
-		
-	sort_three(&a);
-	printf("\n_________A SORTED_________\n");
-	print_stack_a(a); 
-
+	
 		// EXECUTE OPERATIONS
 		operation_exec(&a, &b);
-
+	
+		a->head->cheapest = NULL;
+		a->head->target = NULL;
 		i++;
 	}
 }
