@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operation_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 12:28:20 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/02 17:13:20 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	operation_exec(t_stack *a, t_stack *b)
 	int		i;
 
 	i = 0;
-	cheapest = a->head->cheapest;
-	target = a->head->target;
+	cheapest = a->cheapest;
+	target = a->cheapest->target;
 	int total_costs = cheapest->cost + target->cost;
 
 	if (cheapest->first_half == true && target->first_half == true)

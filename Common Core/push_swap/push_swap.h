@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 14:30:20 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/02 17:11:59 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_node
 	struct s_node	*next;
 	struct s_node	*prev;
 	struct s_node	*target;
-	struct s_node	*cheapest;
 	bool			first_half;
 }	t_node;
 
@@ -42,6 +41,7 @@ typedef struct s_stack
 	t_node	*tail;
 	t_node	*min;		///kleinster Wert im Stack
 	t_node	*max;		///größter Wert im Stack
+	t_node	*cheapest;
 	int		size;		/// Listengröße
 	bool	sorted;		///Sortiert ? Yes : No
 	char	id;

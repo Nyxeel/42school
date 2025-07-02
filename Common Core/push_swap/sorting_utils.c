@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 14:27:14 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/02 17:46:49 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,30 +53,27 @@ void	set_index(t_stack *stack)
 	}
 }
 
-void	find_cheapest(t_stack *a, t_stack *b)
+void	find_cheapest(t_stack *from, t_stack *to)
 {
 	t_node	*node;
 	long	min_cost;
-	int cost = 0;
+	int		total_cost;
 
 
-	node = a->head;
+	node = from->head;
 	min_cost = INT_MAX;
 	while (node)
 	{
-		node->cost = calc(node, a);
-		node->target->cost = calc(node->target, b);
-		if ((node->first_half == true && node->target->first_half == true)
-			|| (node->first_half == false && node->target->first_half == false))
-			cost = find_max(node->cost, node->target->cost);
+		node->cost = calc(node, from);
+		node->target->cost = calc(node->target, to);
+		if (node->first_half == node->target->first_half)
+			total_cost = find_max(node->cost, node->target->cost);
 		else
-			cost = node->cost + node->target->cost;
-		if (node->next && cost < min_cost)
+			total_cost = node->cost + node->target->cost;
+		if (total_cost < min_cost)
 		{
-			min_cost = cost;
-			node->cheapest = node;
-			/* (*a)->head->cost = node->cost;
-			(*a)->head->target->cost = node->target->cost; */
+			min_cost = total_cost;
+			from->cheapest = node;
 		}
 		node = node->next;
 	}
