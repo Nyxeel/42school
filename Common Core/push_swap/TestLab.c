@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 03:19:47 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/02 12:04:09 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	start_algorithm(t_stack *a, t_stack *b)
 	push('b', &a, &b);
 	
 
-	int i = 0;
+	//int i = 0;
 
 
-	while (i < 10)
+	while (a->size >= 3)
 	{
 	////////////////////////////////////////////
 		set_max(&b);
@@ -61,13 +61,12 @@ void	start_algorithm(t_stack *a, t_stack *b)
 		printf("TARGET in B: %i - COSTS to TOP: %i\n",  a->head->target->value, a->head->target->cost);
 		printf("TOTAL COSTS: %i \n", a->head->target->cost + a->head->cheapest->cost);
  
-	
 		// EXECUTE OPERATIONS
 		operation_exec(&a, &b);
 	
 		a->head->cheapest = NULL;
 		a->head->target = NULL;
-		i++;
+		//i++;
 	}
 }
 

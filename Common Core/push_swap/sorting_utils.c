@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 02:29:52 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/02 11:59:27 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	find_cheapest(t_stack **a, t_stack **b)
 		if (node->next && cost < min_cost)
 		{
 			min_cost = cost;
-			(*a)->head->cheapest = node;
+			node->cheapest = node;
 			/* (*a)->head->cost = node->cost;
 			(*a)->head->target->cost = node->target->cost; */
 		}
