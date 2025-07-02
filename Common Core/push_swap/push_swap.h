@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 17:11:59 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/02 21:49:22 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ void	find_cheapest(t_stack *a, t_stack *b);
 void	set_index(t_stack *stack);
 void	operation_exec(t_stack *a, t_stack *b);
 void	push_back(t_stack *a, t_stack *b);
+
+void	rrr(t_stack *a, t_stack *b);
+void	rr(t_stack *a, t_stack *b);
+int	find_min(int node_cost, int target_cost);
+
 
 
 void	print_stack_a(t_stack *a);

@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 17:53:19 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/02 22:54:46 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,13 @@ void	start_algorithm(t_stack *a, t_stack *b)
 		set_index(a);
 		set_index(b);
 
-		find_cheapest(a, b);
+		//find_cheapest(a, b);
 
 		push_back(a, b);
-		//operation_exec(b, a);
 	}
+	set_min(a);
+	//sort_min_to_top(a);
+
 	printf("\n_________A_________\n");
 	print_stack(a);
 

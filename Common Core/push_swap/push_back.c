@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_back.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 14:37:32 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/02 21:51:54 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	push_back(t_stack *a, t_stack *b)
 		}
 		else
 		{
-			while (i ++ < a->size - target->index)		
-			{		
+			while (i ++ < a->size - target->index)
+			{
 				r_rotate('a', &a);
 			}
 		}

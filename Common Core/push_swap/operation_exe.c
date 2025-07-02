@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 17:13:20 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:59:56 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	operation_exec(t_stack *a, t_stack *b)
 	i = 0;
 	cheapest = a->cheapest;
 	target = a->cheapest->target;
-	int total_costs = cheapest->cost + target->cost;
 
 	if (cheapest->first_half == true && target->first_half == true)
 	{
@@ -53,7 +52,7 @@ void	operation_exec(t_stack *a, t_stack *b)
 			i++;
 		}
 		i = 0;
-		while (i < total_costs - find_min(cheapest->cost, target->cost))
+		while (i < find_max(cheapest->cost, target->cost) - find_min(cheapest->cost, target->cost))
 		{
 			if (cheapest->cost == target->cost)
 				break;
@@ -74,7 +73,7 @@ void	operation_exec(t_stack *a, t_stack *b)
 			i++;
 		}
 		i = 0;
-		while (i < total_costs - find_min(cheapest->cost, target->cost))
+		while (i < find_max(cheapest->cost, target->cost) - find_min(cheapest->cost, target->cost))
 		{
 			if (cheapest->cost == target->cost)
 				break ;
