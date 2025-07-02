@@ -6,11 +6,26 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 12:28:35 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/02 14:44:00 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	print_stack(t_stack *a)
+{
+	size_t	i;
+	t_node *curr;
+
+	curr = a->head;
+	i = 0;
+	while (curr)
+	{
+		printf("Node[%zu]: %i\n", i, curr->value);
+		curr = curr->next;
+		i++;
+	}	
+}
 
 
 
@@ -77,6 +92,27 @@ void	start_algorithm(t_stack *a, t_stack *b)
 	printf("--------------------\n");
 	printf("\n_________B_________\n");
 	print_stack_b(b);
+
+
+	//////// PUSH BACK FROM B TO A
+
+	printf("\n\nPUSHBACK\n\n");
+
+	while (b->head)
+	{
+		set_max(a);
+		set_min(a);
+
+		// SET TARGET NODE IN A
+		set_new_targets(a, b);
+
+		set_index(a);
+
+		push_back(a, b);
+
+		/* printf("\n_________A_________\n");
+		print_stack(a); */
+	}
 }
 
 void	start_sorting(t_stack *a, t_stack *b)

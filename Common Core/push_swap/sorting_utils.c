@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 12:25:02 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/02 14:27:14 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,35 @@ void	find_cheapest(t_stack *a, t_stack *b)
 
 
 /////////		SORTING UTILS
+
+
+
+void	set_new_targets(t_stack *a, t_stack *b)
+{
+	t_node	*node_a;
+	t_node	*node_b;
+	long	min_value;
+
+	node_b = b->head;
+	while (node_b)
+	{
+		node_b->target = NULL;
+		min_value = INT_MAX;
+		node_a = a->head;
+		while (node_a)
+		{
+			if (node_b->value < node_a->value && node_a->value < min_value)
+			{
+				min_value = node_a->value;
+				node_b->target = node_a;
+			}
+			node_a = node_a->next;
+		}
+		if (!node_b->target)
+			node_b->target = a->min;
+		node_b = node_b->next;
+	}
+}
 
 
 

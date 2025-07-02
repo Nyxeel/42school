@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 12:24:59 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/02 14:30:20 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,20 @@ void	r_rotate(char id, t_stack **stack);
 
 
 // SORTING
+
 void	start_sorting(t_stack *a, t_stack *b);
 void	set_max(t_stack *stack);
 void	set_min(t_stack *stack);
+int		find_max(int costA, int costB);
 bool	sorted(t_stack *a);
 void	set_targets(t_stack *a, t_stack *b);
 
 
+void	set_new_targets(t_stack *a, t_stack *b);
 void	find_cheapest(t_stack *a, t_stack *b);
 void	set_index(t_stack *stack);
 void	operation_exec(t_stack *a, t_stack *b);
+void	push_back(t_stack *a, t_stack *b);
 
 
 void	print_stack_a(t_stack *a);
