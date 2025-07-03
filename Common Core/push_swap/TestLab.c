@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TestLab.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 22:54:46 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/03 03:36:14 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_stack(t_stack *a)
 
 void	sort_three(t_stack *a)
 {
-	set_max(a);
+	set_minmax(a);
 	if (a->max == a->head)
 		rotate('a', &a);
 	else if (a->max == a->head->next)
@@ -53,9 +53,7 @@ void	start_algorithm(t_stack *a, t_stack *b)
 	{
 		////////////////////////////////////////////
 		printf("\nListsize: %i\n", a->size);
-		set_max(b);
-		set_min(b);
-
+		set_minmax(b);
 		// SET TARGET NODE IN B
 		set_targets(a, b);
 
@@ -75,9 +73,9 @@ void	start_algorithm(t_stack *a, t_stack *b)
 		printf("CHEAPEST in A: %i - COSTS to TOP: %i\n",  a->cheapest->value, a->cheapest->cost);
 		printf("TARGET in B: %i - COSTS to TOP: %i\n",  a->cheapest->target->value, a->cheapest->target->cost);
 		printf("TOTAL COSTS: %i \n", a->cheapest->target->cost + a->cheapest->cost);
-
+ 
 		// EXECUTE OPERATIONS
-		operation_exec(a, b);
+		operation_exe(a, b);
 
 	/* 	a->head->cheapest = NULL;
 		a->head->target = NULL; */
@@ -100,21 +98,19 @@ void	start_algorithm(t_stack *a, t_stack *b)
 
 	while (b->head)
 	{
-		set_max(a);
-		set_min(a);
+		set_minmax(a);
 
 		// SET TARGET NODE IN A
 		set_new_targets(a, b);
 
 		set_index(a);
-		set_index(b);
+	
 
 		//find_cheapest(a, b);
 
 		push_back(a, b);
 	}
-	set_min(a);
-	//sort_min_to_top(a);
+	sort_min_to_top(a);
 
 	printf("\n_________A_________\n");
 	print_stack(a);

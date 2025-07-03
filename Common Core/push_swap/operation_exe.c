@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operation_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 17:59:56 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/03 03:22:07 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	find_min(int node_cost, int target_cost)
 		return (target_cost);
 }
 
-void	operation_exec(t_stack *a, t_stack *b)
+void	operation_exe(t_stack *a, t_stack *b)
 {
 	t_node	*cheapest;
 	t_node	*target;
