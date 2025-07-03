@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start_sorting.c.c                                  :+:      :+:    :+:   */
+/*   start_sorting.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 03:22:50 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 13:16:38 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	sort_three(t_stack *a)
 {
-	set_max(a);
+	set_minmax(a);
 	if (a->max == a->head)
 		rotate('a', &a);
 	else if (a->max == a->head->next)
@@ -37,7 +37,7 @@ void	start_algorithm(t_stack *a, t_stack *b)
 		set_index(a);
 		set_index(b);
 		find_cheapest(a, b);
-		exec_operations(a, b);
+		push_to_b(a, b);
 	}
 	sort_three(a);
 	while (b->head)
@@ -47,7 +47,8 @@ void	start_algorithm(t_stack *a, t_stack *b)
 		set_index(a);
 		push_back(a, b);
 	}
-	sort_min_to_top(a);
+	if (!sorted(a))
+		sort_min_to_top(a);
 }
 
 void	start_sorting(t_stack *a, t_stack *b)

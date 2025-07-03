@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 02:56:47 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 13:33:20 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_stack
 }	t_stack;
 
 
+bool	input_check(t_stack **a, char **av);
 
 
 /// UTILS
@@ -69,21 +70,21 @@ void	r_rotate(char id, t_stack **stack);
 
 // SORTING
 
+int		find_max(int costA, int costB);
+void	set_index(t_stack *stack);
 void	start_sorting(t_stack *a, t_stack *b);
 void	set_minmax(t_stack *stack);
 int		find_max(int costA, int costB);
 bool	sorted(t_stack *a);
 void	set_targets_in_b(t_stack *a, t_stack *b);
+void	find_cheapest(t_stack *from, t_stack *to);
 
 
 void	set_targets_in_a(t_stack *a, t_stack *b);
 void	find_cheapest(t_stack *a, t_stack *b);
-void	set_index(t_stack *stack);
-void	operation_exec(t_stack *a, t_stack *b);
+void	push_to_b(t_stack *a, t_stack *b);
 void	push_back(t_stack *a, t_stack *b);
 
-void	rrr(t_stack *a, t_stack *b);
-void	rr(t_stack *a, t_stack *b);
 int		find_min(int node_cost, int target_cost);
 void	sort_min_to_top(t_stack *a);
 

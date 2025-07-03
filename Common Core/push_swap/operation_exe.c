@@ -6,25 +6,11 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 03:22:07 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 13:06:46 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	rrr(t_stack *a, t_stack *b)
-{
-	r_rotate('f', &a);
-	r_rotate('t', &b);
-	a->operations -= 1;
-}
-
-void	rr(t_stack *a, t_stack *b)
-{
-	rotate('f', &a);
-	rotate('r', &b);
-	a->operations -= 1;
-}
 
 int	find_min(int node_cost, int target_cost)
 {
@@ -34,7 +20,65 @@ int	find_min(int node_cost, int target_cost)
 		return (target_cost);
 }
 
-void	operation_exe(t_stack *a, t_stack *b)
+void	double_rotate(t_stack *a, t_stack *b)
+{
+	t_node	*cheapest;
+	t_node	*target;
+	int		i;
+
+	i = 0;
+	cheapest = a->cheapest;
+	target = a->cheapest->target;	
+	while (i < find_min(cheapest->cost, target->cost))
+	{
+		rotate('f', &a);
+		rotate('r', &b);
+		a->operations -= 1;
+		i++;
+	}
+	i = 0;
+	while (i < find_max(cheapest->cost, target->cost) - find_min(cheapest->cost, target->cost))
+	{
+		if (cheapest->cost == target->cost)
+			break;
+		if (cheapest->cost > target->cost)
+			rotate('a', &a);
+		else
+			rotate('b', &b);
+		i++;
+	}
+}
+
+void	double_rev_rotate(t_stack *a, t_stack *b)
+{
+	t_node	*cheapest;
+	t_node	*target;
+	int		i;
+
+	i = 0;
+	cheapest = a->cheapest;
+	target = a->cheapest->target;	
+	while (i < find_min(cheapest->cost, target->cost))
+	{
+		r_rotate('f', &a);
+		r_rotate('t', &b);
+		a->operations -= 1;
+		i++;
+	}
+	i = 0;
+	while (i < find_max(cheapest->cost, target->cost) - find_min(cheapest->cost, target->cost))
+	{
+		if (cheapest->cost == target->cost)
+			break ;
+		else if (cheapest->cost > target->cost)
+			r_rotate('a', &a);
+		else
+			r_rotate('b', &b);
+		i++;
+	}
+}
+
+void	move_to_top(t_stack *a, t_stack *b)
 {
 	t_node	*cheapest;
 	t_node	*target;
@@ -43,70 +87,39 @@ void	operation_exe(t_stack *a, t_stack *b)
 	i = 0;
 	cheapest = a->cheapest;
 	target = a->cheapest->target;
+	while (i < cheapest->cost)
+	{
+		if (cheapest->first_half == true)
+			rotate('a', &a);
+		else
+			r_rotate('a', &a);
+		i++;
+	}
+	i = 0;
+	while (i < target->cost)
+	{
+		if (cheapest->target->first_half == true)
+			rotate('b', &b);
+		else
+			r_rotate('b', &b);
+		i++;
+	}
+}
 
+void	operation_exe(t_stack *a, t_stack *b)
+{
+	t_node	*cheapest;
+	t_node	*target;
+
+	if (!a || !b || !a->cheapest)
+		return ;
+	cheapest = a->cheapest;
+	target = a->cheapest->target;
 	if (cheapest->first_half == true && target->first_half == true)
-	{
-		while (i < find_min(cheapest->cost, target->cost))
-		{
-			rr(a, b);
-			i++;
-		}
-		i = 0;
-		while (i < find_max(cheapest->cost, target->cost) - find_min(cheapest->cost, target->cost))
-		{
-			if (cheapest->cost == target->cost)
-				break;
-			if (cheapest->cost > target->cost)
-				rotate('a', &a);
-			else
-				rotate('b', &b);
-			i++;
-		}
-
-	}
-
+		double_rotate(a, b);
 	else if (cheapest->first_half == false && target->first_half == false)
-	{
-		while (i < find_min(cheapest->cost, target->cost))
-		{
-			rrr(a, b);
-			i++;
-		}
-		i = 0;
-		while (i < find_max(cheapest->cost, target->cost) - find_min(cheapest->cost, target->cost))
-		{
-			if (cheapest->cost == target->cost)
-				break ;
-			else if (cheapest->cost > target->cost)
-				r_rotate('a', &a);
-			else
-				r_rotate('b', &b);
-			i++;
-		}
-	}
-
+		double_rev_rotate(a, b);
 	else
-	{
-		while (i < cheapest->cost)
-		{
-			if (cheapest->first_half == true)
-				rotate('a', &a);
-			else
-				r_rotate('a', &a);
-			i++;
-		}
-		i = 0;
-		while (i < target->cost)
-		{
-			if (cheapest->target->first_half == true)
-				rotate('b', &b);
-			else
-				r_rotate('b', &b);
-			i++;
-		}
-	}
-
-	push('b', &a, &b);
-
-
+		move_to_top(a, b);
+	push('b', &a, &b);	
 }

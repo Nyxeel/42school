@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 03:18:01 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 13:11:19 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,10 @@ void	double_rev_rotate(t_stack *a, t_stack *b)
 	target = a->cheapest->target;	
 	while (i < find_min(cheapest->cost, target->cost))
 	{
-		rotate('f', &a);
-		rotate('r', &b);
+		r_rotate('f', &a);
+		r_rotate('t', &b);
 		a->operations -= 1;
+		i++;
 	}
 	i = 0;
 	while (i < find_max(cheapest->cost, target->cost) - find_min(cheapest->cost, target->cost))
@@ -105,7 +106,7 @@ void	move_to_top(t_stack *a, t_stack *b)
 	}
 }
 
-void	exec_operations(t_stack *a, t_stack *b)
+void	push_to_b(t_stack *a, t_stack *b)
 {
 	t_node	*cheapest;
 	t_node	*target;

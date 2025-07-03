@@ -6,19 +6,11 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 02:58:28 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 13:39:50 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	find_max(int costA, int costB)
-{
-	if (costA < costB)
-		return (costB);
-	else
-		return (costA);
-}
 
 int	costs(t_node *node, t_stack *stack)
 {

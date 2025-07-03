@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 03:36:14 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 12:54:55 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ void	start_algorithm(t_stack *a, t_stack *b)
 
 		push_back(a, b);
 	}
-	sort_min_to_top(a);
+	if (!sorted(a))
+		sort_min_to_top(a);
 
 	printf("\n_________A_________\n");
 	print_stack(a);

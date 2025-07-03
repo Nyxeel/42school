@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sorting_utils copy.c                               :+:      :+:    :+:   */
+/*   sorting_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 02:56:49 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 13:29:33 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int	find_max(int costA, int costB)
+{
+	if (costA < costB)
+		return (costB);
+	else
+		return (costA);
+}
 
 void	set_targets_in_a(t_stack *a, t_stack *b)
 {
