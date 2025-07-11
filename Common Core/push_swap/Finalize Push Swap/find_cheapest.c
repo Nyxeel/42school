@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cheapest.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 13:39:50 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 17:44:05 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	set_index(t_stack *stack)
 	t_node	*node;
 	int		idx;
 
- 	if (!stack || !stack->head)
-        return;
+	if (!stack || !stack->head)
+		return ;
 	idx = 0;
 	node = stack->head;
 	while (node)
@@ -50,7 +50,7 @@ void	find_cheapest(t_stack *from, t_stack *to)
 	long	min_cost;
 	int		total_cost;
 
-	if(!from || !from->head || !to || !to->head)
+	if (!from || !from->head || !to || !to->head)
 		return ;
 	node = from->head;
 	min_cost = INT_MAX;

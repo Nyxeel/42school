@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 02:11:00 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 17:09:06 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	stack_clear(t_stack **a)
+void	stack_clear(t_stack *a)
 {
 	t_node	*curr;
 
-	if (!(*a)->head)
+	if (!a->head)
 		return ;
-	curr = (*a)->head;
+	curr = a->head;
 	while (curr->next != NULL)
 	{
 		curr = curr->next;
@@ -27,19 +27,19 @@ void	stack_clear(t_stack **a)
 	free(curr);
 }
 
-void free_all(t_stack **a, t_stack **b)
+void	free_all(t_stack *a, t_stack *b)
 {
-	if (a && *a)
+	if (a)
 	{
 		stack_clear(a);
-		free(*a);
-		*a = NULL;
+		free(a);
+		a = NULL;
 	}
-	if (b && *b)
+	if (b)
 	{
 		stack_clear(b);
-		free(*b);
-		*b = NULL;
+		free(b);
+		b = NULL;
 	}
 }
 

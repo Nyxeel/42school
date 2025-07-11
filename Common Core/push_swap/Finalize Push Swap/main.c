@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 02:10:37 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 18:17:08 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ int	main(int argc, char **argv)
 
 	a = ft_calloc(1, sizeof(t_stack));
 	if (!a)
-		return (write(2, "ERROR\n", 7));
+		return (write(2, "Error\n", 6));
 	b = ft_calloc(1, sizeof(t_stack));
 	if (!b || argc < 2 || !argv[1])
-		return (free_all(&a, &b), write(2, "2ERROR\n", 7));
+		return (free_all(a, b), write(2, "Error\n", 6));
 	/* if (argc == 2)
 		argv = ft_split(argv[1][0], ' '); */
-	if (!input_check(&a, argv))
-		return (free_all(&a, &b), write(1, "3ERROR\n", 7));
+	if (!input_check(a, argv))
+		return (free_all(a, b), write(2, "Error\n", 6));
 	start_sorting(a, b);
-  	free_all(&a, &b);
+	free_all(a, b);
 	return (0);
 }

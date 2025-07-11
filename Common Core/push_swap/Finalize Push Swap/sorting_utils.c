@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 13:29:33 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 18:16:19 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	set_targets_in_a(t_stack *a, t_stack *b)
 	t_node	*node_b;
 	long	min_value;
 
-	if(!a || !a->head || !b || !b->head)
+	if (!a || !a->head || !b || !b->head)
 		return ;
 	node_b = b->head;
 	while (node_b)
@@ -49,15 +49,13 @@ void	set_targets_in_a(t_stack *a, t_stack *b)
 	}
 }
 
-
-
 void	set_targets_in_b(t_stack *a, t_stack *b)
 {
 	t_node	*node_a;
 	t_node	*node_b;
 	long	max_value;
-	
-	if(!a || !a->head || !b || !b->head)
+
+	if (!a || !a->head || !b || !b->head)
 		return ;
 	node_a = a->head;
 	while (node_a)
@@ -84,8 +82,8 @@ void	set_minmax(t_stack *stack)
 {
 	t_node	*curr;
 
-	 if (!stack || !stack->head)
-        return;
+	if (!stack || !stack->head)
+		return ;
 	stack->max = stack->head;
 	stack->min = stack->head;
 	curr = stack->head;
@@ -103,7 +101,7 @@ bool	sorted(t_stack *a)
 {
 	t_node	*curr;
 
-	if(!a || !a->head)
+	if (!a || !a->head)
 		return (1);
 	curr = a->head;
 	while (curr != NULL)

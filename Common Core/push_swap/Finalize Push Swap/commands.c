@@ -3,84 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:17:48 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 02:12:47 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 18:16:51 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push(char id, t_stack **from, t_stack **to)
+void	push(char id, t_stack *from, t_stack *to)
 {
 	t_node	*top;
 
-	if (!from || !*from || !(*from)->head)
+	if (!from || !from->head)
 		return ;
-	top = (*from)->head;
-	(*from)->head = top->next;
-	if ((*from)->head != NULL)
-		(*from)->head->prev = NULL;
+	top = from->head;
+	from->head = top->next;
+	if (from->head != NULL)
+		from->head->prev = NULL;
 	else
-		(*from)->tail = NULL;
+		from->tail = NULL;
 	top->prev = NULL;
-	top->next = (*to)->head;
-	if ((*to)->head != NULL)
-		(*to)->head->prev = top;
+	top->next = to->head;
+	if (to->head != NULL)
+		to->head->prev = top;
 	else
-		(*to)->tail = top;
-	(*to)->head = top;
-	(*from)->size -= 1;
-	(*to)->size += 1;
-	(*from)->operations += 1;
+		to->tail = top;
+	to->head = top;
+	from->size -= 1;
+	to->size += 1;
+	from->operations += 1;
 	if (id == 'a')
 		write(1, "pa\n", 3);
 	else if (id == 'b')
 		write(1, "pb\n", 3);
 }
 
-void	swap(char id, t_stack **stack)
+void	swap(char id, t_stack *stack)
 {
 	t_node	*first;
 	t_node	*second;
 
-	if (!(*stack)->head || (*stack)->size < 2)
+	if (!stack->head || stack->size < 2)
 		return ;
-	first = (*stack)->head;
-	second = (*stack)->head->next;
+	first = stack->head;
+	second = stack->head->next;
 	first->next = second->next;
 	if (second->next != NULL)
 		second->next->prev = first;
 	else
-		(*stack)->tail = first;
+		stack->tail = first;
 	first->prev = second;
 	second->next = first;
 	second->prev = NULL;
-	(*stack)->head = second;
-	(*stack)->operations += 1;
+	stack->head = second;
+	stack->operations += 1;
 	if (id == 'a')
 		write(1, "sa\n", 3);
 	else if (id == 'b')
 		write(1, "sb\n", 3);
 }
 
-void	rotate(char id, t_stack **stack)
+void	rotate(char id, t_stack *stack)
 {
 	t_node	*first;
 	t_node	*last;
 
-	if (!stack || !*stack || !(*stack)->head || (*stack)->size < 2)
+	if (!stack || !stack->head || stack->size < 2)
 		return ;
-	first = (*stack)->head;
-	last = (*stack)->tail;
-	(*stack)->head = first->next;
-	(*stack)->head->prev = NULL;
+	first = stack->head;
+	last = stack->tail;
+	stack->head = first->next;
+	stack->head->prev = NULL;
 	first->next = NULL;
 	first->prev = last;
 	last->next = first;
-	(*stack)->tail = first;
-	(*stack)->operations += 1;
+	stack->tail = first;
+	stack->operations += 1;
 	if (id == 'a')
 		write(1, "ra\n", 3);
 	else if (id == 'b')
@@ -89,22 +89,22 @@ void	rotate(char id, t_stack **stack)
 		write(1, "rr\n", 3);
 }
 
-void	r_rotate(char id, t_stack **stack)
+void	r_rotate(char id, t_stack *stack)
 {
 	t_node	*first;
 	t_node	*last;
 
-	if (!stack || !*stack || !(*stack)->head || (*stack)->size < 2)
+	if (!stack || !stack->head || stack->size < 2)
 		return ;
-	first = (*stack)->head;
-	last = (*stack)->tail;
+	first = stack->head;
+	last = stack->tail;
 	last->prev->next = NULL;
-	(*stack)->tail = last->prev;
+	stack->tail = last->prev;
 	last->next = first;
 	last->prev = NULL;
 	first->prev = last;
-	(*stack)->head = last;
-	(*stack)->operations += 1;
+	stack->head = last;
+	stack->operations += 1;
 	if (id == 'a')
 		write(1, "rra\n", 4);
 	else if (id == 'b')

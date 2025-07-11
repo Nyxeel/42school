@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/02 23:59:49 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 17:43:23 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,25 @@ t_node	*create_node(int value)
 	return (new_node);
 }
 
-
-bool	add_node(t_stack **a, int value)
+bool	add_node(t_stack *a, int value)
 {
 	t_node	*curr;
 
 	curr = create_node(value);
 	if (!curr)
 		return (false);
-	if (!(*a)->head)
+	if (!a->head)
 	{
-
-		(*a)->head = curr;
-		(*a)->tail = curr;
+		a->head = curr;
+		a->tail = curr;
 	}
 	else
 	{
-		(*a)->tail->next = curr;
-		curr->prev = (*a)->tail;
-		(*a)->tail = curr;
+		a->tail->next = curr;
+		curr->prev = a->tail;
+		a->tail = curr;
 	}
-	(*a)->size++;
+	a->size++;
 	return (true);
 }
 
@@ -65,11 +63,11 @@ bool	number_check(char *str)
 	return (true);
 }
 
-bool	doubles(t_stack **a, int num)
+bool	doubles(t_stack *a, int num)
 {
 	t_node	*curr;
 
-	curr = (*a)->head;
+	curr = a->head;
 	while (curr != NULL)
 	{
 		if (curr->value == num)
@@ -79,7 +77,7 @@ bool	doubles(t_stack **a, int num)
 	return (true);
 }
 
-bool	input_check(t_stack **a, char **av)
+bool	input_check(t_stack *a, char **av)
 {
 	size_t	i;
 	long	num;
@@ -92,7 +90,7 @@ bool	input_check(t_stack **a, char **av)
 		num = ft_atoi(av[i]);
 		if (num < INT_MIN || num > INT_MAX)
 			return (false);
-		if ((*a)->head && !doubles(a, num))
+		if (a->head && !doubles(a, num))
 			return (write(2, "Error\n", 6));
 		if (!add_node(a, num))
 			return (false);

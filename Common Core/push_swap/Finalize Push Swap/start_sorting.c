@@ -3,33 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   start_sorting.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 13:16:38 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 18:16:36 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-
 void	sort_three(t_stack *a)
 {
 	set_minmax(a);
 	if (a->max == a->head)
-		rotate('a', &a);
+		rotate('a', a);
 	else if (a->max == a->head->next)
-		r_rotate('a', &a);
+		r_rotate('a', a);
 	if (!sorted(a))
-		swap('a', &a);
+		swap('a', a);
 }
 
 void	start_algorithm(t_stack *a, t_stack *b)
 {
 	if (a->size > 3)
-		push('b', &a, &b);
+		push('b', a, b);
 	if (a->size > 3)
-		push('b', &a, &b);
+		push('b', a, b);
 	while (a->size > 3)
 	{
 		set_minmax(b);
@@ -56,7 +55,7 @@ void	start_sorting(t_stack *a, t_stack *b)
 	if (!sorted(a))
 	{
 		if (a->size == 2)
-			swap('a', &a);
+			swap('a', a);
 		else if (a->size == 3)
 			sort_three(a);
 		else
@@ -64,4 +63,3 @@ void	start_sorting(t_stack *a, t_stack *b)
 	}
 	printf("Operations: %i\n", a->operations + b->operations);
 }
-

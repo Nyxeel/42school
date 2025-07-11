@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_back.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 13:36:24 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 17:11:51 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sort_min_to_top(t_stack *stack)
 {
-	t_node *minimum;
+	t_node	*minimum;
 
 	set_minmax(stack);
 	set_index(stack);
@@ -22,32 +22,32 @@ void	sort_min_to_top(t_stack *stack)
 	while (stack->head != minimum)
 	{
 		if (minimum->first_half)
-			rotate('a', &stack);
+			rotate('a', stack);
 		else
-			r_rotate('a', &stack);
+			r_rotate('a', stack);
 	}
 }
 
 void	push_back(t_stack *a, t_stack *b)
 {
-	t_node *target;
-	int i;
+	t_node	*target;
+	int		i;
 
 	i = 0;
 	target = b->head->target;
-		if (target->first_half == true)
+	if (target->first_half == true)
+	{
+		while (i ++ < target->index)
 		{
-			while (i ++ < target->index)
-			{
-				rotate('a', &a);
-			}
+			rotate('a', a);
 		}
-		else
+	}
+	else
+	{
+		while (i ++ < a->size - target->index)
 		{
-			while (i ++ < a->size - target->index)
-			{
-				r_rotate('a', &a);
-			}
+			r_rotate('a', a);
 		}
-	push('a', &b, &a);
+	}
+	push('a', b, a);
 }
