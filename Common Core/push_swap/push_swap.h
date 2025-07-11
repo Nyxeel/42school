@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 03:28:47 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 16:43:54 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void	*ft_calloc(size_t nmemb, size_t size);
 
 
 ///	COMANDS
-void	swap(char id, t_stack **stack);
-void	push(char id, t_stack **from, t_stack **to);
-void	rotate(char id, t_stack **stack);
-void	r_rotate(char id, t_stack **stack);
+void	swap(char id, t_stack *stack);
+void	push(char id, t_stack *from, t_stack *to);
+void	rotate(char id, t_stack *stack);
+void	r_rotate(char id, t_stack *stack);
 
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_back.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 03:28:52 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/03 16:42:18 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	sort_min_to_top(t_stack *a)
 	while (a->head != top)
 	{
 		if (top->first_half)
-			rotate('a', &a);
+			rotate('a', a);
 		else
-			r_rotate('a', &a);
+			r_rotate('a', a);
 	}
 }
 
@@ -39,15 +39,15 @@ void	push_back(t_stack *a, t_stack *b)
 		{
 			while (i ++ < target->index)
 			{
-				rotate('a', &a);
+				rotate('a', a);
 			}
 		}
 		else
 		{
 			while (i ++ < a->size - target->index)
 			{
-				r_rotate('a', &a);
+				r_rotate('a', a);
 			}
 		}
-	push('a', &b, &a);
+	push('a', b, a);
 }
