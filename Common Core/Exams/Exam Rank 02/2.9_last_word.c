@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   2.8_.ft_strrev.c                                   :+:      :+:    :+:   */
+/*   2.9_last_word.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 00:12:49 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/23 09:23:37 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/23 09:53:22 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,28 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-char    *ft_strrev(char *src)
+void	ft_last_word(char *src)
 {
 	int		len;
-	int		i;
-	char	tmp;
-
-	i = 0;
-	if (!src)
-		return (NULL);
+	int		wordend;
+	
 	len = ft_strlen(src);
-	while (i < len - 1)
-	{
-		tmp = src[i];
-		src[i] = src[len - 1];
-		src[len - 1] = tmp;
-		i++;
+	wordend = len;
+	while (src[len - 1] == ' ' || src[len] == '\t')
 		len--;
+	while (src[len - 1] != ' ' || src[len] == '\t')
+		len--;
+	while (src[len])
+	{
+		if (src[len] != ' ')
+			write(1, &src[len], 1);
+		len++;
 	}
-	return (src);
 }
 
-int	main()
+int	main(int ac, char** av)
 {
-	char	p[] = "Willkommen in der neuen Welt";
-	printf("%s", ft_strrev(p));
+	if (ac == 2)
+		ft_last_word(av[1]);
+	write(1, "\n", 1);
 }
