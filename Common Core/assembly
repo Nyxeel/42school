@@ -1,0 +1,7 @@
+
+Linux Command to check Object Files in Assembly
+
+objdump -d FILENAME.o  > out
+
+example:
+objdump -d 06_SIGABRT_strchr_bonus.o  > out
