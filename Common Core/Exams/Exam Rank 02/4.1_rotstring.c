@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4.1_rotstring.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:09:16 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/07/25 09:44:47 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/07/25 10:03:50 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ void	rotstring(char *str)
 	while (ft_isspace(str[i]))
 		i++;
 	start = i;
+	while (str[i] && !ft_isspace(str[i]))
+		i++;
 	while (str[i])
 	{
-		while (str[i] && !ft_isspace(str[i]))
-			i++;
 		while (str[i] && ft_isspace(str[i]))
-			i++;	
+			i++;
 		while ((str[i] && !ft_isspace(str[i])) && !ft_isspace(str[i + 1]))
 		{
 			while (str[i] && !ft_isspace(str[i]))

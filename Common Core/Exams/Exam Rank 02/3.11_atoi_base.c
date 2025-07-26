@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:09:16 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/07/24 16:54:09 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:01:37 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ int	ft_atoi_base(const char *str, int str_base)
 
 int	main(int ac, char **av)
 {
- 	(void) ac;
- 	(void) av;
  	if (ac == 2)
  	{
  		printf("%d", ft_atoi_base(av[1], 16));
