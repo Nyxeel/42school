@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:09:16 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/07/25 15:48:42 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/31 10:40:17 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	ft_isspace(char c)
 {
 	return (c == ' ' || (c >= 9 && c <= 13));
 }
+
+// You hate people! But I love gatherings. Isn't it ironic?
 
 
 void	rev_wstr(char *str)

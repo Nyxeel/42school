@@ -1,54 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   2.2_union.c                                        :+:      :+:    :+:   */
+/*   1.1_wordcount.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 00:12:49 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/31 10:52:35 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/31 09:54:13 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
+#include <stdbool.h>
 
-void	ft_union(char *str, char *str2)
+
+int	ft_isspace(char c)
 {
-	int i = 0;
-	int j;
-	int lookup[256] = {0};
+	if (c == ' ' || c >= 9 && c <= 13)
+		return (1);
+	return (0);
+}
 
-	while (str[i])
-		lookup[(int)str[i++]] = 1;
-	i = 0;
-	while (str2[i])
-		lookup[(int)str2[i++]] = 1;
+int	ft_wordcount(char *str)
+{
+	int i;
+	int words;
+	bool in_word;
+
+	words = 0;
 	i = 0;
 	while (str[i])
 	{
-		if (lookup[str[i]] == 1)
+		if (ft_isspace(str[i]))
+			in_word = false;
+		else if (!in_word)
 		{
-			write(1, &str[i], 1);
-			lookup[(int)str[i]] = 0;
+			in_word = true;
+			words++;
 		}
 		i++;
 	}
-	i = 0;
-	while (str2[i])
-	{
-		if (lookup[str2[i]] == 1)
-		{
-			write(1, &str2[i], 1);
-			lookup[(int)str2[i]] = 0;
-		}
-		i++;
-	}
+	return (words);
 }
 
 int	main(int ac, char **av)
 {
-	if (ac == 3)
-		ft_union(av[1], av[2]);
-	write(1, "\n", 1);
+	if (ac == 2)
+		printf("Words: %i", ft_wordcount(av[1]));
 	return (0);
 }

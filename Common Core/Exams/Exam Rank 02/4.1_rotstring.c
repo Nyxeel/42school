@@ -6,38 +6,46 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:09:16 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/07/25 10:03:50 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:23:40 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-Assignment name  : str_capitalizer
-Expected files   : str_capitalizer.c
-Allowed functions: write
+Assignment name  : rostring
+Expected files   : rostring.c
+Allowed functions: write, malloc, free
 --------------------------------------------------------------------------------
 
-Write a program that takes one or several strings and, for each argument,
-capitalizes the first character of each word (If it's a letter, obviously),
-puts the rest in lowercase, and displays the result on the standard output,
-followed by a \n.
+Write a program that takes a string and displays this string after rotating it
+one word to the left.
+
+Thus, the first word becomes the last, and others stay in the same order.
 
 A "word" is defined as a part of a string delimited either by spaces/tabs, or
-by the start/end of the string. If a word only has one letter, it must be
-capitalized.
+by the start/end of the string.
 
-If there are no arguments, the progam must display \n.
+Words will be separated by only one space in the output.
+
+If there's less than one argument, the program displays \n.
 
 Example:
 
-$> ./str_capitalizer | cat -e
-$
-$> ./str_capitalizer "a FiRSt LiTTlE TESt" | cat -e
-A First Little Test$
-$> ./str_capitalizer "__SecONd teST A LITtle BiT   Moar comPLEX" "   But... This iS not THAT COMPLEX" "     Okay, this is the last 1239809147801 but not    the least    t" | cat -e
-__second Test A Little Bit   Moar Complex$
-   But... This Is Not That Complex$
-     Okay, This Is The Last 1239809147801 But Not    The Least    T$
+$>./rostring "abc   " | cat -e
+abc$
 $>
+$>./rostring "Que la      lumiere soit et la lumiere fut"
+la lumiere soit et la lumiere fut Que
+$>
+$>./rostring "     AkjhZ zLKIJz , 23y"
+zLKIJz , 23y AkjhZ
+$>
+$>./rostring "first" "2" "11000000"
+first
+$>
+$>./rostring | cat -e
+$
+$>
+
  */
 
 #include <unistd.h>
