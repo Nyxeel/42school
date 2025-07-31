@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_wordcount.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/11 20:26:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/07/31 12:36:04 by pjelinek         ###   ########.fr       */
+/*   Created: 2025/07/09 00:12:49 by netrunner         #+#    #+#             */
+/*   Updated: 2025/07/31 10:17:13 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPE_H
-# define PIPE_H
+#include "libft.h"
 
-# include <limits.h>
-# include <stdbool.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <stdlib.h>
-# include <stdint.h>
-# include <fcntl.h>
+size_t	ft_wordcount(char *str)
+{
+	size_t	i;
+	size_t	words;
+	bool	in_word;
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
-char	**ft_split(char const *s, char c);
-char	*ft_strjoin(char const *s1, char const *s2);
-
-
-#endif
+	words = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isspace(str[i]))
+			in_word = false;
+		else if (!in_word)
+		{
+			in_word = true;
+			words++;
+		}
+		i++;
+	}
+	return (words);
+}

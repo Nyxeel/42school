@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   1main.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/07/26 14:43:21 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/07/31 17:05:21 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int ac, char **av)
 }*/
 
 
-char	**find_path(char **envp)
+char	**split_path(char **envp)
 {
 	int		i;
 	char	**path;
@@ -37,7 +37,7 @@ char	**find_path(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		if (ft_strncmp(envp[i], "PATH=", 5) == 1)
 		{
 			path = ft_split(&envp[i][5], ':');
 			if (!path)
@@ -64,7 +64,7 @@ int	main(int argc, char **argv, char **envp)
 	else
 	{
 		if (argc >= 5)
-			if (pipe_and_fork(argc - 1, &argv[1], find_path(envp)) == 0)
+			if (pipe_and_fork(argc - 1, &argv[1], split_path(envp)) == 0)
 				free_and_exit();
 		else
 			ft_perror();
