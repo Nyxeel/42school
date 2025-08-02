@@ -6,13 +6,13 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/07/31 12:36:07 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/02 16:47:37 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-size_t	ft_strlen(const char *str)
+static size_t	ft_strlen(const char *str)
 {
 	size_t	count;
 	if (!str)
@@ -50,7 +50,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (join);
 }
 
-void	*ft_bzero(void *s, size_t n)
+static void	*ft_bzero(void *s, size_t n)
 {
 	size_t			i;
 	unsigned char	*arr;
@@ -127,7 +127,7 @@ static char	*ft_cpy(char const *str, char c)
 	return (p);
 }
 
-static void	ft_freeall(char **freearr, size_t index)
+void	ft_freeall(char **freearr, size_t index)
 {
 	size_t	i;
 
@@ -140,7 +140,7 @@ static void	ft_freeall(char **freearr, size_t index)
 	free(freearr);
 }
 
-char	**ft_split_loop(char **split, char const *s, char c)
+static char	**ft_split_loop(char **split, char const *s, char c)
 {
 	size_t	i;
 	size_t	j;

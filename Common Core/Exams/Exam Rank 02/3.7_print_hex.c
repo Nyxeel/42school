@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:09:16 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/07/24 13:36:58 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/01 12:40:08 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	print_hex(int nb)
 	char *base;
 
 	base = "0123456789abcdef";
-	if (nb > 16)
+	if (nb >= 16)
 		print_hex(nb / 16);
 	write(1, &base[nb % 16], 1);
 }

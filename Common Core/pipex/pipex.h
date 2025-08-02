@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:26:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/07/31 12:36:04 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/02 16:57:08 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	**ft_split(char const *s, char c);
+void	ft_freeall(char **freearr, size_t index);
+int		find_access(char **envp, char *command);
+int		open_files_bonus(int argc, char **argv, char **envp);
+int		open_files(int argc, char **argv, char **envp);
 
 
 #endif
