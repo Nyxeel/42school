@@ -6,49 +6,12 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/02 16:54:25 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/04 10:13:23 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-
-/* funktion execute_pipeline(argumente)
-	wenn here_doc verwendet wird:
-		initialisiere  here_doc_input
-		passe start_index und output_open_mode an
-
-	öffne input_file (nur wenn kein here_doc)
-	öffne output_file (mit > oder >>, je nach here_doc)
-
-	prev_pipe = -1  // Kein vorheriger Pipe beim ersten Befehl
-
-	für jeden command_index von 0 bis anzahl_commands - 1:
-
-		wenn nicht letzter command:
-			erstelle neuen curr_pipe
-
-		erzeuge Kindprozess mit fork()
-
-		wenn Kindprozess:
-			wenn erster command:
-				setze stdin auf input_fd oder here_doc_fd
-			sonst:
-				setze stdin auf prev_pipe_read_end
-
-			wenn letzter command:
-				setze stdout auf output_fd
-			sonst:
-				setze stdout auf curr_pipe_write_end
-
-			schließe unnötige Pipe-FDs
-			execve(cmd[command_index])
-
-		sonst (Parent-Prozess):
-			schließe prev_pipe_read_end und write_end
-			speichere curr_pipe als prev_pipe für nächsten Durchlauf
-
-	warte auf alle Kinder */
 void	exit_call(char *message)
 {
 	perror(message);
@@ -78,7 +41,6 @@ int	pipe_fork(int cmd_count, char **cmds, char **path, int input_fd, int output_
 		{
 			if (i == 0)   ///ERSTER DURCHLAUF READ AUS STDIN
 			{
-
 				if (dup2(input_fd, STDIN_FILENO) < 0)
 					exit_call("child - dup2 failed");
 				if (close(input_fd) < 0)
