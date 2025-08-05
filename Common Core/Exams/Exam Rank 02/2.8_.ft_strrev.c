@@ -6,9 +6,25 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 00:12:49 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/23 09:23:37 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/04 14:12:24 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+
+/* Assignment name  : ft_strrev
+Expected files   : ft_strrev.c
+Allowed functions:
+--------------------------------------------------------------------------------
+
+Write a function that reverses (in-place) a string.
+
+It must return its parameter.
+
+Your function must be declared as follows:
+
+char    *ft_strrev(char *str); */
+
 
 #include <unistd.h>
 #include <stdio.h>

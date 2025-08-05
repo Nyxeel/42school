@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3.1_addprime.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 00:12:49 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/25 11:24:58 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/04 14:12:24 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int	isprime(int nb)
 {
 	int n = 2;
 
+	if (nb < 2)
+		return (0);
 	while (n < nb)
 	{
 		if (nb % n == 0)
