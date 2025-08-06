@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/05 18:02:20 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/06 10:23:36 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,22 +106,34 @@ int	ft_strcheck(const char *str, int c)
 
 /////////////////////////////////		ft_split
 
-static size_t	ft_wordcount(char const *s, char c)
+int	ft_isspace(char c)
 {
-	size_t	i;
-	size_t	count;
+	if (c == ' ' || c >= 9 && c <= 13)
+		return (1);
+	return (0);
+}
 
-	count = 0;
+int	ft_wordcount(char const *str , char c)
+{
+	int i;
+	int words;
+	bool in_word;
+
+	in_word = false;
+	words = 0;
 	i = 0;
-	while (s[i] == c && s[i])
-		i++;
-	while (s[i])
+	while (str[i])
 	{
-		if ((s[i - 1] != c && s[i] == c) || (s[i] != c && s[i + 1] == '\0'))
-			count++;
+		if (c == str[i])
+			in_word = false;
+		else if (!in_word)
+		{
+			in_word = true;
+			words++;
+		}
 		i++;
 	}
-	return (count);
+	return (words);
 }
 
 static char	*ft_cpy(char const *str, char c)
@@ -219,4 +231,22 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (str1[i] - str2[i]);
 }
 
+
+int	find_char(char *str, int c)
+{
+	unsigned char	letter;
+	size_t			i;
+
+	letter = (unsigned char) c;
+	i = 0;
+	if (str == NULL)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == letter)
+			return (i);
+		i++;
+	}
+	return (0);
+}
 

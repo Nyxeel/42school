@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:16:59 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/05 19:54:05 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/06 10:47:53 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SO_LONG_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100000
+#  define BUFFER_SIZE 10000
 # endif
 
 
@@ -38,10 +38,12 @@ typedef struct s_data
 {
 	size_t	movements;
 	void	*exit;
-	void	*coins;
 	char	**map;
+	int		coin_count;
+	t_coord	coins[20];
 	t_coord	player;
 	t_coord	enemy;
+	t_coord	coin;
 	t_coord	length;
 
 }	t_data;
@@ -52,5 +54,6 @@ void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_freeall(char **freearr, size_t index);
 size_t	ft_strlen(const char *str);
 int		ft_strcheck(const char *str, int c);
+int		find_char(char *str, int c);
 
 #endif

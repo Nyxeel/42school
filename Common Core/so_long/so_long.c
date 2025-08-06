@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:15:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/05 20:47:51 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/06 10:52:04 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 
-int	grid_line_count(char **split)
+int	count_lines(char **split)
 {
 	int	count;
 
@@ -21,77 +21,92 @@ int	grid_line_count(char **split)
 	if (split || *split)
 	{
 		while (split[count] != NULL)
-		count++;
+			count++;
 	}
 	return (count);
 }
 
-void	exit_call(char *message, char **split)
+void	exit_call(char *message, char **split, t_data *game)
 {
 	write(2, "Error: ", 7);
 	write(2, message, ft_strlen(message));
-	if (split || *split)
-	ft_freeall(split, grid_line_count(split));
+	if (split)
+		ft_freeall(split, count_lines(split));
+	free(game);
 	exit(1);
 }
 
-void	free_function(char **p)
-{
-	if (!*p)
-	return ;
-	free(*p);
-	*p = NULL;
-}
 
-char	**parse_input(int fd)
+char	**extract_map(char *map_path)
 {
 	int		i;
 	char	*line;
 	int		bytes;
 	char	**map;
+	int		fd;
 
-	line = (char *)ft_calloc(1, BUFFER_SIZE + 1);
+	fd = open(map_path, O_RDONLY);
+	if (fd == -1)
+		return (NULL);
+	line = (char *)ft_calloc(BUFFER_SIZE + 1, 1);
 	if (!line)
-	return (0);
+		return (close(fd), NULL);
 	bytes = read(fd, line, BUFFER_SIZE);
-	if (bytes < 0)
-	return (free_function(&line), NULL);
-	if (bytes == 0)
-	return (free_function(&line), NULL);
+	if (bytes <= 0)
+		return (close(fd), free(line), NULL);
 	line[bytes] = '\0';
 	map = ft_split(line, '\n');
 	if (!map)
-	return (free_function(&line), NULL);
-	free(line);
-	return (map);
+		return (close(fd), free(line), NULL);
+	return (close(fd), free(line), map);
 }
 
-void  flood_fill(char **map, t_coord length, t_coord begin)
+void  flood_fill(t_data *game, int x, int y)
 {
-	int	x;
-	int y;
+	int i = 0;
+	if (x < 0 || y < 0 || x >= game->length.x || y >= game->length.y)
+		return ;
+	if (game->map[y][x] == '1' || game->map[y][x] == 'X')
+		return ;
+	else
+	{
+		if (game->map[y][x] == 'E')
+		{
+			game->enemy.x = x;
+			game->enemy.y = y;
+		}
 
-	if ()
+		if (game->map[y][x] == 'C')
+		{
+			game->coins.x = x;
+			game->coins.y = y;
+		}
+		game->map[y][x] = 'X';
+		flood_fill(game, x + 1, y);
+		flood_fill(game, x - 1, y);
+		flood_fill(game, x, y + 1);
+		flood_fill(game, x, y - 1);		
+	}
 }
 
-int	check_walls(char **grid, t_data *game)
+int	check_walls(char **map, t_data *game)
 {
 	int	i;
 
 	i = 0;
-	game->length.y = grid_line_count(grid);
-	while (grid[i])
+	game->length.y = count_lines(map);
+	while (map[i])
 	{
 		if (i == 0 || i == game->length.y - 1)
 		{
-			if (ft_strcheck(grid[i++], '1'))
-			continue ;
+			if (ft_strcheck(map[i++], '1'))
+				continue ;
 			else
-			return (0);
+				return (0);
 		}
 		else
 		{
-			if (grid[i++][0] == '1' && grid[i][game->length.x - 1])
+			if (map[i++][0] == '1' && map[i][game->length.x - 1])
 				continue ;
 			else
 				return (0);
@@ -115,39 +130,55 @@ int	check_rectangular(char **map, int line_length)
 	return (1);
 }
 
-void	check_map(char *map_path, t_data *_game)
+int	check_letters_on_map(t_data *game)
 {
-	int		fd;
-	int		line_length;
+	int i;
 
-	fd = open(map_path, O_RDONLY);
-	if (fd == EOF)
-		exit_call("Nothing found - Check path again", _game->map);
-	if (fd == 0)
-		exit_call("Map file empty", _game->map);
-	_game->map = parse_input(fd);
-	if (!_game->map)
-		exit_call("Map parsing failed", _game->map);
-	_game->length.x = ft_strlen(_game->map[0]);
-	if (!check_rectangular(_game->map, _game->length.x))
-		exit_call("Map is not rectangular", _game->map);
-	if (!check_walls(_game->map, _game))
-		exit_call("Map not proper walled", _game->map);
-	if (!flood_fill(_game->map, _game->length, _game->length))
-		exit_call("Floodfill failed", _game->map);
+	i = 0;
+	while (game->map[i])
+	{
+		if (find_char(game->map[i], 'P'))
+			game->player.x = i; game->player.y = find_char(game->map[i], 'P');
+		if (find_char(game->map[i], 'C'))
+			game->coins[game->coin_count].x = i; game->coins = find_char(game->map[i], 'C');
 
+		i++;	
+	}
+}
+
+void	check_map(char *map_path, t_data *game)
+{
+	game->map = extract_map(map_path);
+	if (!game->map)
+		exit_call("Map parsing failed", game->map, game);
+	if (!check_letters_on_map(game));
+		exit_call("Letters failed (C,P,E,B)", game->map, game);
+	game->length.x = ft_strlen(game->map[0]);
+	if (!check_rectangular(game->map, game->length.x))
+		exit_call("Map is not rectangular", game->map, game);
+	if (!check_walls(game->map, game))
+		exit_call("Map not proper walled", game->map, game);
+	flood_fill(game, 2, 2);
+	int i = 0;
+	
+	ft_freeall(game->map, count_lines(game->map));
 	printf("OK");
+	
 }
 
 
 int main(int ac, char **av)
 {
-	t_data	*_game;
-	_game = ft_calloc(1, sizeof(t_data));
+	t_data	*game;
+	game = ft_calloc(1, sizeof(t_data));
+	if (!game)
+		return (0);
 	if (ac == 2)
-		check_map(av[1], _game);
+		check_map(av[1], game);
 	else
 		write(2, "Error, no map found!", 21);
+	free(game);
+	return (0);
 }
 
 /* int main(void)
