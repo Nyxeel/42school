@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:15:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/06 10:52:04 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/06 16:24:38 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,29 +63,20 @@ char	**extract_map(char *map_path)
 
 void  flood_fill(t_data *game, int x, int y)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	if (x < 0 || y < 0 || x >= game->length.x || y >= game->length.y)
 		return ;
 	if (game->map[y][x] == '1' || game->map[y][x] == 'X')
 		return ;
 	else
 	{
-		if (game->map[y][x] == 'E')
-		{
-			game->enemy.x = x;
-			game->enemy.y = y;
-		}
-
-		if (game->map[y][x] == 'C')
-		{
-			game->coins.x = x;
-			game->coins.y = y;
-		}
 		game->map[y][x] = 'X';
 		flood_fill(game, x + 1, y);
 		flood_fill(game, x - 1, y);
 		flood_fill(game, x, y + 1);
-		flood_fill(game, x, y - 1);		
+		flood_fill(game, x, y - 1);
 	}
 }
 
@@ -106,7 +97,7 @@ int	check_walls(char **map, t_data *game)
 		}
 		else
 		{
-			if (map[i++][0] == '1' && map[i][game->length.x - 1])
+			if (map[i][0] == '1' && map[i++][game->length.x - 1] == '1')
 				continue ;
 			else
 				return (0);
@@ -130,28 +121,75 @@ int	check_rectangular(char **map, int line_length)
 	return (1);
 }
 
-int	check_letters_on_map(t_data *game)
+bool	check_doubles(t_data *game)
 {
-	int i;
+	int		i;
+	t_bool	_bool;
 
+	_bool = (t_bool){0};
 	i = 0;
 	while (game->map[i])
 	{
 		if (find_char(game->map[i], 'P'))
-			game->player.x = i; game->player.y = find_char(game->map[i], 'P');
-		if (find_char(game->map[i], 'C'))
-			game->coins[game->coin_count].x = i; game->coins = find_char(game->map[i], 'C');
-
-		i++;	
+		{
+			if (!_bool.player && find_doubles(game->map[i], 'P') == 1)
+				_bool.player = true;
+			else
+				return (false);
+		}
+		if (find_char(game->map[i], 'E'))
+		{
+			if (!_bool.exit && find_doubles(game->map[i], 'E') == 1)
+				_bool.exit = true;
+			else
+				return (false);
+		}
+		i++;
 	}
+	return (true);
+}
+
+void	set_coords(bool *env, t_coord *point, int x, int y)
+{
+	(*point).x = x;
+	(*point).y = y;
+	*env = true;
+}
+
+int	check_letters_on_map(t_data *game)
+{
+	t_bool	_bo;
+	int		i;
+
+	_bo = (t_bool){0};
+	game->coin_count = 0;
+	i = 0;
+	while (game->map[i])
+	{
+		if (find_char(game->map[i], 'P'))
+			set_coords(&_bo.player, &game->player, i,
+				find_char(game->map[i], 'P'));
+		if (find_char(game->map[i], 'C'))
+			game->coin_count = find_doubles(game->map[i], 'C');
+		if (find_char(game->map[i], 'E'))
+			set_coords(&_bo.exit, &game->exit, i, find_char(game->map[i], 'E'));
+		i++;
+	}
+	if (_bo.player == true && _bo.exit == true && game->coin_count > 0)
+		return (printf("Exit 1\n"), 1);
+	else if (_bo.player == false && _bo.exit == false && game->coin_count == 0)
+		return (printf("Exit 0\n"), 0);
+	return (printf("Exit -1\n"), -1);
 }
 
 void	check_map(char *map_path, t_data *game)
 {
 	game->map = extract_map(map_path);
 	if (!game->map)
-		exit_call("Map parsing failed", game->map, game);
-	if (!check_letters_on_map(game));
+		exit_call("Map extraction failed", game->map, game);
+	if (!check_doubles(game))
+		exit_call("Doubles found (P, E)", game->map, game);
+	if (check_letters_on_map(game) <= 0)
 		exit_call("Letters failed (C,P,E,B)", game->map, game);
 	game->length.x = ft_strlen(game->map[0]);
 	if (!check_rectangular(game->map, game->length.x))
@@ -159,13 +197,26 @@ void	check_map(char *map_path, t_data *game)
 	if (!check_walls(game->map, game))
 		exit_call("Map not proper walled", game->map, game);
 	flood_fill(game, 2, 2);
-	int i = 0;
-	
+	if (check_letters_on_map(game))
+		exit_call("Exit/Coins not reachable", game->map, game);
 	ft_freeall(game->map, count_lines(game->map));
-	printf("OK");
-	
+	printf("Map valid");
+
 }
 
+bool	check_map_string(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c && str[i + 1] == '.')
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 int main(int ac, char **av)
 {
@@ -173,7 +224,7 @@ int main(int ac, char **av)
 	game = ft_calloc(1, sizeof(t_data));
 	if (!game)
 		return (0);
-	if (ac == 2)
+	if (ac == 2 && check_map_string(av[1], '/'))
 		check_map(av[1], game);
 	else
 		write(2, "Error, no map found!", 21);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/06 10:23:36 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/06 15:40:07 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (join);
 }
 
-static void	*ft_bzero(void *s, size_t n)
+void	*ft_bzero(void *s, size_t n)
 {
 	size_t			i;
 	unsigned char	*arr;
@@ -231,6 +231,25 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (str1[i] - str2[i]);
 }
 
+int	find_doubles(char *str, int c)
+{
+	unsigned char	letter;
+	unsigned int	count;
+	size_t			i;
+
+	letter = (unsigned char) c;
+	count = 0;
+	i = 0;
+	if (str == NULL)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == letter)
+			count++;
+		i++;
+	}
+	return (count);
+}
 
 int	find_char(char *str, int c)
 {
