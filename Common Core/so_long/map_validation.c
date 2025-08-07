@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:15:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/06 16:24:38 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/07 15:33:58 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ int	check_letters_on_map(t_data *game)
 	int		i;
 
 	_bo = (t_bool){0};
-	game->coin_count = 0;
 	i = 0;
 	while (game->map[i])
 	{
@@ -170,14 +169,17 @@ int	check_letters_on_map(t_data *game)
 			set_coords(&_bo.player, &game->player, i,
 				find_char(game->map[i], 'P'));
 		if (find_char(game->map[i], 'C'))
+		{
 			game->coin_count = find_doubles(game->map[i], 'C');
+			_bo.coins = true;
+		}
 		if (find_char(game->map[i], 'E'))
 			set_coords(&_bo.exit, &game->exit, i, find_char(game->map[i], 'E'));
 		i++;
 	}
-	if (_bo.player == true && _bo.exit == true && game->coin_count > 0)
+	if (_bo.player == true && _bo.exit == true && _bo.coins == true)
 		return (printf("Exit 1\n"), 1);
-	else if (_bo.player == false && _bo.exit == false && game->coin_count == 0)
+	else if (_bo.player == false && _bo.exit == false && _bo.coins == false)
 		return (printf("Exit 0\n"), 0);
 	return (printf("Exit -1\n"), -1);
 }
@@ -196,17 +198,17 @@ void	check_map(char *map_path, t_data *game)
 		exit_call("Map is not rectangular", game->map, game);
 	if (!check_walls(game->map, game))
 		exit_call("Map not proper walled", game->map, game);
-	flood_fill(game, 2, 2);
+	flood_fill(game, game->player.x, game->player.y);
 	if (check_letters_on_map(game))
 		exit_call("Exit/Coins not reachable", game->map, game);
 	ft_freeall(game->map, count_lines(game->map));
-	printf("Map valid");
+	printf("Map valid\n");
 
 }
 
 bool	check_map_string(char *str, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -221,11 +223,15 @@ bool	check_map_string(char *str, char c)
 int main(int ac, char **av)
 {
 	t_data	*game;
+
 	game = ft_calloc(1, sizeof(t_data));
 	if (!game)
 		return (0);
 	if (ac == 2 && check_map_string(av[1], '/'))
+	{
 		check_map(av[1], game);
+		mlx_initialize(av[1], game);
+	}
 	else
 		write(2, "Error, no map found!", 21);
 	free(game);

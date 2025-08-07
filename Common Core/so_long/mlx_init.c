@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlxx_init.c                                         :+:      :+:    :+:   */
+/*   game->mlxx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,55 +13,88 @@
 #include "so_long.h"
 #include <X11/keysym.h>
 
-int	keyhandler(int keysym, t_mlx *_mlx)
+int	keyhandler(int keysym, t_data *game)
 {
 	if (keysym == ESC)
 	{
-		mlx_destroy_window(_mlx->connect, _mlx->win);
-		mlx_destroy_display(_mlx->connect);
-		free(_mlx->connect);
+		//game->mlx_destroy_image(game->mlx.connect, game->mlx.img);
+		mlx_destroy_window(game->mlx.connect, game->mlx.win);
+		mlx_destroy_display(game->mlx.connect);
+		free(game->mlx.connect);
 		exit(0);
 	}
-	printf("test %d\n", keysym);
+	if (keysym == W || keysym == UP)
+		update_game(game, 'u');
+/* 	if (keysym == A || keysym == LEFT)
+		update_game(game, 'l');
+	if (keysym == D || keysym == RIGHT)
+		update_game(game, 'r');
+	if (keysym == S || keysym == DOWN)
+		update_game(game, 'd'); */
 	return (0);
-
-
-
-
 }
-int	main(void)
-{
-	t_mlx	_mlx;
-	int	keysym;
 
-	_mlx.width = 800;
-	_mlx.height = 800;
-	_mlx.connect = mlx_init();
-	if (!_mlx.connect)
+int	close_window(t_data *game)
+{
+	//game->mlx_destroy_image(game->mlx.connect, game->mlx.img);
+	mlx_destroy_window(game->mlx.connect, game->mlx.win);
+	mlx_destroy_display(game->mlx.connect);
+	free(game->mlx.connect);
+	exit(0);
+}
+void	init_game(t_data *game, char *map_path)
+{
+	int i = 0;
+	game->map = extract_map(map_path);
+	if (!game->map)
+		exit_call("Map extraction failed", game->map, game);
+	game->length.x = ft_strlen(game->map[0]);
+	game->length.y = count_lines(game->map);
+	/* while (game->map[i])
+		printf("%s\n", game->map[i++]); */
+}
+
+int	mlx_initialize(char *map_path, t_data *game)
+{
+
+
+	init_game(game, map_path);
+
+	game->mlx.width = game->length.x * TILE_SIZE;
+	game->mlx.height = (1 + game->length.y) * TILE_SIZE;
+	game->mlx.connect = mlx_init();
+	if (!game->mlx.connect)
 		exit(1);
-	_mlx.win = mlx_new_window(_mlx.connect, _mlx.width, _mlx.height, "GAME");
-	if (!_mlx.win)
+	game->mlx.win = mlx_new_window(game->mlx.connect, game->mlx.width, game->mlx.height, "GAME");
+	if (!game->mlx.win)
 	{
-		mlx_destroy_display(_mlx.connect);
-		free(_mlx.connect);
+		mlx_destroy_display(game->mlx.connect);
+		free(game->mlx.connect);
 		exit(1);
 	}
 
-	//_mlx_hook(_mlx.connect,)
-	mlx_key_hook(_mlx.win, keyhandler, &_mlx);
+	create_map(game);
+
+	mlx_key_hook(game->mlx.win, keyhandler, game);
+	mlx_hook(game->mlx.win, ON_DESTROY, STOP, close_window, game);
 
 
 
-	mlx_loop(_mlx.connect);
-	printf("test %d", keysym);
-	//_mlx_destroy_window(_mlx.connect, _mlx.win);
-	mlx_destroy_display(_mlx.connect);
-	free(_mlx.connect);
-
-	//_mlx_put_image_to_window(_mlx, win, img, x * TILE_SIZE, y * TILE_SIZE);
+	//game->mlx_put_image_to_window(game->mlx, win, img, x * TILE_SIZE, y * TILE_SIZE);
 
 
 
 
 
+	mlx_loop(game->mlx.connect);
+
+
+	//game->mlx_destroy_image(game->mlx.connect, game->mlx.img);
+	mlx_destroy_display(game->mlx.connect);
+	mlx_destroy_window(game->mlx.connect, game->mlx.win);
+	free(game->mlx.connect);
+	return (0);
 }
+
+
+// cc game->mlx_init.c -lX11 -lXext -lgame->mlx -lbsd -fsanitize=address,leak,undefined -g3

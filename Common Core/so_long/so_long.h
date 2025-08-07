@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:16:59 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/06 20:24:35 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/07 21:37:00 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,38 @@
 # include <mlx.h>
 
 # define ESC 65307
-# define W 1731
-# define A 1734
-# define S 1753
-# define D 1751
+# define W 119
+# define A 97
+# define S 115
+# define D 100
+# define UP 65362
+# define LEFT 65361
+# define DOWN 65364
+# define RIGHT 65363
+# define TILE_SIZE 64
+# define ON_DESTROY 17
 # define STOP 0
-# define LEFT 1
-# define RIGHT 2
-# define UP 3
-# define DOWN 4
+
+
+typedef struct s_sprite
+{
+	void	*down;
+	void	*left;
+	void	*up;
+	void	*right;
+	char	*path;
+}	t_sprite;
+
 
 typedef struct s_mlx
 {
-	void	*connect;
-	void	*win;
-	void	*img;
-	int		width;
-	int		height;
+	void		*connect;
+	void		*win;
+	void		*img_wall;
+	int			width;
+	int			height;
+	void		*player;
+	t_sprite	boss;
 }	t_mlx;
 
 
@@ -58,18 +73,17 @@ typedef struct s_coord
 
 typedef struct s_data
 {
-	size_t	movements;
-	//void	*exit;
-	char	**map;
+	size_t	move_count;
 	int		coin_count;
-	bool	fill;
-	t_coord	coins[20];
+	char	**map;
+	t_coord	length;
 	t_coord	player;
+	t_coord	coins;
 	t_coord	boss;
 	t_coord	exit;
-	t_coord	length;
-
+	t_mlx 	mlx;
 }	t_data;
+
 
 typedef struct s_bool
 {
@@ -77,7 +91,6 @@ typedef struct s_bool
 	bool	boss;
 	bool	coins;
 	bool	exit;
-
 }	t_bool;
 
 
@@ -92,5 +105,10 @@ int		ft_strcheck(const char *str, int c);
 int		find_char(char *str, int c);
 void	*ft_bzero(void *s, size_t n);
 int		find_doubles(char *str, int c);
-
+int		mlx_initialize(char *map_path, t_data *game);
+int		count_lines(char **split);
+char	**extract_map(char *map_path);
+void	exit_call(char *message, char **split, t_data *game);
+void	create_map(t_data *game);
+void	update_game(t_data *game, char id);
 #endif
