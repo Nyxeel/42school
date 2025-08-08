@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_game.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 17:27:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/08 10:48:18 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/08 15:39:36 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void	add_wall_img(t_data *game)
 		while (game->map[y][x])
 		{
 			if (game->map[y][x] == '1')
-				mlx_put_image_to_window(game->mlx.connect, game->mlx.win, game->mlx.wall_img,
-					x * TILE_SIZE, y * TILE_SIZE);
+				mlx_put_image_to_window(game->mlx.connect,
+					game->mlx.win, game->mlx.wall_img, x * TILE_SIZE,
+					y * TILE_SIZE);
 			x++;
 		}
 		y++;
@@ -41,7 +42,7 @@ void	add_wall_img(t_data *game)
 	mlx_destroy_image(game->mlx.connect, game->mlx.wall_img);
 }
 
-void	add_coins(t_data *game)
+void	add_collectiables(t_data *game)
 {
 	int	x;
 	int	y;
@@ -50,7 +51,7 @@ void	add_coins(t_data *game)
 
 	y = 0;
 	x = 0;
-	game->mlx.coin_img = mlx_xpm_file_to_image(game->mlx.connect,
+	game->mlx.collectiable_img = mlx_xpm_file_to_image(game->mlx.connect,
 			"tile-set/character/right.xpm", &width, &height);
 	if (!game->mlx.wall_img)
 		exit_mlx(game, "mlx wall image not found");
@@ -60,13 +61,14 @@ void	add_coins(t_data *game)
 		while (game->map[y][x])
 		{
 			if (game->map[y][x] == 'C')
-				mlx_put_image_to_window(game->mlx.connect, game->mlx.win, game->mlx.coin_img,
-					x * TILE_SIZE, y * TILE_SIZE);
+				mlx_put_image_to_window(game->mlx.connect,
+					game->mlx.win, game->mlx.collectiable_img, x * TILE_SIZE,
+					y * TILE_SIZE);
 			x++;
 		}
 		y++;
 	}
-	mlx_destroy_image(game->mlx.connect, game->mlx.coin_img);
+	mlx_destroy_image(game->mlx.connect, game->mlx.collectiable_img);
 }
 
 
@@ -82,6 +84,7 @@ void	add_player(t_data *game)
 	mlx_put_image_to_window(game->mlx.connect, game->mlx.win,
 		game->mlx.player_img, game->player.x * TILE_SIZE,
 		game->player.y * TILE_SIZE);
+	mlx_destroy_image(game->mlx.connect, game->mlx.player_img);
 
 }
 
@@ -90,10 +93,8 @@ void	create_map(t_data *game)
 {
 	add_wall_img(game);
 	add_player(game);
-	add_coins(game);
-	mlx_string_put(game->mlx.connect, game->mlx.win, game->length.x * TILE_SIZE / 2, (game->length.y + 0.6) * TILE_SIZE, 0xFFFFFF,"MOVEMENTS:");
-	mlx_string_put(game->mlx.connect, game->mlx.win, game->length.x * TILE_SIZE / 2 + 70, (game->length.y + 0.6) * TILE_SIZE, 0xFFFFFF, "120");
-
+	add_collectiables(game);
+	add_move_counter(game);
 }
 
 

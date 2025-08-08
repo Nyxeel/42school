@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:15:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/08 00:13:11 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/08 19:04:15 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,22 @@ int	count_lines(char **split)
 
 void	exit_call(char *message, char **split, t_data *game)
 {
-	write(2, "Error: ", 7);
-	write(2, message, ft_strlen(message));
-	if (split)
-		ft_freeall(split, count_lines(split));
-	free(game);
-	exit(1);
+	if (message)
+	{
+		write(2, "Error\n", 6);
+		write(2, message, ft_strlen(message));
+		if (split)
+			ft_freeall(split, count_lines(split));
+		free(game);
+		exit(1);
+	}
+	else
+	{
+		if (split)
+			ft_freeall(split, count_lines(split));
+		free(game);
+		exit(0);
+	}
 }
 
 
@@ -64,7 +74,7 @@ char	**extract_map(char *map_path)
 void  flood_fill(t_data *game, int x, int y)
 {
 	int	i;
-	
+
 	i = 0;
 	if (x < 0 || y < 0 || x >= game->length.x || y >= game->length.y)
 		return ;
@@ -170,7 +180,7 @@ int	check_letters_on_map(t_data *game)
 				find_char(game->map[i], 'P'));
 		if (find_char(game->map[i], 'C'))
 		{
-			game->coin_count = find_doubles(game->map[i], 'C');
+			game->coin_count += find_doubles(game->map[i], 'C');
 			_bo.coins = true;
 		}
 		if (find_char(game->map[i], 'E'))
@@ -184,14 +194,44 @@ int	check_letters_on_map(t_data *game)
 	return (-1);
 }
 
+bool	check_forbidden_chars(t_data *game)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (game->map[y])
+	{
+		x = 0;
+		while (game->map[y][x])
+		{
+			if (game->map[y][x] == '1' ||
+				game->map[y][x] == 'C' ||
+				game->map[y][x] == 'P' ||
+				game->map[y][x] == '0' ||
+				game->map[y][x] == 'E')
+			{
+				x++;
+				continue ; //return (printf("OKOKOKOK %i/%i\n", y, x), false);
+			}
+			else
+				return (false);
+		}
+		y++;
+	}
+	return (true);
+}
+
 void	check_map(char *map_path, t_data *game)
 {
-	int i = 0;
 	game->map = extract_map(map_path);
 	if (!game->map)
 		exit_call("Map extraction failed\n", game->map, game);
 	if (!check_doubles(game))
 		exit_call("Doubles found (P, E)\n", game->map, game);
+	if (!check_forbidden_chars(game))
+		exit_call("Forbidden char detected\n", game->map, game);
 	if (check_letters_on_map(game) <= 0)
 		exit_call("Letters failed (C,P,E,B)\n", game->map, game);
 	game->length.x = ft_strlen(game->map[0]) - 1;

@@ -24,7 +24,7 @@ void exit_mlx(t_data *game, char *message)
 int	keyhandler(int keysym, t_data *game)
 {
 	if (keysym == ESC)
-		exit_mlx(game, "ESC - game closed");
+		exit_mlx(game, NULL);
 	if (keysym == W || keysym == UP)
 		update_game(game, 'u');
  	if (keysym == A || keysym == LEFT)
@@ -36,10 +36,12 @@ int	keyhandler(int keysym, t_data *game)
 	return (0);
 }
 
-int	close_window(t_data *game)
+int close_window(t_data *game)
 {
-	exit_mlx(game, "");
+	exit_mlx(game, NULL);
+	return (0);
 }
+
 void	init_game(t_data *game, char *map_path)
 {
 	//int i = 0;
@@ -69,33 +71,18 @@ int	mlx_initialize(char *map_path, t_data *game)
 		free(game->mlx.connect);
 		exit_call("mlx window failed", game->map, game);
 	}
-
 	create_map(game);
-
 	mlx_key_hook(game->mlx.win, keyhandler, game);
 	mlx_hook(game->mlx.win, ON_DESTROY, STOP, close_window, game);
-
-
-
-	//game->mlx_put_image_to_window(game->mlx, win, img, x * TILE_SIZE, y * TILE_SIZE);
-
-
-
-
-
 	mlx_loop(game->mlx.connect);
-
-
-	//game->mlx_destroy_image(game->mlx.connect, game->mlx.img);
-	
 	return (0);
 }
 
 
-// cc game->mlx_init.c -lX11 -lXext -lgame->mlx -lbsd -fsanitize=address,leak,undefined -g3
+//  cc player.c utils.c map_validation.c create_game.c mlx_init.c -lX11 -lXext -lmlx -lbsd -fsanitize=address,leak,undefined -g3
 // gcc -I./minilibx-linux
 
-/* 
+/*
 gcc -I./minilibx-linux \
     player.c map_validation.c utils.c mlx_init.c create_game.c \
     -L./minilibx-linux -lmlx \

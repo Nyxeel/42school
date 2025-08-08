@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:16:59 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/08 10:46:10 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/08 15:40:47 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,7 @@
 # define TILE_SIZE 64
 # define ON_DESTROY 17
 # define STOP 0
-
-
-typedef struct s_sprite
-{
-	void	*down;
-	void	*left;
-	void	*up;
-	void	*right;
-	char	*path;
-}	t_sprite;
-
+# define WHITE 0xFFFFFF
 
 typedef struct s_mlx
 {
@@ -61,8 +51,8 @@ typedef struct s_mlx
 	int			width;
 	int			height;
 	void		*player_img;
-	void		*coin_img;
-	t_sprite	boss;
+	void		*collectiable_img;
+	void		*boss;
 }	t_mlx;
 
 
@@ -74,7 +64,7 @@ typedef struct s_coord
 
 typedef struct s_data
 {
-	size_t	move_count;
+	int		move_count;
 	int		coin_count;
 	char	**map;
 	t_coord	length;
@@ -113,6 +103,7 @@ void	exit_call(char *message, char **split, t_data *game);
 void	create_map(t_data *game);
 void	update_game(t_data *game, char id);
 void 	exit_mlx(t_data *game, char *message);
-
+char	*ft_itoa(int n);
+void add_move_counter(t_data *game);
 
 #endif
