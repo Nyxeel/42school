@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:16:59 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/07 21:37:00 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/08 10:46:10 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <stdint.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <mlx.h>
+# include "mlx.h"
 
 # define ESC 65307
 # define W 119
@@ -57,10 +57,11 @@ typedef struct s_mlx
 {
 	void		*connect;
 	void		*win;
-	void		*img_wall;
+	void		*wall_img;
 	int			width;
 	int			height;
-	void		*player;
+	void		*player_img;
+	void		*coin_img;
 	t_sprite	boss;
 }	t_mlx;
 
@@ -111,4 +112,7 @@ char	**extract_map(char *map_path);
 void	exit_call(char *message, char **split, t_data *game);
 void	create_map(t_data *game);
 void	update_game(t_data *game, char id);
+void 	exit_mlx(t_data *game, char *message);
+
+
 #endif

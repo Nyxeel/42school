@@ -13,38 +13,36 @@
 #include "so_long.h"
 #include <X11/keysym.h>
 
+void exit_mlx(t_data *game, char *message)
+{
+	mlx_destroy_window(game->mlx.connect, game->mlx.win);
+	mlx_destroy_display(game->mlx.connect);
+	free(game->mlx.connect);
+	exit_call(message, game->map, game);
+}
+
 int	keyhandler(int keysym, t_data *game)
 {
 	if (keysym == ESC)
-	{
-		//game->mlx_destroy_image(game->mlx.connect, game->mlx.img);
-		mlx_destroy_window(game->mlx.connect, game->mlx.win);
-		mlx_destroy_display(game->mlx.connect);
-		free(game->mlx.connect);
-		exit(0);
-	}
+		exit_mlx(game, "ESC - game closed");
 	if (keysym == W || keysym == UP)
 		update_game(game, 'u');
-/* 	if (keysym == A || keysym == LEFT)
+ 	if (keysym == A || keysym == LEFT)
 		update_game(game, 'l');
 	if (keysym == D || keysym == RIGHT)
 		update_game(game, 'r');
 	if (keysym == S || keysym == DOWN)
-		update_game(game, 'd'); */
+		update_game(game, 'd');
 	return (0);
 }
 
 int	close_window(t_data *game)
 {
-	//game->mlx_destroy_image(game->mlx.connect, game->mlx.img);
-	mlx_destroy_window(game->mlx.connect, game->mlx.win);
-	mlx_destroy_display(game->mlx.connect);
-	free(game->mlx.connect);
-	exit(0);
+	exit_mlx(game, "");
 }
 void	init_game(t_data *game, char *map_path)
 {
-	int i = 0;
+	//int i = 0;
 	game->map = extract_map(map_path);
 	if (!game->map)
 		exit_call("Map extraction failed", game->map, game);
@@ -59,18 +57,17 @@ int	mlx_initialize(char *map_path, t_data *game)
 
 
 	init_game(game, map_path);
-
 	game->mlx.width = game->length.x * TILE_SIZE;
 	game->mlx.height = (1 + game->length.y) * TILE_SIZE;
 	game->mlx.connect = mlx_init();
 	if (!game->mlx.connect)
-		exit(1);
+		exit_call("mlx connect failed", game->map, game);
 	game->mlx.win = mlx_new_window(game->mlx.connect, game->mlx.width, game->mlx.height, "GAME");
 	if (!game->mlx.win)
 	{
 		mlx_destroy_display(game->mlx.connect);
 		free(game->mlx.connect);
-		exit(1);
+		exit_call("mlx window failed", game->map, game);
 	}
 
 	create_map(game);
@@ -90,11 +87,16 @@ int	mlx_initialize(char *map_path, t_data *game)
 
 
 	//game->mlx_destroy_image(game->mlx.connect, game->mlx.img);
-	mlx_destroy_display(game->mlx.connect);
-	mlx_destroy_window(game->mlx.connect, game->mlx.win);
-	free(game->mlx.connect);
+	
 	return (0);
 }
 
 
 // cc game->mlx_init.c -lX11 -lXext -lgame->mlx -lbsd -fsanitize=address,leak,undefined -g3
+// gcc -I./minilibx-linux
+
+/* 
+gcc -I./minilibx-linux \
+    player.c map_validation.c utils.c mlx_init.c create_game.c \
+    -L./minilibx-linux -lmlx \
+    -lXext -lX11 -lbsd -g3 */
