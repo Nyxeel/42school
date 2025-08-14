@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_sorting.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/12 20:58:49 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/14 14:31:13 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	sort_three(t_stack *a)
 
 void	start_algorithm(t_stack *a, t_stack *b)
 {
+	if (sorted(a))
+		return (free_all(a, b));
 	if (a->size > 3)
 		push('b', a, b);
 	if (a->size > 3)
