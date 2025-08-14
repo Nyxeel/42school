@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   update_game.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 17:27:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/14 11:36:09 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/14 18:54:48 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include "libft/libft.h"
+#include "libft/ft_printf/ft_printf.h"
 
 void	add_move_counter(t_data *game)
 {
@@ -87,18 +89,21 @@ void	update_player(t_data *game, char id)
 	mlx_destroy_image(game->mlx.connect, game->mlx.player_img);
 	game->move_count += 1;
 	add_move_counter(game);
-	ft_printf("Movements: %i\n", game->move_count);///////////////////////////////////
+	ft_printf("Movements: %i\n", game->move_count);
 }
 
 void	update_game(t_data *game, char id)
 {
 	if (id == 'u' && (game->map[game->player.y - 1][game->player.x]) != '1')
 		update_player(game, id);
-	else if (id == 'l' && (game->map[game->player.y][game->player.x - 1]) != '1')
+	else if (id == 'l' && (game->map[game->player.y]
+			[game->player.x - 1]) != '1')
 		update_player(game, id);
-	else if (id == 'd' && (game->map[game->player.y + 1][game->player.x]) != '1')
+	else if (id == 'd' && (game->map[game->player.y + 1]
+			[game->player.x]) != '1')
 		update_player(game, id);
-	else if (id == 'r' && (game->map[game->player.y][game->player.x + 1]) != '1')
+	else if (id == 'r' && (game->map[game->player.y]
+			[game->player.x + 1]) != '1')
 		update_player(game, id);
 	if (game->map[game->player.y][game->player.x] == 'C')
 	{
@@ -106,15 +111,17 @@ void	update_game(t_data *game, char id)
 		game->coin_count -= 1;
 	}
 	if (game->coin_count == 0 && game->player.y == game->exit.y
-			&& game->player.x == game->exit.x)
+		&& game->player.x == game->exit.x)
 	{
 		write(1, "You won the game!", 17);
 		exit_mlx(game, NULL);
 	}
-
 }
 
 // cc mlx_init.c -lX11 -lXext -lmlx -lbsd -fsanitize=address,leak,undefined -g3
 
 //
-//cc player.c map_validation.c utils.c mlx_init.c create_game.c -lX11 -lXext -lmlx -lbsd -g3
+/*
+cc player.c map_validation.c utils.c mlx_init.c create_game.c
+-lX11 -lXext -lmlx -lbsd -g3
+*/

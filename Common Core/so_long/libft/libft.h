@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:23:20 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/07/31 10:17:23 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/14 18:33:28 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_isspace(char c);
-size_t	ft_wordcount(char *str);
+size_t	ft_wordcount(char const *str, char c);
 
 #endif

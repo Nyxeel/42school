@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:15:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/14 11:53:26 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/14 18:19:10 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 char	**extract_map(char *map_path)
 {
-	int		i;
 	char	*line;
 	int		bytes;
 	char	**map;
@@ -37,66 +36,6 @@ char	**extract_map(char *map_path)
 	return (close(fd), free(line), map);
 }
 
-void  flood_fill(t_data *game, int x, int y)
-{
-	int	i;
-
-	i = 0;
-	if (x < 0 || y < 0 || x >= game->length.x || y >= game->length.y)
-		return ;
-	if (game->map[y][x] == '1' || game->map[y][x] == 'X')
-		return ;
-	else
-	{
-		game->map[y][x] = 'X';
-		flood_fill(game, x + 1, y);
-		flood_fill(game, x - 1, y);
-		flood_fill(game, x, y + 1);
-		flood_fill(game, x, y - 1);
-	}
-}
-
-int	check_walls(char **map, t_data *game)
-{
-	int	i;
-
-	i = 0;
-	game->length.y = count_lines(map) - 1;
-	while (map[i])
-	{
-		if (i == 0 || i == game->length.y)
-		{
-			if (ft_strcheck(map[i++], '1'))
-				continue ;
-			else
-				return (0);
-		}
-		else
-		{
-			if (map[i][0] == '1' && map[i++][game->length.x] == '1')
-				continue ;
-			else
-				return (0);
-		}
-	}
-	return (1);
-}
-
-int	check_rectangular(char **map, int line_length)
-{
-	int	i;
-
-	i = 1;
-	while (map[i])
-	{
-		if (ft_strlen(map[i++]) == line_length)
-			continue ;
-		else
-			return (0);
-	}
-	return (1);
-}
-
 bool	check_doubles(t_data *game)
 {
 	int		i;
@@ -108,14 +47,14 @@ bool	check_doubles(t_data *game)
 	{
 		if (find_char(game->map[i], 'P'))
 		{
-			if (!_bool.player && find_doubles(game->map[i], 'P') == 1)
+			if (!_bool.player && count_letters(game->map[i], 'P') == 1)
 				_bool.player = true;
 			else
 				return (false);
 		}
 		if (find_char(game->map[i], 'E'))
 		{
-			if (!_bool.exit && find_doubles(game->map[i], 'E') == 1)
+			if (!_bool.exit && count_letters(game->map[i], 'E') == 1)
 				_bool.exit = true;
 			else
 				return (false);
@@ -125,7 +64,7 @@ bool	check_doubles(t_data *game)
 	return (true);
 }
 
-static void	set_coords(bool *env, t_coord *point, int y, int x)
+void	set_coords(bool *env, t_coord *point, int y, int x)
 {
 	(*point).x = x;
 	(*point).y = y;
@@ -146,7 +85,7 @@ int	check_letters_on_map(t_data *game)
 				find_char(game->map[i], 'P'));
 		if (find_char(game->map[i], 'C'))
 		{
-			game->coin_count += find_doubles(game->map[i], 'C');
+			game->coin_count += count_letters(game->map[i], 'C');
 			_bo.coins = true;
 		}
 		if (find_char(game->map[i], 'E'))

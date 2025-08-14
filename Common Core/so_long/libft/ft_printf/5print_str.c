@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_wordcount.c                                     :+:      :+:    :+:   */
+/*   5print_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 00:12:49 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/14 18:34:32 by pjelinek         ###   ########.fr       */
+/*   Created: 2025/05/10 15:53:12 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/08/14 18:54:10 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-size_t	ft_wordcount(char const *str, char c)
+
+size_t	ft_strlen(const char *str)
 {
-	size_t	i;
-	size_t	words;
-	bool	in_word;
+	size_t	count;
 
-	words = 0;
-	i = 0;
-	while (str[i])
-	{
-		if (c == str[i])
-			in_word = false;
-		else if (!in_word)
-		{
-			in_word = true;
-			words++;
-		}
-		i++;
-	}
-	return (words);
+	count = 0;
+	while (str[count])
+		count++;
+	return (count);
+}
+
+int	ft_arg_string(char	*str)
+{
+	if (!str)
+		return (write(1, "(null)", 6));
+	return (write(1, str, ft_strlen(str)));
 }

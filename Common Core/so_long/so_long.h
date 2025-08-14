@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:16:59 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/08 15:40:47 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/14 18:20:31 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,25 +85,32 @@ typedef struct s_bool
 }	t_bool;
 
 
+//############ CHECK MAP
 
-
-
-char	**ft_split(char const *s, char c);
-void	*ft_calloc(size_t nmemb, size_t size);
-void	ft_freeall(char **freearr, size_t index);
-size_t	ft_strlen(const char *str);
-int		ft_strcheck(const char *str, int c);
-int		find_char(char *str, int c);
-void	*ft_bzero(void *s, size_t n);
-int		find_doubles(char *str, int c);
-int		mlx_initialize(char *map_path, t_data *game);
-int		count_lines(char **split);
+bool	check_forbidden_chars(t_data *game);
+int		check_letters_on_map(t_data *game);
+bool	check_doubles(t_data *game);
+int		check_rectangular(char **map, size_t line_length);
+int		check_walls(char **map, t_data *game);
+void	flood_fill(t_data *game, int x, int y);
 char	**extract_map(char *map_path);
+
+//############# UTILS
+
+int		ft_strcheck(const char *str, int c);
+int		count_letters(char *str, int c);
+int		count_lines(char **split);
+int		find_char(char *str, int c);
+
+//############# EXIT
+
 void	exit_call(char *message, char **split, t_data *game);
+void	exit_mlx(t_data *game, char *message);
+void	ft_freeall(char **freearr, size_t index);
+
+int		mlx_initialize(char *map_path, t_data *game);
 void	create_map(t_data *game);
 void	update_game(t_data *game, char id);
-void 	exit_mlx(t_data *game, char *message);
-char	*ft_itoa(int n);
-void add_move_counter(t_data *game);
+void	add_move_counter(t_data *game);
 
 #endif

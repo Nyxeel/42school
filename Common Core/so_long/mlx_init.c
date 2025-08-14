@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <X11/keysym.h>
+#include "libft/libft.h"
 
 void exit_mlx(t_data *game, char *message)
 {
@@ -21,13 +21,13 @@ void exit_mlx(t_data *game, char *message)
 	exit_call(message, game->map, game);
 }
 
-int	keyhandler(int keysym, t_data *game)
+static int	keyhandler(int keysym, t_data *game)
 {
 	if (keysym == ESC)
 		exit_mlx(game, NULL);
 	if (keysym == W || keysym == UP)
 		update_game(game, 'u');
- 	if (keysym == A || keysym == LEFT)
+	if (keysym == A || keysym == LEFT)
 		update_game(game, 'l');
 	if (keysym == D || keysym == RIGHT)
 		update_game(game, 'r');
@@ -36,35 +36,31 @@ int	keyhandler(int keysym, t_data *game)
 	return (0);
 }
 
-int close_window(t_data *game)
+static int close_window(t_data *game)
 {
 	exit_mlx(game, NULL);
 	return (0);
 }
 
-void	init_game(t_data *game, char *map_path)
+static void	init_game(t_data *game, char *map_path)
 {
-	//int i = 0;
 	game->map = extract_map(map_path);
 	if (!game->map)
 		exit_call("Map extraction failed", game->map, game);
 	game->length.x = ft_strlen(game->map[0]);
 	game->length.y = count_lines(game->map);
-	/* while (game->map[i])
-		printf("%s\n", game->map[i++]); */
 }
 
 int	mlx_initialize(char *map_path, t_data *game)
 {
-
-
 	init_game(game, map_path);
 	game->mlx.width = game->length.x * TILE_SIZE;
 	game->mlx.height = (1 + game->length.y) * TILE_SIZE;
 	game->mlx.connect = mlx_init();
 	if (!game->mlx.connect)
 		exit_call("mlx connect failed", game->map, game);
-	game->mlx.win = mlx_new_window(game->mlx.connect, game->mlx.width, game->mlx.height, "GAME");
+	game->mlx.win = mlx_new_window(game->mlx.connect,
+			game->mlx.width, game->mlx.height, "GAME");
 	if (!game->mlx.win)
 	{
 		mlx_destroy_display(game->mlx.connect);
