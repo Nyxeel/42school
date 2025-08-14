@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 17:43:23 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/12 20:51:47 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool	doubles(t_stack *a, int num)
 	while (curr != NULL)
 	{
 		if (curr->value == num)
-			return (write(2, "Error\n", 6));
+			return (false);
 		curr = curr->next;
 	}
 	return (true);
@@ -91,7 +91,7 @@ bool	input_check(t_stack *a, char **av)
 		if (num < INT_MIN || num > INT_MAX)
 			return (false);
 		if (a->head && !doubles(a, num))
-			return (write(2, "Error\n", 6));
+			return (false);
 		if (!add_node(a, num))
 			return (false);
 		i++;

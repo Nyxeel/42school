@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 17:44:49 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/14 11:02:50 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <stdio.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -39,7 +38,6 @@ typedef struct s_stack
 	t_node	*max;
 	t_node	*cheapest;
 	int		size;
-	int		operations;
 }	t_stack;
 
 // -------------------- INPUT & ERROR HANDLING --------------------

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_to_b.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 18:19:54 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/14 10:52:14 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	double_rotate(t_stack *a, t_stack *b)
 	{
 		rotate('f', a);
 		rotate('r', b);
-		a->operations -= 1;
 		i++;
 	}
 	i = 0;
@@ -61,7 +60,6 @@ void	double_rev_rotate(t_stack *a, t_stack *b)
 	{
 		r_rotate('f', a);
 		r_rotate('t', b);
-		a->operations -= 1;
 		i++;
 	}
 	i = 0;

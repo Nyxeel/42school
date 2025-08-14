@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:17:48 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 18:16:51 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/14 10:51:35 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	push(char id, t_stack *from, t_stack *to)
 	to->head = top;
 	from->size -= 1;
 	to->size += 1;
-	from->operations += 1;
 	if (id == 'a')
 		write(1, "pa\n", 3);
 	else if (id == 'b')
@@ -58,7 +57,6 @@ void	swap(char id, t_stack *stack)
 	second->next = first;
 	second->prev = NULL;
 	stack->head = second;
-	stack->operations += 1;
 	if (id == 'a')
 		write(1, "sa\n", 3);
 	else if (id == 'b')
@@ -80,7 +78,6 @@ void	rotate(char id, t_stack *stack)
 	first->prev = last;
 	last->next = first;
 	stack->tail = first;
-	stack->operations += 1;
 	if (id == 'a')
 		write(1, "ra\n", 3);
 	else if (id == 'b')
@@ -104,7 +101,6 @@ void	r_rotate(char id, t_stack *stack)
 	last->prev = NULL;
 	first->prev = last;
 	stack->head = last;
-	stack->operations += 1;
 	if (id == 'a')
 		write(1, "rra\n", 4);
 	else if (id == 'b')

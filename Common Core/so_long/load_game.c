@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_game.c                                      :+:      :+:    :+:   */
+/*   load_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 17:27:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/08 15:39:36 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/14 11:38:22 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include <X11/keysym.h>
 
-void	add_wall_img(t_data *game)
+static void	add_wall_img(t_data *game)
 {
 	int	x;
 	int	y;
@@ -42,7 +42,7 @@ void	add_wall_img(t_data *game)
 	mlx_destroy_image(game->mlx.connect, game->mlx.wall_img);
 }
 
-void	add_collectiables(t_data *game)
+static void	add_collectiables(t_data *game)
 {
 	int	x;
 	int	y;
@@ -72,7 +72,7 @@ void	add_collectiables(t_data *game)
 }
 
 
-void	add_player(t_data *game)
+static void	add_player(t_data *game)
 {
 	int	width;
 	int	height;

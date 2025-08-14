@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_game.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 17:27:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/08 17:27:19 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/14 11:36:09 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,7 @@ void	update_player(t_data *game, char id)
 	mlx_destroy_image(game->mlx.connect, game->mlx.player_img);
 	game->move_count += 1;
 	add_move_counter(game);
-	printf("Movements: %i\n", game->move_count);///////////////////////////////////
-	printf("COINS: %i\n", game->coin_count);
-
+	ft_printf("Movements: %i\n", game->move_count);///////////////////////////////////
 }
 
 void	update_game(t_data *game, char id)

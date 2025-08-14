@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_sorting.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 18:16:36 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/12 20:58:49 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,4 @@ void	start_sorting(t_stack *a, t_stack *b)
 		else
 			start_algorithm(a, b);
 	}
-	printf("Operations: %i\n", a->operations + b->operations);
 }
