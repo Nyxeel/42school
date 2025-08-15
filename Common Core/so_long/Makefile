@@ -8,6 +8,7 @@ OBJ_DIR         := objects/
 # Compiler & Flags (42‑konform)
 CC              := cc
 CFLAGS          := -Wall -Wextra -Werror
+MINILIBX		:= -lX11 -lXext -lmlx -lbsd -g3
 
 # Libft (liegt im Projekt-Root)
 LIBFT_DIR       := libft
@@ -22,9 +23,6 @@ CORE_SOURCES    := check_map.c check_map2.c utils.c \
                    load_game.c mlx_init.c update_game.c
 MAIN_SOURCE     := main.c
 
-# Bonus (optional; wird nur verwendet, wenn Dateien existieren)
-BONUS_SOURCES   := $(wildcard *_bonus.c)
-
 # Objekte
 CORE_OBJECTS    := $(CORE_SOURCES:%.c=$(OBJ_DIR)%.o)
 MAIN_OBJECT     := $(OBJ_DIR)$(MAIN_SOURCE:.c=.o)
@@ -36,8 +34,7 @@ all: $(PROGRAM_NAME)
 
 # Programm bauen (linkt: main + statische CORE-LIB + libft.a)
 $(PROGRAM_NAME): $(MAIN_OBJECT) $(LIB_NAME) $(LIBFT_A)
-	@$(CC) $(CFLAGS) -o $(PROGRAM_NAME) $(MAIN_OBJECT) $(LIB_NAME) $(LIBFT_A)
-
+	@$(CC) $(CFLAGS) $(MINILIBX) -o $(PROGRAM_NAME) $(MAIN_OBJECT) $(LIB_NAME) $(LIBFT_A)
 # Statische Bibliothek aus den CORE-Objekten
 $(LIB_NAME): $(CORE_OBJECTS)
 	@ar rcs $(LIB_NAME) $(CORE_OBJECTS)
