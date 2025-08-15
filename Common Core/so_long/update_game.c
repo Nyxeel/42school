@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_game.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 17:27:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/14 18:54:48 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/15 21:43:48 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void	update_game(t_data *game, char id)
 		game->map[game->player.y][game->player.x] = '0';
 		game->coin_count -= 1;
 	}
+	if (game->coin_count == 0)
+		add_exit(game);
 	if (game->coin_count == 0 && game->player.y == game->exit.y
 		&& game->player.x == game->exit.x)
 	{

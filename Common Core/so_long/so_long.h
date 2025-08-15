@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:16:59 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/15 16:09:43 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/15 21:42:20 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_mlx
 	int			width;
 	int			height;
 	void		*player_img;
+	void		*exit_img;
 	void		*collectiable_img;
 	void		*boss;
 }	t_mlx;

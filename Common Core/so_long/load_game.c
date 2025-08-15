@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 17:27:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/14 17:33:06 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/15 21:46:21 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	add_collectiables(t_data *game)
 	y = 0;
 	x = 0;
 	game->mlx.collectiable_img = mlx_xpm_file_to_image(game->mlx.connect,
-			"tile-set/character/right.xpm", &width, &height);
+			"tile-set/blood64x64.xpm", &width, &height);
 	if (!game->mlx.wall_img)
 		exit_mlx(game, "mlx wall image not found");
 	while (game->map[y])
@@ -84,6 +84,22 @@ static void	add_player(t_data *game)
 		game->mlx.player_img, game->player.x * TILE_SIZE,
 		game->player.y * TILE_SIZE);
 	mlx_destroy_image(game->mlx.connect, game->mlx.player_img);
+
+}
+
+static void	add_exit(t_data *game)
+{
+	int	width;
+	int	height;
+
+	game->mlx.exit_img = mlx_xpm_file_to_image(game->mlx.connect,
+			"tile-set/exit64x64.xpm", &width, &height);
+	if (!game->mlx.exit_img)
+		exit_mlx(game, "mlx exit image not found");
+	mlx_put_image_to_window(game->mlx.connect, game->mlx.win,
+		game->mlx.exit_img, game->exit.x * TILE_SIZE,
+		game->exit.y * TILE_SIZE);
+	mlx_destroy_image(game->mlx.connect, game->mlx.exit_img);
 
 }
 
