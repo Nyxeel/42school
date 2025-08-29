@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:16:59 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/15 21:42:20 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/29 12:55:19 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10000
 # endif
-
 
 # include <limits.h>
 # include <stdbool.h>
@@ -56,7 +55,6 @@ typedef struct s_mlx
 	void		*boss;
 }	t_mlx;
 
-
 typedef struct s_coord
 {
 	int	x;
@@ -76,7 +74,6 @@ typedef struct s_data
 	t_mlx	mlx;
 }	t_data;
 
-
 typedef struct s_bool
 {
 	bool	player;
@@ -85,9 +82,7 @@ typedef struct s_bool
 	bool	exit;
 }	t_bool;
 
-
 //############ CHECK MAP
-
 bool	check_forbidden_chars(t_data *game);
 int		check_letters_on_map(t_data *game);
 bool	check_doubles(t_data *game);
@@ -97,17 +92,16 @@ void	flood_fill(t_data *game, int x, int y);
 char	**extract_map(char *map_path);
 
 //############# UTILS
-
 int		ft_strcheck(const char *str, int c);
 int		count_letters(char *str, int c);
 int		count_lines(char **split);
 int		find_char(char *str, int c);
 
 //############# EXIT
-
 void	exit_call(char *message, char **split, t_data *game);
 void	exit_mlx(t_data *game, char *message);
 void	ft_freeall(char **freearr, size_t index);
+void	add_exit(t_data *game);
 
 int		mlx_initialize(char *map_path, t_data *game);
 void	create_map(t_data *game);

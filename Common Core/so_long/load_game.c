@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 17:27:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/15 21:46:21 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/29 12:53:54 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,9 @@ static void	add_player(t_data *game)
 		game->mlx.player_img, game->player.x * TILE_SIZE,
 		game->player.y * TILE_SIZE);
 	mlx_destroy_image(game->mlx.connect, game->mlx.player_img);
-
 }
 
-static void	add_exit(t_data *game)
+void	add_exit(t_data *game)
 {
 	int	width;
 	int	height;
@@ -100,9 +99,7 @@ static void	add_exit(t_data *game)
 		game->mlx.exit_img, game->exit.x * TILE_SIZE,
 		game->exit.y * TILE_SIZE);
 	mlx_destroy_image(game->mlx.connect, game->mlx.exit_img);
-
 }
-
 
 void	create_map(t_data *game)
 {
@@ -111,9 +108,3 @@ void	create_map(t_data *game)
 	add_collectiables(game);
 	add_move_counter(game);
 }
-
-
-// cc game->mlx_init.c -lX11 -lXext -lgame->mlx -lbsd -fsanitize=address,leak,undefined -g3
-
-//
-// cc map_validation.c utils.c game->mlx_init.c create_game.c -lX11 -lXext -lgame->mlx -lbsd -g3

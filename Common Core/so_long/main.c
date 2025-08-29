@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:15:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/14 17:56:43 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/29 12:50:43 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int ac, char **av)
 		mlx_initialize(av[1], game);
 	}
 	else
-		write(2, "No valid map found!", 21);
+		write(2, "No valid map found!\n", 21);
 	free(game);
 	return (0);
 }

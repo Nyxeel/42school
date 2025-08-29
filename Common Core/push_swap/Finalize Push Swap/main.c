@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/14 17:06:42 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/28 15:50:37 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 		return (write(2, "Error\n", 6));
 	b = ft_calloc(1, sizeof(t_stack));
 	if (argc == 1)
-		return (0);
+		return (free_all(a, b), 0);
 	if (!b || argc < 2 || !argv[1])
 		return (free_all(a, b), write(2, "Error\n", 6));
 	if (!input_check(a, argv))

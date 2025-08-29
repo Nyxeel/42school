@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game->mlxx_init.c                                         :+:      :+:    :+:   */
+/*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 17:00:59 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/06 20:58:43 by pjelinek         ###   ########.fr       */
+/*   Created: 2025/08/29 12:52:07 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/08/29 12:52:42 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "libft/libft.h"
 
-void exit_mlx(t_data *game, char *message)
+void	exit_mlx(t_data *game, char *message)
 {
 	mlx_destroy_window(game->mlx.connect, game->mlx.win);
 	mlx_destroy_display(game->mlx.connect);
@@ -36,7 +36,7 @@ static int	keyhandler(int keysym, t_data *game)
 	return (0);
 }
 
-static int close_window(t_data *game)
+static int	close_window(t_data *game)
 {
 	exit_mlx(game, NULL);
 	return (0);
@@ -73,13 +73,3 @@ int	mlx_initialize(char *map_path, t_data *game)
 	mlx_loop(game->mlx.connect);
 	return (0);
 }
-
-
-//  cc player.c utils.c map_validation.c create_game.c mlx_init.c -lX11 -lXext -lmlx -lbsd -fsanitize=address,leak,undefined -g3
-// gcc -I./minilibx-linux
-
-/*
-gcc -I./minilibx-linux \
-    player.c map_validation.c utils.c mlx_init.c create_game.c \
-    -L./minilibx-linux -lmlx \
-    -lXext -lX11 -lbsd -g3 */

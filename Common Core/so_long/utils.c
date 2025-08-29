@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/15 21:39:03 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/29 12:55:52 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	ft_strcheck(const char *str, int c)
 	}
 	return (1);
 }
-
-
 
 int	count_letters(char *str, int c)
 {
@@ -96,5 +94,3 @@ int	count_lines(char **split)
 	}
 	return (count);
 }
-
-
