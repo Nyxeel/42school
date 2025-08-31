@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:15:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/29 15:37:13 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/31 14:42:35 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**extract_map(char *map_path)
 		return (close(fd), free(line), NULL);
 	line[bytes] = '\0';
 	if (!find_empty_line(line))
-		return (NULL);
+		return (close (fd), free(line), NULL);
 	map = ft_split(line, '\n');
 	if (!map)
 		return (close(fd), free(line), NULL);

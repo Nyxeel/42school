@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:52:07 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/29 12:52:42 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/31 15:26:42 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ int	mlx_initialize(char *map_path, t_data *game)
 	mlx_key_hook(game->mlx.win, keyhandler, game);
 	mlx_hook(game->mlx.win, ON_DESTROY, STOP, close_window, game);
 	mlx_loop(game->mlx.connect);
+	exit_mlx(game, NULL);
 	return (0);
 }

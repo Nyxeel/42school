@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:16:59 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/29 15:28:25 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/31 15:06:08 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_data
 	t_coord	length;
 	t_coord	player;
 	t_coord	coins;
-	t_coord	boss;
 	t_coord	exit;
 	t_mlx	mlx;
 }	t_data;

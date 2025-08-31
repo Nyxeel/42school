@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 17:27:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/29 14:01:37 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/31 14:34:05 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static void	add_collectiables(t_data *game)
 	x = 0;
 	game->mlx.collectiable_img = mlx_xpm_file_to_image(game->mlx.connect,
 			"tile-set/blood64x64.xpm", &width, &height);
-	if (!game->mlx.wall_img)
-		exit_mlx(game, "mlx wall image not found");
+	if (!game->mlx.collectiable_img)
+		exit_mlx(game, "mlx collectiable image not found");
 	while (game->map[y])
 	{
 		x = 0;

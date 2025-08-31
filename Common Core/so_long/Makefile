@@ -8,7 +8,7 @@ LIB_NAME        := solong.a
 # Compiler & Flags (42-konform)
 # =========================
 CC              := cc
-CFLAGS          := -Wall -Wextra -Werror
+CFLAGS          := -Wall -Wextra -Werror -g
 INCLUDES        := -I . -I libft -I ./minilibx-linux
 
 # MiniLibX (Linux) – ohne MLX_DIR-Variable
@@ -123,3 +123,4 @@ re: fclean all
 # Phony
 # =========================
 .PHONY: all clean fclean re bonus clean_libft fclean_libft
+.SILENT:

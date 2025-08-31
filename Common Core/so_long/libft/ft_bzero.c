@@ -6,13 +6,13 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 10:36:36 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/04 10:26:23 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/31 14:47:15 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
 	size_t			i;
 	unsigned char	*arr;
@@ -24,7 +24,6 @@ void	*ft_bzero(void *s, size_t n)
 		arr[i] = 0;
 		i++;
 	}
-	return ((void *) s);
 }
 /*
 int main(void)

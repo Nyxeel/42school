@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:23:20 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/29 13:42:28 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/31 14:47:36 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_atoi(const char *str);
-void	*ft_bzero(void *s, size_t n);
+void	ft_bzero(void *s, size_t n);
 int		ft_isalnum(int str);
 int		ft_isalpha(int str);
 int		ft_isascii(int str);
