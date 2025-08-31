@@ -7,7 +7,7 @@ OBJ_DIR       := objects/
 
 # Compiler & Flags
 CC            := cc
-CFLAGS        := -Wall -Wextra -Werror
+CFLAGS        := -Wall -Wextra -Werror -g
 
 # Header
 HEADERS       := push_swap.h

@@ -6,21 +6,18 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:18:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 16:43:54 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:28:54 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <stdio.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
 # include <stdint.h>
-
-
 
 typedef struct s_node
 {
@@ -33,61 +30,49 @@ typedef struct s_node
 	bool			first_half;
 }	t_node;
 
-
-
 typedef struct s_stack
 {
 	t_node	*head;
 	t_node	*tail;
-	t_node	*min;		///kleinster Wert im Stack
-	t_node	*max;		///größter Wert im Stack
+	t_node	*min;
+	t_node	*max;
 	t_node	*cheapest;
-	int		size;		/// Listengröße
-	bool	sorted;		///Sortiert ? Yes : No
-	char	id;
-	int		operations;
+	int		size;
 }	t_stack;
 
+// -------------------- INPUT & ERROR HANDLING --------------------
+bool	input_check(t_stack *a, char **av);
 
-
-
-/// UTILS
+// -------------------- MEMORY & UTILS --------------------
 void	ft_bzero(void *s, size_t n);
 long	ft_atoi(const char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
+void	free_all(t_stack *a, t_stack *b);
 
-
-
-///	COMANDS
+// -------------------- STACK COMMANDS --------------------
 void	swap(char id, t_stack *stack);
 void	push(char id, t_stack *from, t_stack *to);
 void	rotate(char id, t_stack *stack);
 void	r_rotate(char id, t_stack *stack);
 
-
-
-// SORTING
-
+// -------------------- SORTING ALGORITHM CORE --------------------
 void	start_sorting(t_stack *a, t_stack *b);
+void	sort_min_to_top(t_stack *a);
+bool	sorted(t_stack *a);
+
+// -------------------- COST & INDEX MANAGEMENT --------------------
+void	set_index(t_stack *stack);
 void	set_minmax(t_stack *stack);
 int		find_max(int costA, int costB);
-bool	sorted(t_stack *a);
-void	set_targets(t_stack *a, t_stack *b);
-
-
-void	set_new_targets(t_stack *a, t_stack *b);
-void	find_cheapest(t_stack *a, t_stack *b);
-void	set_index(t_stack *stack);
-void	operation_exe(t_stack *a, t_stack *b);
-void	push_back(t_stack *a, t_stack *b);
-
-void	rrr(t_stack *a, t_stack *b);
-void	rr(t_stack *a, t_stack *b);
 int		find_min(int node_cost, int target_cost);
-void	sort_min_to_top(t_stack *a);
 
+// -------------------- TARGETS & CHEAPEST CALC --------------------
+void	set_targets_in_a(t_stack *a, t_stack *b);// Zielzuweisung für B->A
+void	set_targets_in_b(t_stack *a, t_stack *b);// Zielzuweisung für A->B
+void	find_cheapest(t_stack *from, t_stack *to);
 
-void	print_stack_a(t_stack *a);
-void	print_stack_b(t_stack *a);
+// -------------------- PUSH UTILS --------------------
+void	push_to_b(t_stack *a, t_stack *b);// Schiebe von A nach B
+void	push_back(t_stack *a, t_stack *b);// Schiebe von B zurück nach A
 
 #endif
