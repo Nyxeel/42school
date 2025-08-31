@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:24:40 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/07/25 15:17:22 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/14 18:35:13 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putchar_fd(zahl + '0', fd);
 	}
 	if (zahl > 9)
-	{1
+	{
 		ft_putnbr_fd(zahl / 10, fd);
 		ft_putnbr_fd(zahl % 10, fd);
 	}

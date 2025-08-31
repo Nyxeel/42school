@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 17:27:04 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/29 12:53:54 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/29 14:01:37 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ void	create_map(t_data *game)
 	add_wall_img(game);
 	add_player(game);
 	add_collectiables(game);
+	add_exit(game);
 	add_move_counter(game);
 }

@@ -1,69 +1,125 @@
-# Namen
-LIB_NAME        := solong.a
+# =========================
+# Names
+# =========================
 PROGRAM_NAME    := so_long
+LIB_NAME        := solong.a
 
-# Ordner
-OBJ_DIR         := objects/
-
-# Compiler & Flags (42‑konform)
+# =========================
+# Compiler & Flags (42-konform)
+# =========================
 CC              := cc
 CFLAGS          := -Wall -Wextra -Werror
-MINILIBX		:= -lX11 -lXext -lmlx -lbsd -g3
+INCLUDES        := -I . -I libft -I ./minilibx-linux
 
-# Libft (liegt im Projekt-Root)
+# MiniLibX (Linux) – ohne MLX_DIR-Variable
+LDFLAGS         := -L ./minilibx-linux
+LDLIBS          := -lmlx -lXext -lX11 -lbsd
+
+# =========================
+# Libft
+# =========================
 LIBFT_DIR       := libft
 LIBFT_A         := $(LIBFT_DIR)/libft.a
 
-# Header
-HEADERS         := so_long.h libft/libft.h
-INCLUDES        := -I . -I $(LIBFT_DIR)
-
-# Quellen
-CORE_SOURCES    := check_map.c check_map2.c utils.c \
-                   load_game.c mlx_init.c update_game.c
+# =========================
+# Sources
+# =========================
 MAIN_SOURCE     := main.c
 
-# Objekte
-CORE_OBJECTS    := $(CORE_SOURCES:%.c=$(OBJ_DIR)%.o)
-MAIN_OBJECT     := $(OBJ_DIR)$(MAIN_SOURCE:.c=.o)
-BONUS_OBJECTS   := $(BONUS_SOURCES:%.c=$(OBJ_DIR)%.o)
+# Pflicht-Quellen (mandatory)
+SOURCES_CORE    := \
+	check_map.c \
+	check_map2.c \
+	utils.c \
+	load_game.c \
+	mlx_init.c \
+	move_counter.c \
+	update_game.c
 
-# Default: baue das Binary (und dabei implizit libft & LIB)
-NAME: all
+# Bonus-Zusatz (ersetzt update_game.c)
+SOURCES_BONUSONLY := \
+	update_game_bonus.c
+
+# =========================
+# Build-Mode (mandatory / bonus)
+# =========================
+MODE ?= mandatory
+
+ifeq ($(MODE),bonus)
+OBJ_DIR   := objects_bonus/
+# Wichtig: update_game.c im Bonus ausschließen, wenn update_game_bonus.c es ersetzt
+SOURCES   := $(filter-out update_game.c,$(SOURCES_CORE)) $(SOURCES_BONUSONLY)
+else
+OBJ_DIR   := objects/
+SOURCES   := $(SOURCES_CORE)
+endif
+
+# =========================
+# Objects
+# =========================
+HEADERS       := so_long.h libft/libft.h
+MAIN_OBJECT   := $(addprefix $(OBJ_DIR),$(MAIN_SOURCE:.c=.o))
+OBJECTS       := $(addprefix $(OBJ_DIR),$(SOURCES:.c=.o))
+
+# =========================
+# Default Target
+# =========================
 all: $(PROGRAM_NAME)
 
-# Programm bauen (linkt: main + statische CORE-LIB + libft.a)
+# =========================
+# Link: Programm (kein unnötiges Relinken)
+# =========================
 $(PROGRAM_NAME): $(MAIN_OBJECT) $(LIB_NAME) $(LIBFT_A)
-	@$(CC) $(CFLAGS) $(MINILIBX) -o $(PROGRAM_NAME) $(MAIN_OBJECT) $(LIB_NAME) $(LIBFT_A)
-# Statische Bibliothek aus den CORE-Objekten
-$(LIB_NAME): $(CORE_OBJECTS)
-	@ar rcs $(LIB_NAME) $(CORE_OBJECTS)
+	$(CC) $(CFLAGS) -o $@ $(MAIN_OBJECT) $(LIB_NAME) $(LIBFT_A) $(LDFLAGS) $(LDLIBS)
 
-# libft bauen (über eigenes Makefile)
+# =========================
+# Archive: Statische Bibliothek (nur bei neuen OBJs)
+# =========================
+$(LIB_NAME): $(OBJECTS)
+	ar rcs $@ $(OBJECTS)
+
+# =========================
+# Libft bauen (Ziel explizit!)
+# =========================
 $(LIBFT_A):
-	@$(MAKE) -C $(LIBFT_DIR)
+	$(MAKE) -C $(LIBFT_DIR) all
 
-# Generische Regel: .c -> .o (für alle .c in CORE + MAIN + BONUS)
-$(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+# =========================
+# Pattern Rule: .c -> .o
+# =========================
+$(OBJ_DIR)%.o: %.c $(HEADERS) | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+# =========================
 # Objektordner anlegen
+# =========================
 $(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)
 
-# Aufräumen
+# =========================
+# Bonus-Target
+# =========================
+bonus:
+	$(MAKE) MODE=bonus all
+
+# =========================
+# Clean Targets
+# =========================
 clean: clean_libft
-	@rm -rf $(OBJ_DIR)
+	rm -rf objects/ objects_bonus/
 
 clean_libft:
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean fclean_libft
-	@rm -f $(LIB_NAME) $(PROGRAM_NAME)
+	rm -f $(LIB_NAME) $(PROGRAM_NAME)
 
 fclean_libft:
-	@$(MAKE) -C $(LIBFT_DIR) fclean || true
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: NAME all clean fclean re bonus clean_libft fclean_libft
+# =========================
+# Phony
+# =========================
+.PHONY: all clean fclean re bonus clean_libft fclean_libft

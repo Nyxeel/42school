@@ -5,7 +5,7 @@ PROGRAM_NAME  := push_swap
 # Ordner
 OBJ_DIR       := objects/
 
-# Compiler & Flags (42‑konform)
+# Compiler & Flags
 CC            := cc
 CFLAGS        := -Wall -Wextra -Werror
 
@@ -23,7 +23,7 @@ MAIN_SOURCE   := main.c
 CORE_OBJECTS  := $(CORE_SOURCES:%.c=$(OBJ_DIR)%.o)
 MAIN_OBJECT   := $(OBJ_DIR)$(MAIN_SOURCE:.c=.o)
 
-# Default: baue das Binary (und dabei implizit die LIB)
+# Default: baue das Binary
 all: $(PROGRAM_NAME)
 
 # LIB bauen: nur aus CORE_OBJECTS

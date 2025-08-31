@@ -6,12 +6,28 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:15:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/14 18:19:40 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:28:11 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "libft/libft.h"
+
+bool	find_empty_line(char *str)
+{
+	int		i;
+	char	c;
+
+	c = '1';
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n' && str[i + 1] == '\n')
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 void	flood_fill(t_data *game, int x, int y)
 {

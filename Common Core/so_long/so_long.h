@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:16:59 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/29 12:55:19 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:28:25 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int		check_rectangular(char **map, size_t line_length);
 int		check_walls(char **map, t_data *game);
 void	flood_fill(t_data *game, int x, int y);
 char	**extract_map(char *map_path);
+bool	find_empty_line(char *str);
 
 //############# UTILS
 int		ft_strcheck(const char *str, int c);

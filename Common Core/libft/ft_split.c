@@ -6,29 +6,11 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/15 14:35:20 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/14 18:31:59 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static size_t	ft_wordcount(char const *s, char c)
-{
-	size_t	i;
-	size_t	count;
-
-	count = 0;
-	i = 0;
-	while (s[i] == c && s[i])
-		i++;
-	while (s[i])
-	{
-		if ((s[i - 1] != c && s[i] == c) || (s[i] != c && s[i + 1] == '\0'))
-			count++;
-		i++;
-	}
-	return (count);
-}
 
 static char	*ft_cpy(char const *str, char c)
 {

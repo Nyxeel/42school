@@ -6,6 +6,9 @@
 		"initializer_list": "c",
 		"ranges": "c",
 		"utility": "c",
-		"pipex.h": "c"
+		"pipex.h": "c",
+		"libft.h": "c",
+		"printf.h": "c",
+		"stdbool.h": "c"
 	}
 }

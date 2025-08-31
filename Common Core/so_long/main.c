@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:15:57 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/29 12:50:43 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:50:16 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ static void	check_map(char *map_path, t_data *game)
 
 static bool	check_map_string(char *str, char c)
 {
-	int	i;
+	int		i;
+	size_t	len;
 
+	len = ft_strlen(str) - 4;
 	i = 0;
 	while (str[i])
 	{
@@ -66,7 +68,9 @@ static bool	check_map_string(char *str, char c)
 			return (false);
 		i++;
 	}
-	return (true);
+	if (!ft_strncmp(&str[len], ".ber", 4))
+		return (true);
+	return (false);
 }
 
 int	main(int ac, char **av)
