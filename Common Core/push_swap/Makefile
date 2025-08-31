@@ -1,5 +1,5 @@
 # Namen
-PROGRAM_NAME  := push_swap
+NAME  := push_swap
 
 # Ordner
 OBJ_DIR       := objects/
@@ -22,10 +22,10 @@ CORE_OBJECTS  := $(CORE_SOURCES:%.c=$(OBJ_DIR)%.o)
 MAIN_OBJECT   := $(OBJ_DIR)$(MAIN_SOURCE:.c=.o)
 
 # Default: baue das Binary
-all: $(PROGRAM_NAME)
+all: $(NAME)
 
 # Binary direkt aus allen Objekten bauen
-$(PROGRAM_NAME): $(MAIN_OBJECT) $(CORE_OBJECTS)
+$(NAME): $(MAIN_OBJECT) $(CORE_OBJECTS)
 	@$(CC) $(CFLAGS) -o $@ $^
 
 # Generische Regel: .c -> .o
@@ -41,7 +41,7 @@ clean:
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@rm -rf $(PROGRAM_NAME)
+	@rm -rf $(NAME)
 
 re: fclean all
 
