@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_wordcount.c                                     :+:      :+:    :+:   */
+/*   1ft_printf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 00:12:49 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/29 15:51:26 by pjelinek         ###   ########.fr       */
+/*   Created: 2025/05/10 19:05:14 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/08/14 18:54:01 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-ssize_t	ft_wordcount(char const *str, char c)
+int	ft_printf(const char *str, ...)
 {
-	size_t	i;
-	size_t	words;
-	bool	in_word;
+	va_list	ap;
+	int		result;
 
-	words = 0;
-	i = 0;
-	in_word = false;
 	if (!str)
 		return (-1);
-	while (str[i])
-	{
-		if (c == str[i])
-			in_word = false;
-		else if (!in_word)
-		{
-			in_word = true;
-			words++;
-		}
-		i++;
-	}
-	return (words);
+	va_start(ap, str);
+	result = ft_va_start(str, ap);
+	va_end(ap);
+	return (result);
 }

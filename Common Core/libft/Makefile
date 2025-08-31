@@ -13,7 +13,7 @@ HEADER          := libft.h
 
 # ft_printf (eigener Ordner mit eigener Makefile)
 FT_PRINTF_DIR   := ft_printf
-FT_PRINTF_A     := $(FT_PRINTF_DIR)/libftprintf.a
+FT_PRINTF_A     := $(FT_PRINTF_DIR)/printf.a
 
 # Temp-Ordner zum Entpacken der printf-Objekte
 TMP_DIR         := .printf_objs

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   2ft_va_start.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:43:03 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/16 23:22:02 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/14 18:54:18 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 char	*find_specifier(const char *str, int c)
 {

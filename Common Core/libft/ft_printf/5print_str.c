@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1ft_printf.c                                       :+:      :+:    :+:   */
+/*   5print_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 19:05:14 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/05/16 19:40:50 by pjelinek         ###   ########.fr       */
+/*   Created: 2025/05/10 15:53:12 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/08/29 12:56:52 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-int	ft_printf(const char *str, ...)
+static size_t	ft_strlen(const char *str)
 {
-	va_list	ap;
-	int		result;
+	size_t	count;
 
+	count = 0;
+	while (str[count])
+		count++;
+	return (count);
+}
+
+int	ft_arg_string(char	*str)
+{
 	if (!str)
-		return (-1);
-	va_start(ap, str);
-	result = ft_va_start(str, ap);
-	va_end(ap);
-	return (result);
+		return (write(1, "(null)", 6));
+	return (write(1, str, ft_strlen(str)));
 }

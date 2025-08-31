@@ -1,15 +1,15 @@
-NAME := libftprintf.a
-HEADER := printf/libftprintf.h
+NAME := printf.a
+HEADER := ft_printf.h
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
 
 SRC := \
-	printf/1ft_printf.c \
-	printf/2ft_va_start.c \
-	printf/3find_arg.c \
-	printf/4print_base.c \
-	printf/5print_str.c
+	1ft_printf.c \
+	2ft_va_start.c \
+	3find_arg.c \
+	4print_base.c \
+	5print_str.c
 
 
 OBJ := $(SRC:.c=.o)

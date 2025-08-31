@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/14 18:31:59 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/29 13:44:35 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,14 @@ char	**ft_split_loop(char **split, char const *s, char c)
 char	**ft_split(char const *s, char c)
 {
 	char	**split;
+	int		words;
 
 	if (!s)
 		return (NULL);
-	split = (char **)ft_calloc(ft_wordcount(s, c) + 1, sizeof(char *));
+	words = ft_wordcount(s, c);
+	if (words == -1)
+		return (NULL);
+	split = (char **)ft_calloc(words + 1, sizeof(char *));
 	if (!split)
 		return (NULL);
 	return (ft_split_loop(split, s, c));
