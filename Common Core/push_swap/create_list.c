@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/12 20:51:47 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/08/31 20:01:23 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ bool	doubles(t_stack *a, int num)
 
 bool	input_check(t_stack *a, char **av)
 {
-	size_t	i;
-	long	num;
+	size_t		i;
+	long long	num;
 
 	i = 1;
 	while (av[i])

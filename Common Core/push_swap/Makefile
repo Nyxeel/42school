@@ -1,5 +1,4 @@
 # Namen
-LIB_NAME      := pushswap.a
 PROGRAM_NAME  := push_swap
 
 # Ordner
@@ -7,12 +6,11 @@ OBJ_DIR       := objects/
 
 # Compiler & Flags
 CC            := cc
-CFLAGS        := -Wall -Wextra -Werror -g
+CFLAGS        := -Wall -Wextra -Werror
 
 # Header
 HEADERS       := push_swap.h
 INCLUDES      := -I .
-
 
 CORE_SOURCES  := commands.c create_list.c find_cheapest.c \
                  push_back.c push_to_b.c sorting_utils.c \
@@ -26,14 +24,11 @@ MAIN_OBJECT   := $(OBJ_DIR)$(MAIN_SOURCE:.c=.o)
 # Default: baue das Binary
 all: $(PROGRAM_NAME)
 
-# LIB bauen: nur aus CORE_OBJECTS
-$(LIB_NAME): $(CORE_OBJECTS)
-	@ar rcs $(LIB_NAME) $(CORE_OBJECTS)
+# Binary direkt aus allen Objekten bauen
+$(PROGRAM_NAME): $(MAIN_OBJECT) $(CORE_OBJECTS)
+	@$(CC) $(CFLAGS) -o $@ $^
 
-$(PROGRAM_NAME): $(MAIN_OBJECT) $(LIB_NAME)
-	@$(CC) $(CFLAGS) -o $(PROGRAM_NAME) $(MAIN_OBJECT) $(LIB_NAME)
-
-# Generische Regel: .c -> .o (für alle .c in CORE + MAIN)
+# Generische Regel: .c -> .o
 $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
@@ -46,7 +41,7 @@ clean:
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@rm -rf $(LIB_NAME) $(PROGRAM_NAME)
+	@rm -rf $(PROGRAM_NAME)
 
 re: fclean all
 

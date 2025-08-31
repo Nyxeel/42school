@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 13:51:28 by netrunner         #+#    #+#             */
-/*   Updated: 2025/07/03 17:09:06 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/08/31 20:18:59 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (p);
 }
 
-long	ft_atoi(const char *str)
+long long	ft_atoi(const char *str)
 {
-	int		minus;
-	long	num;
-	size_t	i;
+	int			minus;
+	long long	num;
+	size_t		i;
 
 	i = 0;
 	minus = 1;
@@ -97,5 +97,7 @@ long	ft_atoi(const char *str)
 		num = num + str[i] - '0';
 		i++;
 	}
+	if (i > 11)
+		return (LLONG_MIN);
 	return (minus * num);
 }
