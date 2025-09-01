@@ -1,33 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 14:25:29 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/07/11 20:40:35 by pjelinek         ###   ########.fr       */
+/*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
+/*   Updated: 2025/09/01 17:39:19 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static size_t	ft_wordcount(char const *s, char c)
+static ssize_t	ft_wordcount(char const *str, char c)
 {
 	size_t	i;
-	size_t	count;
+	size_t	words;
+	bool	in_word;
 
-	count = 0;
+	words = 0;
 	i = 0;
-	while (s[i] == c && s[i])
-		i++;
-	while (s[i])
+	in_word = false;
+	if (!str)
+		return (-1);
+	while (str[i])
 	{
-		if ((s[i - 1] != c && s[i] == c) || (s[i] != c && s[i + 1] == '\0'))
-			count++;
+		if (c == str[i])
+			in_word = false;
+		else if (!in_word)
+		{
+			in_word = true;
+			words++;
+		}
 		i++;
 	}
-	return (count);
+	return (words);
 }
 
 static char	*ft_cpy(char const *str, char c)
@@ -52,7 +59,7 @@ static char	*ft_cpy(char const *str, char c)
 	return (p);
 }
 
-static void	ft_freeall(char **freearr, size_t index)
+void	ft_freeall(char **freearr, size_t index)
 {
 	size_t	i;
 
@@ -65,7 +72,7 @@ static void	ft_freeall(char **freearr, size_t index)
 	free(freearr);
 }
 
-char	**ft_split_loop(char **split, char const *s, char c)
+static char	**ft_split_loop(char **split, char const *s, char c)
 {
 	size_t	i;
 	size_t	j;
@@ -93,29 +100,16 @@ char	**ft_split_loop(char **split, char const *s, char c)
 char	**ft_split(char const *s, char c)
 {
 	char	**split;
+	int		words;
 
 	if (!s)
 		return (NULL);
-	split = (char **)ft_calloc(ft_wordcount(s, c) + 1, sizeof(char *));
+	words = ft_wordcount(s, c);
+	if (words == -1)
+		return (NULL);
+	split = (char **)ft_calloc(words + 1, sizeof(char *));
 	if (!split)
 		return (NULL);
 	return (ft_split_loop(split, s, c));
 }
 
-/* int	main(void)
-{
-	char **split;
-	int i = 0;
-
-	split = (char **)ft_split("lorem ipsum dolor sit amet, mmn, mi. ", ' ');
-
-	if (!split)
-		return (0);
-	while(split[i])
-	{
-		printf("**split[%d]: %s\n", i, split[i]);
-		free(split[i]);
-		i++;
-	}
-	free(split);
-} */
