@@ -13,9 +13,8 @@ CFLAGS  := -Wall -Wextra -Werror
 # Quellen & Objekte
 # =========================
 # Liste alle deine .c-Dateien explizit auf:
-SRCS    := main.c
-# Beispiel, wenn mehr hinzukommen:
-# SRCS := main.c utils.c philosophers.c monitor.c
+SRCS    := main.c utils.c
+
 
 OBJS    := $(addprefix obj/,$(SRCS:.c=.o))
 
@@ -57,3 +56,4 @@ re: fclean all
 # Phony
 # =========================
 .PHONY: all clean fclean re
+.SILENT:

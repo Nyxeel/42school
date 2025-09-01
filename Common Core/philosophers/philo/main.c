@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/08/31 17:30:31 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/01 12:20:04 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,21 @@
 
 //pthread_mutex_t lock;
 
-void	*philo(void *arg)
+void	*print_hello(void *arg)
 {
+	t_philo *data;
+
+	data = arg;
 	//pthread_mutex_lock(&lock);
 	int i = 0;
 	while (i < 10)
-		printf("Hello[%i]\n", i++);
+		printf("Hello[%i] from Philo %i\n", i++, data[i].id);
 	//pthread_mutex_unlock(&lock);
 	return NULL;
 }
 
 
-void	*philo2(void *arg)
+void	*print_world()
 {
 	//pthread_mutex_lock(&lock);
 	int i = 0;
@@ -36,38 +39,53 @@ void	*philo2(void *arg)
 	return NULL;
 }
 
-void	philo_init(t_philo *philo, char **av)
+void	start_threads(t_philo *data)
 {
-	philo->number_of_philos = ft_atoi(av[1]);
-	philo->time_to_die = ft_atoi(av[2]);
-	philo->time_to_eat = ft_atoi(av[3]);
-	philo->time_to_sleep = ft_atoi(av[4]);
-	philo->forks = philo->number_of_philos;
+	pthread_t	philo[data->number_of_philos];
 
 
+	//pthread_mutex_init(&lock, NULL);
+	//number_of_philo = argv[1];
+	for (int i = 0; i < 5; i++)
+		pthread_create(&philo[i], NULL, print_hello, (void *)&data);
+	for (int i = 0; i < 5; i++)
+		pthread_join(philo[i], NULL);
+
+	int i = 0;
+	while (i < data->number_of_philos)
+		printf("Number of Threads: %i\n", i++);
+	//pthread_join(philo[1], NULL);
+	//pthread_mutex_destroy(&lock);
+}
+
+void	philo_init(t_philo *data, char **av)
+{
+	/* int i;
+
+	i = 1; */
+	data->number_of_philos = ft_atoi(av[1]);
+	data->time_to_die = ft_atoi(av[2]);
+	data->time_to_eat = ft_atoi(av[3]);
+	data->time_to_sleep = ft_atoi(av[4]);
+	data->forks = data->number_of_philos;
+	/* while (i <= data->number_of_philos)
+		philo[i].id = i++; */
 }
 
 int	main(int ac, char **av)
 {
-	t_philo			philo;
-	pthread_t		newthread[atoi(av[1])];
-	pthread_mutex_t	fork[atoi(av[1])];
-
-	philo_init(&philo, av);
-
+	t_philo	data;
+	
+	if (ac == 5 || ac == 6)
+	{
+		data_init(&data, av);
+		start_threads(&data);
+	}
+	return (0);
 	//if (ac <= 6)
 
 /*
 ./philosophers number_of_philosophers time_to_die time_to_eat time_to_sleep
 [number_of_times_each_philosopher_must_eat]
 */
-	//pthread_mutex_init(&lock, NULL);
-	//number_of_philo = argv[1];
-	pthread_create(&newthread[0],NULL, philo, arg);
-	pthread_create(&newthread[1],NULL, philo2, arg);
-
-	pthread_join(newthread[0], NULL);
-	pthread_join(newthread[1], NULL);
-	//pthread_mutex_destroy(&lock);
-	return 0;
 }
