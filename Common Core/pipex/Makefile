@@ -8,7 +8,7 @@ LIB_NAME        := pipex.a
 # Compiler & Flags (42-konform)
 # =========================
 CC              := cc
-CFLAGS          := -Wall -Wextra -Werror
+CFLAGS          := -Wall -Wextra -Werror -g
 
 # =========================
 # Sources

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:26:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/02 11:54:08 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/02 14:38:52 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ typedef struct s_fds
 
 typedef struct s_data
 {
-	int cmd_count;
-	char **cmds;
+	int		cmd_count;
+	char	**cmds;
 	char 	**path;
+	char 	**cmd_split;
 	t_fds	fd;
 }	t_data;
 
@@ -43,9 +44,19 @@ char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 void	ft_freeall(char **freearr, size_t index);
-int		find_access(char **envp, char *command);
+int		find_access(t_data *pipex, char *command);
 int		open_files_bonus(int argc, char **argv, char **envp);
 int		open_files(int argc, char **argv, char **envp);
 void	*ft_calloc(size_t nmemb, size_t size);
+void	child_cleanup(t_data *pipex, char *message, unsigned int exit_id);
+size_t	ft_strlen(const char *str);
 
+/* ##################FULL VALGRIND CHECK
+valgrind --leak-check=full --show-leak-kinds=all
+--track-origins=yes -trace-children=yes --trace-children-skip=/usr/bin/cat
+./pipex infile "grep 2" "cat" outfile
+
+##### CHECK GREP COMMAND
+valgrind --leak-check=full /usr/bin/grep 2 infile
+*/
 #endif
