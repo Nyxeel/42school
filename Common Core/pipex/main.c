@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1main.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/02 16:50:58 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/01 21:45:48 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
 		if (argc >= 6)
-			open_files_bonus(argc, argv, envp);
+			open_files(argc, argv, envp);
 		else
 			perror("Need more argumnets to start program");
 	}

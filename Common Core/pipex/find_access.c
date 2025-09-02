@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_access.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/01 18:45:56 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/02 11:49:04 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,22 @@ char	**find_path(char **envp)
 	return (NULL);
 }
 
+/* void	child_cleanup(t_data *pipex, t_fds *fd)
+{
+	if (fd->input >= 0)
+    	close(fd->input);
+	if (fd->output >= 0)
+    	close(fd->output);
+	if (fd->prev[0] >= 0)
+    	close(fd->prev[0]);
+	if (fd->prev[1] >= 0)
+    	close(fd->prev[1]);
+	if (fd->curr[0] >= 0)
+    	close(fd->curr[0]);
+	if (fd->curr[1] >= 0)
+    	close(fd->curr[1]);
+} */
+
 int	find_access(char **envp, char *command)
 {
 	int		i;
@@ -65,9 +81,12 @@ int	find_access(char **envp, char *command)
 	path = find_path(envp);
 	if (!path)
 		return (0);
+	while (path[i])
+		printf("%s", path[i++]);
 	cmd = ft_split(command, ' ');
 	if (!cmd)
 		return (free_split(path), 0);
+	i = 0;
 	while (path[i])
 	{
 		full_path = create_full_path(path[i], cmd[0]);
