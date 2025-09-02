@@ -1,14 +1,14 @@
 # =========================
 # Names
 # =========================
-PROGRAM_NAME    := so_long
+NAME    := so_long
 LIB_NAME        := solong.a
 
 # =========================
 # Compiler & Flags (42-konform)
 # =========================
 CC              := cc
-CFLAGS          := -Wall -Wextra -Werror -g
+CFLAGS          := -Wall -Wextra -Werror
 INCLUDES        := -I . -I libft -I ./minilibx-linux
 
 # MiniLibX (Linux) – ohne MLX_DIR-Variable
@@ -64,12 +64,12 @@ OBJECTS       := $(addprefix $(OBJ_DIR),$(SOURCES:.c=.o))
 # =========================
 # Default Target
 # =========================
-all: $(PROGRAM_NAME)
+all: $(NAME)
 
 # =========================
 # Link: Programm (kein unnötiges Relinken)
 # =========================
-$(PROGRAM_NAME): $(MAIN_OBJECT) $(LIB_NAME) $(LIBFT_A)
+$(NAME): $(MAIN_OBJECT) $(LIB_NAME) $(LIBFT_A)
 	$(CC) $(CFLAGS) -o $@ $(MAIN_OBJECT) $(LIB_NAME) $(LIBFT_A) $(LDFLAGS) $(LDLIBS)
 
 # =========================
@@ -112,7 +112,7 @@ clean_libft:
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean fclean_libft
-	rm -f $(LIB_NAME) $(PROGRAM_NAME)
+	rm -f $(LIB_NAME) $(NAME)
 
 fclean_libft:
 	$(MAKE) -C $(LIBFT_DIR) fclean

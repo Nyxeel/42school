@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:52:07 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/31 15:26:42 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:08:45 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static void	init_game(t_data *game, char *map_path)
 		exit_call("Map extraction failed", game->map, game);
 	game->length.x = ft_strlen(game->map[0]);
 	game->length.y = count_lines(game->map);
+	if (game->length.x > 30 || game->length.y > 15)
+		exit_call("Map bigger than your screen resolution", game->map, game);
 }
 
 int	mlx_initialize(char *map_path, t_data *game)
