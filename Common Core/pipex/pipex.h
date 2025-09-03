@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:26:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/03 14:42:07 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/03 15:43:27 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_data
 	char			**path;
 	char			**access_path;
 	char			**cmd_split;
-	int				pid;
+	int				status;
 	t_fds			fd;
 }	t_data;
 
@@ -49,7 +49,7 @@ void	ft_freeall(char **freearr, size_t index);
 int		find_access(t_data *pipex, char *command);
 int		open_files_bonus(int argc, char **argv, char **envp);
 void	*ft_calloc(size_t nmemb, size_t size);
-void	cleanup(t_data *pipex, char *message, unsigned int exit_id);
+void	cleanup(t_data *pipex, char *message, int exit_id);
 size_t	ft_strlen(const char *str);
 int		pipe_fork(t_data *pipex);
 

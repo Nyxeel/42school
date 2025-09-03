@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/03 14:44:02 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:17:38 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ char	**find_path(char **envp)
 	return (NULL);
 }
 
-void	cleanup(t_data *pipex, char *message, unsigned int exit_id)
+void	cleanup(t_data *pipex, char *message, int exit_id)
 {
 	if (message)
-		write(2, message, ft_strlen(message));
+		perror(message);
 	if (pipex->fd.input >= 0)
 		close(pipex->fd.input);
 	if (pipex->fd.output >= 0)
@@ -70,7 +70,7 @@ void	cleanup(t_data *pipex, char *message, unsigned int exit_id)
 		close(pipex->fd.curr[0]);
 	if (pipex->fd.curr[1] >= 0)
 		close(pipex->fd.curr[1]);
-	pipex->pid = exit_id;
+	pipex->status = exit_id;
 	exit(exit_id);
 }
 
@@ -86,7 +86,7 @@ static void	path_access(t_data *pipex, char *full_path)
 				free_split(pipex->access_path);
 				free(full_path);
 			}
-			cleanup(pipex, "cmd: execve no access\n", 126);
+			cleanup(pipex, "Permission denied\n", 126);
 		}
 	}
 	free(full_path);

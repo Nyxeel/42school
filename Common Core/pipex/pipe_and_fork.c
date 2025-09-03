@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/03 15:22:57 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:37:07 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ int	child_process(t_data *pipex, int loop)
 			cleanup(pipex, "child - dup2 failed", 1);
 		if (close(pipex->fd.curr[1]) < 0
 			|| close(pipex->fd.curr[0]) < 0)
-			cleanup(pipex, "child - close failed", 127);
+			cleanup(pipex, "child - close failed", 1);
 	}
 	if (close(pipex->fd.output) < 0)
 		cleanup(pipex, "child - close failed", 1);
 	if (!find_access(pipex, pipex->cmds[loop]))
 	{
 		write(2, pipex->cmds[loop], ft_strlen(pipex->cmds[loop]));
-		cleanup(pipex, " : command not found\n", 127);
+		cleanup(pipex, " : command not found ", 127);
 	}
 	return (0);
 }
@@ -67,6 +67,10 @@ int	child_process(t_data *pipex, int loop)
 int	pipe_fork(t_data *pipex)
 {
 	int		i;
+	int		status;
+	int		exit_code;
+	int		pid;
+	pid_t	wpid;
 
 	if (pipe(pipex->fd.prev) < 0)
 		return (1);
@@ -76,10 +80,10 @@ int	pipe_fork(t_data *pipex)
 		if (i != pipex->cmd_count - 1)
 			if (pipe(pipex->fd.curr) < 0)
 				return (1);
-		pipex->pid = fork();
-		if (pipex->pid < 0)
+		pid = fork();
+		if (pid < 0)
 			cleanup(pipex, "error fork", 1);
-		if (pipex->pid == 0)
+		if (pid == 0)
 			exit(child_process(pipex, i));
 		else
 			parent_process(pipex, i);
@@ -87,9 +91,16 @@ int	pipe_fork(t_data *pipex)
 	}
 	if (close(pipex->fd.input) < 0 || close(pipex->fd.output) < 0)
 		cleanup(pipex, "parent - close failed", 1);
-	while (wait(NULL) > 0)
-		continue ;
-	exit(pipex->pid);
+	while ((wpid = wait(&status)) > 0)
+		if (wpid == pid)
+		{
+			if (WIFEXITED(status))
+				exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				exit_code = 128 + WTERMSIG(status);
+		}
+	//sleep(25);
+	exit(exit_code);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/03 14:40:36 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:37:11 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	pipex;
 
+
+	//sleep(25);
 	if (argc >= 5)
 	{
 		pipex.cmd_count = argc - 3;
