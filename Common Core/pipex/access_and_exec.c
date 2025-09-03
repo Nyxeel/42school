@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_access.c                                      :+:      :+:    :+:   */
+/*   access_and_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/02 20:01:16 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:44:02 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	**find_path(char **envp)
 	return (NULL);
 }
 
-void	child_cleanup(t_data *pipex, char *message, unsigned int exit_id)
+void	cleanup(t_data *pipex, char *message, unsigned int exit_id)
 {
 	if (message)
 		write(2, message, ft_strlen(message));
@@ -70,55 +70,52 @@ void	child_cleanup(t_data *pipex, char *message, unsigned int exit_id)
 		close(pipex->fd.curr[0]);
 	if (pipex->fd.curr[1] >= 0)
 		close(pipex->fd.curr[1]);
+	pipex->pid = exit_id;
 	exit(exit_id);
 }
 
-void	relativ_path_access(t_data *pipex, char *command)
+static void	path_access(t_data *pipex, char *full_path)
 {
-	pipex->cmd_split = ft_split(command, ' ');
-	if (!pipex->cmd_split)
-		return (0);
-	if (access(pipex->cmd_split[0], X_OK) == 0)
+	if (access(full_path, X_OK) == 0)
 	{
-		if (execve(pipex->cmd_split[0], pipex->cmd_split, pipex->path) == -1)
+		if (execve(full_path, pipex->cmd_split, pipex->path) == -1)
 		{
 			free_split(pipex->cmd_split);
-			child_cleanup(pipex, "cmd: command not found\n", 126);
+			if (pipex->access_path)
+			{
+				free_split(pipex->access_path);
+				free(full_path);
+			}
+			cleanup(pipex, "cmd: execve no access\n", 126);
 		}
 	}
-	child_cleanup(pipex, "cmd: command not found\n", 127);
+	free(full_path);
 }
 
 int	find_access(t_data *pipex, char *command)
 {
 	int		i;
-	char	**path;
-	char	*full_path;
+	char	*path;
 
-	i = 0;
-	if (command[0] == '/' || (command[0] == '.' && command[1] == '/'))
-		relativ_path_access(pipex, command);
-	path = find_path(pipex->path);
-	if (!path)
-		return (0);
 	pipex->cmd_split = ft_split(command, ' ');
 	if (!pipex->cmd_split)
-		return (free_split(path), 0);
-	while (path[i])
+		return (0);
+	if (command[0] == '/' || (command[0] == '.' && command[1] == '/'))
+		return (path_access(pipex, pipex->cmd_split[0]), 0);
+	pipex->access_path = find_path(pipex->path);
+	if (!pipex->access_path)
+		return (free_split(pipex->cmd_split), 0);
+	i = 0;
+	while (pipex->access_path[i])
 	{
-		full_path = create_full_path(path[i], pipex->cmd_split[0]);
-		if (!full_path)
-			return (free_split(path), free_split(pipex->cmd_split), 0);
-		if (access(full_path, X_OK) == 0)
-		{
-			if (execve(full_path, pipex->cmd_split, pipex->path) == -1)
-				return (free_split(path), free_split(pipex->cmd_split), free(full_path), 0);
-		}
-		else
-			free(full_path);
+		path = create_full_path(pipex->access_path[i], pipex->cmd_split[0]);
+		if (!path)
+			return (free_split(pipex->access_path),
+				free_split(pipex->cmd_split), 0);
+		path_access(pipex, path);
 		i++;
 	}
-	return (free_split(path), free_split(pipex->cmd_split), 0);
+	return (free_split(pipex->access_path), free_split(pipex->cmd_split), 0);
 }
 
 

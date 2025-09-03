@@ -6,27 +6,51 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/02 18:39:05 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:40:36 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+/*
+static int	open_files(int argc, char **argv, char **envp)
+{
+	t_data	pipex;
+
+	pipex.cmd_count = argc - 3;
+	pipex.cmds = &argv[2];
+	pipex.path = envp;
+	pipex.access_path = NULL;
+	pipex.fd.input = open(argv[1], O_RDONLY);
+	if (pipex.fd.input == -1)
+		return (1);
+	pipex.fd.output = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (pipex.fd.output == -1)
+		return (close(pipex.fd.input));
+	pipe_fork(&pipex);
+	return (0);
+} */
+
 int	main(int argc, char **argv, char **envp)
 {
-	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+	t_data	pipex;
+
+	if (argc >= 5)
 	{
-		if (argc >= 6)
-			open_files(argc, argv, envp);
-		else
-			perror("Need more argumnets to start program");
+		pipex.cmd_count = argc - 3;
+		pipex.cmds = &argv[2];
+		pipex.path = envp;
+		pipex.access_path = NULL;
+		pipex.fd.input = open(argv[1], O_RDONLY);
+		if (pipex.fd.input == -1)
+			return (1);
+		pipex.fd.output = open(argv[argc - 1], O_WRONLY | O_CREAT
+				| O_TRUNC, 0644);
+		if (pipex.fd.output == -1)
+			return (close(pipex.fd.input));
+		pipe_fork(&pipex);
 	}
 	else
-	{
-		if (argc >= 5)
-			open_files(argc, argv, envp);
-		else
-			perror("Need more argumnets to start program");
-	}
+		perror("Need more argumnets to start program");
 	return (0);
 }

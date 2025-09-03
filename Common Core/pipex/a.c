@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/02 19:22:13 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/03 12:44:38 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ int	main(int argc, char **argv, char **envp)
 	if (!path)
 		return (0);
 	int i = 0;
+	while (argv[i])
+		printf("%s\n", argv[i++]);
+	i = 0;
 	while (path[i])
 		printf("%s\n", path[i++]);
 	free_split(path);

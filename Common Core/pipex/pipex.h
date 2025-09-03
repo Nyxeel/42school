@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:26:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/02 14:38:52 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:42:07 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,26 @@ typedef struct s_fds
 
 typedef struct s_data
 {
-	int		cmd_count;
-	char	**cmds;
-	char 	**path;
-	char 	**cmd_split;
-	t_fds	fd;
+	int				cmd_count;
+	char			**cmds;
+	char			**path;
+	char			**access_path;
+	char			**cmd_split;
+	int				pid;
+	t_fds			fd;
 }	t_data;
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 void	ft_freeall(char **freearr, size_t index);
 int		find_access(t_data *pipex, char *command);
 int		open_files_bonus(int argc, char **argv, char **envp);
-int		open_files(int argc, char **argv, char **envp);
 void	*ft_calloc(size_t nmemb, size_t size);
-void	child_cleanup(t_data *pipex, char *message, unsigned int exit_id);
+void	cleanup(t_data *pipex, char *message, unsigned int exit_id);
 size_t	ft_strlen(const char *str);
+int		pipe_fork(t_data *pipex);
 
 /* ##################FULL VALGRIND CHECK
 valgrind --leak-check=full --show-leak-kinds=all

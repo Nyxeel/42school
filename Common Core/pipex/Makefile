@@ -17,7 +17,7 @@ MAIN_SOURCE     := main.c
 
 # Pflicht-Quellen (mandatory)
 SOURCES_CORE    := \
-	find_access.c \
+	access_and_exec.c \
 	pipe_and_fork.c \
 	utils.c \
 	utils2.c \
