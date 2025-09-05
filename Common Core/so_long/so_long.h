@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:16:59 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/31 15:06:08 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/05 16:07:55 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 # include <limits.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <unistd.h>
 # include <sys/wait.h>
 # include <stdlib.h>
@@ -27,6 +26,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include "mlx.h"
+//# include <stdio.h>
 
 # define ESC 65307
 # define W 119

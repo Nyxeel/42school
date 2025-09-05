@@ -9,6 +9,8 @@
 		"pipex.h": "c",
 		"libft.h": "c",
 		"printf.h": "c",
-		"stdbool.h": "c"
+		"stdbool.h": "c",
+		"stdint.h": "c",
+		"random": "c"
 	}
 }

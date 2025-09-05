@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/05 18:35:36 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/05 18:47:10 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	direct_access(t_data *pipex, char *command)
 	{
 		if (errno == EACCES)
 			free_split_exit(126, "1 denied", pipex);
-		free_split_exit(127, "no comesadasdasdmand found\n", pipex);
+		free_split_exit(127, " : no command found\n", pipex);
 	}
 	execve(command, pipex->cmd_split, pipex->path);
 	if (errno == ENOENT || errno == ENOTDIR)

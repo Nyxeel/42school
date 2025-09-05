@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 15:18:54 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/05 18:29:28 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/05 18:46:04 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	free_split(char **split)
 void	free_split_exit(int exit_code, char *message, t_data *pipex)
 {
 	if (message)
+	{
+		write(2, pipex->cmd_split[0], ft_strlen(pipex->cmd_split[0]));
 		write(2, message, ft_strlen(message));
+	}
 	if (pipex->access_path)
 		free_split(pipex->access_path);
 	if (pipex->cmd_split)

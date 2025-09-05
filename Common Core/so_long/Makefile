@@ -2,7 +2,6 @@
 # Names
 # =========================
 NAME    := so_long
-LIB_NAME        := solong.a
 
 # =========================
 # Compiler & Flags (42-konform)
@@ -69,32 +68,26 @@ all: $(NAME)
 # =========================
 # Link: Programm (kein unnötiges Relinken)
 # =========================
-$(NAME): $(MAIN_OBJECT) $(LIB_NAME) $(LIBFT_A)
-	$(CC) $(CFLAGS) -o $@ $(MAIN_OBJECT) $(LIB_NAME) $(LIBFT_A) $(LDFLAGS) $(LDLIBS)
-
-# =========================
-# Archive: Statische Bibliothek (nur bei neuen OBJs)
-# =========================
-$(LIB_NAME): $(OBJECTS)
-	ar rcs $@ $(OBJECTS)
+$(NAME): $(MAIN_OBJECT) $(OBJECTS) $(LIBFT_A)
+	@$(CC) $(CFLAGS) -o $@ $(MAIN_OBJECT) $(OBJECTS) $(LIBFT_A) $(LDFLAGS) $(LDLIBS)
 
 # =========================
 # Libft bauen (Ziel explizit!)
 # =========================
 $(LIBFT_A):
-	$(MAKE) -C $(LIBFT_DIR) all
+	@$(MAKE) -C $(LIBFT_DIR) all
 
 # =========================
 # Pattern Rule: .c -> .o
 # =========================
 $(OBJ_DIR)%.o: %.c $(HEADERS) | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # =========================
 # Objektordner anlegen
 # =========================
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 # =========================
 # Bonus-Target
@@ -112,7 +105,7 @@ clean_libft:
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean fclean_libft
-	rm -f $(LIB_NAME) $(NAME)
+	@rm -f $(NAME)
 
 fclean_libft:
 	$(MAKE) -C $(LIBFT_DIR) fclean
@@ -123,4 +116,4 @@ re: fclean all
 # Phony
 # =========================
 .PHONY: all clean fclean re bonus clean_libft fclean_libft
-.SILENT:
+
