@@ -29,8 +29,9 @@ $(NAME): $(MAIN_OBJECT) $(CORE_OBJECTS)
 	@$(CC) $(CFLAGS) -o $@ $^
 
 # Generische Regel: .c -> .o
-$(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
+$(OBJ_DIR)%.o: %.c $(HEADERS) | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
 
 # Objektordner anlegen
 $(OBJ_DIR):

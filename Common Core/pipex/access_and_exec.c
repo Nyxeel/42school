@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/05 15:19:45 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/05 15:46:44 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,25 +112,19 @@ int	find_access(t_data *pipex, char *command)
 		cleanup(pipex, "command not found\n", 127);
 	if (command[0] == '/' || (command[0] == '.' && command[1] == '/'))
 		path_access(pipex, pipex->cmd_split[0]);
-	else
+	pipex->access_path = find_path(pipex->path);
+	if (!pipex->access_path)
+		return(free_split(pipex->cmd_split), 0);			
+	i = 0;
+	while (pipex->access_path[i])
 	{
-		pipex->access_path = find_path(pipex->path);
-		if (!pipex->access_path)
-		{
-			free_split(pipex->cmd_split);
-			cleanup(pipex, "command not found\n", 127);
-		}
-		i = 0;
-		while (pipex->access_path[i])
-		{
-			path = create_full_path(pipex->access_path[i], pipex->cmd_split[0]);
-			if (!path)
-				return (free_split(pipex->access_path),
-			free_split(pipex->cmd_split), 0);
-			path_access(pipex, path);
-			free(path);
-			i++;
-		}
+		path = create_full_path(pipex->access_path[i], pipex->cmd_split[0]);
+		if (!path)
+			return (free_split(pipex->access_path),
+		free_split(pipex->cmd_split), 0);
+		path_access(pipex, path);
+		free(path);
+		i++;
 	}
 	return (free_split(pipex->access_path), free_split(pipex->cmd_split), 0);
 }

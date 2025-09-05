@@ -9,7 +9,7 @@ LIB_NAME        := solong.a
 # =========================
 CC              := cc
 CFLAGS          := -Wall -Wextra -Werror
-INCLUDES        := -I . -I libft -I ./minilibx-linux
+INCLUDES        := -I. -Ilibft -I./minilibx-linux
 
 # MiniLibX (Linux) – ohne MLX_DIR-Variable
 LDFLAGS         := -L ./minilibx-linux
