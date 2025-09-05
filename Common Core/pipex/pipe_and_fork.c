@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_and_fork.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/04 15:17:40 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/05 17:25:41 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,8 @@ int	child_process(t_data *pipex, int loop)
 	}
 	if (close(pipex->fd.output) < 0)
 		cleanup(pipex, "child - close failed", 1);
-	if (!find_access(pipex, pipex->cmds[loop]))
-	{
-		write(2, pipex->cmds[loop], ft_strlen(pipex->cmds[loop]));
-		cleanup(pipex, " : command not found ", 127);
-	}
-	return (0);
+	find_access(pipex, pipex->cmds[loop]);
+	exit (0);
 }
 
 int	pipe_fork(t_data *pipex)
@@ -84,7 +80,7 @@ int	pipe_fork(t_data *pipex)
 		if (pid < 0)
 			cleanup(pipex, "error fork", 1);
 		if (pid == 0)
-			exit(child_process(pipex, i));
+			child_process(pipex, i);
 		else
 			parent_process(pipex, i);
 		i++;

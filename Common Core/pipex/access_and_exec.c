@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access_and_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/05 15:46:44 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/05 18:35:36 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ char	**find_path(char **envp)
 	return (NULL);
 }
 
-/* 
+/*
 static int	path_access(t_data *pipex, char *full_path)
 {
    	printf("VOR ACCESS 0");
-	
+
 	if (access(full_path, X_OK) == -1) {
         if (errno == EACCES)
             return 126;
@@ -60,7 +60,7 @@ static int	path_access(t_data *pipex, char *full_path)
    execve(full_path, pipex->cmd_split, pipex->path);
    printf("Nach EXEC");
 
-   
+
     if (errno == EACCES)
         return 126;
     if (errno == ENOENT || errno == ENOTDIR)
@@ -68,20 +68,31 @@ static int	path_access(t_data *pipex, char *full_path)
     return 1;
 } */
 
-static void	path_access(t_data *pipex, char *full_path)
+static void	direct_access(t_data *pipex, char *command)
+{
+	if (access(command, X_OK) == -1)
+	{
+		if (errno == EACCES)
+			free_split_exit(126, "1 denied", pipex);
+		free_split_exit(127, "no comesadasdasdmand found\n", pipex);
+	}
+	execve(command, pipex->cmd_split, pipex->path);
+	if (errno == ENOENT || errno == ENOTDIR)
+		free_split_exit(127, "WRONG", pipex);
+	free_split_exit(1, "HELLO", pipex);
+}
+
+static void	search_path_access(t_data *pipex, char *full_path)
 {
 	if (access(full_path, X_OK) == 0)
 	{
 		execve(full_path, pipex->cmd_split, pipex->path);
-		free_split(pipex->cmd_split);
 		if (pipex->access_path)
-		{
-			free_split(pipex->access_path);
 			free(full_path);
-		}
-		cleanup(pipex, "Permission denied\n", 126);
+		free_split_exit(126, "SPECIAL", pipex);
 	}
 }
+
 
 
 /* static void	path_access(t_data *pipex)
@@ -102,31 +113,32 @@ static void	path_access(t_data *pipex, char *full_path)
 	}
 } */
 
-int	find_access(t_data *pipex, char *command)
+void	find_access(t_data *pipex, char *command)
 {
 	int		i;
 	char	*path;
-	
+
 	pipex->cmd_split = ft_split(command, ' ');
 	if (!pipex->cmd_split)
-		cleanup(pipex, "command not found\n", 127);
+		free_split_exit(126, "LOOOOO", pipex);
 	if (command[0] == '/' || (command[0] == '.' && command[1] == '/'))
-		path_access(pipex, pipex->cmd_split[0]);
+		direct_access(pipex, pipex->cmd_split[0]);
 	pipex->access_path = find_path(pipex->path);
 	if (!pipex->access_path)
-		return(free_split(pipex->cmd_split), 0);			
+		free_split_exit(126, "XXXXXXXXXX", pipex);
 	i = 0;
 	while (pipex->access_path[i])
 	{
 		path = create_full_path(pipex->access_path[i], pipex->cmd_split[0]);
 		if (!path)
-			return (free_split(pipex->access_path),
-		free_split(pipex->cmd_split), 0);
-		path_access(pipex, path);
+			free_split_exit(126, "LALALALAL", pipex);
+		search_path_access(pipex, path);
 		free(path);
 		i++;
 	}
-	return (free_split(pipex->access_path), free_split(pipex->cmd_split), 0);
+	write(2, pipex->cmd_split[0], ft_strlen(pipex->cmd_split[0]));
+	free_split_exit(126, "NNOT NOT NOT NOT", pipex);
+
 }
 
 

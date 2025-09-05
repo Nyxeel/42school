@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:26:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/05 15:17:38 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/05 18:30:20 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <fcntl.h>
-
-
-
-
-
-
 
 typedef struct s_fds
 {
@@ -52,7 +46,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 void	ft_freeall(char **freearr, size_t index);
-int		find_access(t_data *pipex, char *command);
+void	find_access(t_data *pipex, char *command);
 int		open_files_bonus(int argc, char **argv, char **envp);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	cleanup(t_data *pipex, char *message, int exit_id);
@@ -60,6 +54,7 @@ size_t	ft_strlen(const char *str);
 int		pipe_fork(t_data *pipex);
 void	cleanup(t_data *pipex, char *message, int exit_code);
 void	free_split(char **split);
+void	free_split_exit(int exit_code, char *message, t_data *pipex);
 
 /* ##################FULL VALGRIND CHECK
 valgrind --leak-check=full --show-leak-kinds=all
