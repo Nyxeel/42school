@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:26:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/03 15:43:27 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/05 15:17:38 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <fcntl.h>
+
+
+
+
+
+
 
 typedef struct s_fds
 {
@@ -52,6 +58,8 @@ void	*ft_calloc(size_t nmemb, size_t size);
 void	cleanup(t_data *pipex, char *message, int exit_id);
 size_t	ft_strlen(const char *str);
 int		pipe_fork(t_data *pipex);
+void	cleanup(t_data *pipex, char *message, int exit_code);
+void	free_split(char **split);
 
 /* ##################FULL VALGRIND CHECK
 valgrind --leak-check=full --show-leak-kinds=all

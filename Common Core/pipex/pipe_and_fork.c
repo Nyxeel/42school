@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_and_fork.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/03 17:37:07 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/04 15:17:40 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	pipe_fork(t_data *pipex)
 			else if (WIFSIGNALED(status))
 				exit_code = 128 + WTERMSIG(status);
 		}
-	//sleep(25);
 	exit(exit_code);
 }
 
