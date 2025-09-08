@@ -11,6 +11,7 @@
 		"printf.h": "c",
 		"stdbool.h": "c",
 		"stdint.h": "c",
-		"random": "c"
+		"random": "c",
+		"errno.h": "c"
 	}
 }

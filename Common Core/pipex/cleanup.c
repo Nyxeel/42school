@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 15:18:54 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/08 14:05:21 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/08 21:00:34 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	free_split(char **split)
 		ft_freeall(split, count);
 	}
 }
+
 void	free_split_exit(int exit_code, char *message, t_data *pipex)
 {
 	if (message)
@@ -31,11 +32,26 @@ void	free_split_exit(int exit_code, char *message, t_data *pipex)
 		write(2, pipex->cmd_split[0], ft_strlen(pipex->cmd_split[0]));
 		write(2, message, ft_strlen(message));
 	}
+	else
+		perror(pipex->cmd_split[0]);
 	if (pipex->access_path)
 		free_split(pipex->access_path);
 	if (pipex->cmd_split)
 		free_split(pipex->cmd_split);
 	exit(exit_code);
+}
+
+void	handle_errno(t_data *pipex, int error_code)
+{
+	printf("ERRNO: %i\n", errno);
+	if (error_code == ENOEXEC)
+		free_split_exit(126, NULL, pipex);
+	else if (error_code == ENOENT)
+		free_split_exit(127, NULL, pipex);
+	else if (error_code == ENOTDIR || error_code == EISDIR)
+		free_split_exit(126, NULL, pipex);
+	else if (error_code == EACCES)
+		free_split_exit(126, NULL, pipex);
 }
 
 

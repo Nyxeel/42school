@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:26:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/05 18:30:20 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/08 21:00:53 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <fcntl.h>
+# include <errno.h>
 
 typedef struct s_fds
 {
@@ -55,6 +56,7 @@ int		pipe_fork(t_data *pipex);
 void	cleanup(t_data *pipex, char *message, int exit_code);
 void	free_split(char **split);
 void	free_split_exit(int exit_code, char *message, t_data *pipex);
+void	handle_errno(t_data *pipex, int error_code);
 
 /* ##################FULL VALGRIND CHECK
 valgrind --leak-check=full --show-leak-kinds=all
