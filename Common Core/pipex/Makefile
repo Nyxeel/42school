@@ -1,5 +1,5 @@
 # =========================
-# Names
+# Name
 # =========================
 NAME    		:= pipex
 
@@ -74,8 +74,8 @@ $(OBJ_DIR):
 # Debugging
 # =========================
 
-debug: CFLAGS += -g
-debug: re
+#debug: CFLAGS += -g
+#debug: re
 
 ## valgrind --track-fds=yes --trace-children=yes ./pipex infile "grep 4" "wc -l" outfile
 

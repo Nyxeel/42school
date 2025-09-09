@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/08 20:42:22 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:19:54 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	main(int argc, char **argv, char **envp)
 		pipex.access_path = NULL;
 		pipex.fd.input = open(argv[1], O_RDONLY);
 		if (pipex.fd.input == -1)
-			return (perror(argv[1]), 1);
+			return (perror(argv[1]), 0);
 		pipex.fd.output = open(argv[argc - 1], O_WRONLY | O_CREAT
 				| O_TRUNC, 0644);
 		if (pipex.fd.output == -1)
-			return (close(pipex.fd.input), perror(argv[argc]), 1);
+			return (close(pipex.fd.input), perror(argv[argc - 1]), 1);
 		pipe_fork(&pipex);
 	}
 	else

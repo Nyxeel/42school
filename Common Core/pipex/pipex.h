@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:26:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/08 21:00:53 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:52:14 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <stdint.h>
 # include <fcntl.h>
 # include <errno.h>
+
+# define ISDIR 13
 
 typedef struct s_fds
 {
@@ -52,7 +54,7 @@ int		open_files_bonus(int argc, char **argv, char **envp);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	cleanup(t_data *pipex, char *message, int exit_id);
 size_t	ft_strlen(const char *str);
-int		pipe_fork(t_data *pipex);
+void		pipe_fork(t_data *pipex);
 void	cleanup(t_data *pipex, char *message, int exit_code);
 void	free_split(char **split);
 void	free_split_exit(int exit_code, char *message, t_data *pipex);

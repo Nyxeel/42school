@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access_and_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/08 21:15:21 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:45:19 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ char	*create_full_path(char *dir, char *cmd)
 	return (full_path);
 }
 
-char	**find_path(char **envp)
+char	**find_path(char **envp, t_data *pipex)
 {
 	int	i;
 
 	i = 0;
-	if (!envp)
-		return (NULL);
+	if (!envp || !envp[0])
+		free_split_exit(127, " : command not found\n", pipex);
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
@@ -51,11 +51,13 @@ static void	direct_access(t_data *pipex, char *command)
 	if (access(command, X_OK) == -1)
 	{
 		error_code = errno;
+		printf("ERRNO DAVOR: %i\n", errno);
 		handle_errno(pipex, error_code);
 	}
 	if (execve(command, pipex->cmd_split, pipex->path) == -1)
 	{
 		error_code = errno;
+		printf("ERRNO DAVOR: %i\n", errno);
 		handle_errno(pipex, error_code);
 	}
 }
@@ -72,6 +74,10 @@ static void	search_path_access(t_data *pipex, char *full_path)
 	}
 }
 
+
+
+
+
 void	find_access(t_data *pipex, char *command)
 {
 	int		i;
@@ -82,9 +88,7 @@ void	find_access(t_data *pipex, char *command)
 		free_split_exit(1, " : ft_split failed", pipex);
 	if (command[0] == '/' || (command[0] == '.' && command[1] == '/'))
 		direct_access(pipex, pipex->cmd_split[0]);
-	if (!pipex->path || !pipex->path[0])
-		free_split_exit(127, " : command not found\n", pipex);
-	pipex->access_path = find_path(pipex->path);
+	pipex->access_path = find_path(pipex->path, pipex);
 	if (!pipex->access_path)
 		free_split_exit(1, " : ft_split failed\n", pipex);
 	i = 0;
@@ -98,7 +102,6 @@ void	find_access(t_data *pipex, char *command)
 		i++;
 	}
 	free_split_exit(127, " : command not found\n", pipex);
-
 }
 
 

@@ -1,119 +1,106 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   2pipe_and_fork_bonus.c                             :+:      :+:    :+:   */
+/*   pipe_and_fork_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/04 10:13:23 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:52:12 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	exit_call(char *message)
+static void	ft_close(t_data *pipex)
 {
-	perror(message);
-	exit(1);
+	if (close(pipex->fd.input) < 0)
+		cleanup(pipex, "child - close input_fd failed", 1);
+	if (close(pipex->fd.prev[0]) < 0 || close(pipex->fd.prev[1]) < 0)
+		cleanup(pipex, "child - close failed", 1);
 }
 
-
-int	pipe_fork(int cmd_count, char **cmds, char **path, int input_fd, int output_fd)
+static void parent_process(t_data *pipex, int loop)
 {
-	int		curr_fd[2];
-	int		prev_fd[2];
-	int		pid;
-	int		i;
-
-	if (pipe(prev_fd) < 0)
-		return (1);
-	i = 0;
-	while (i < cmd_count)
+	if (loop != 0 && (close(pipex->fd.prev[0]) < 0
+			|| close(pipex->fd.prev[1]) < 0))
+		cleanup(pipex, "parent - close failed", 1);
+	if (loop != pipex->cmd_count -1 )
 	{
-		if (i != cmd_count - 1)
-			if (pipe(curr_fd) < 0)
-				return (1);
+		pipex->fd.prev[0] = pipex->fd.curr[0];
+		pipex->fd.prev[1] = pipex->fd.curr[1];
+	}
+}
+
+static void	child_process(t_data *pipex, int loop)
+{
+	if (loop == 0)
+	{
+		if (dup2(pipex->fd.input, STDIN_FILENO) < 0)
+			cleanup(pipex, "child - dup2 failed", 1);
+	}
+	else
+		if (dup2(pipex->fd.prev[0], STDIN_FILENO) < 0)
+			cleanup(pipex, "child - dup2 failed", 1);
+	ft_close(pipex);
+	if (loop == pipex->cmd_count - 1)
+	{
+		if (dup2(pipex->fd.output, STDOUT_FILENO) < 0)
+			cleanup(pipex, "child - dup2 failed", 1);
+	}
+	else
+	{
+		if (dup2(pipex->fd.curr[1], STDOUT_FILENO) < 0)
+			cleanup(pipex, "child - dup2 failed", 1);
+		if (close(pipex->fd.curr[1]) < 0
+			|| close(pipex->fd.curr[0]) < 0)
+			cleanup(pipex, "child - close failed", 1);
+	}
+	if (close(pipex->fd.output) < 0)
+		cleanup(pipex, "child - close failed", 1);
+	find_access(pipex, pipex->cmds[loop]);
+}
+
+static int	ft_exit_status(int pid)
+{
+	pid_t	wpid;
+	int		status;
+	int		exit_code;
+
+	while ((wpid = wait(&status)) > 0)
+	if (wpid == pid)
+	{
+		if (WIFEXITED(status))
+			exit_code = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			exit_code = 128 + WTERMSIG(status);
+	}
+	exit(exit_code);
+}
+
+void	pipe_fork(t_data *pipex)
+{
+	int		i;
+	int		pid;
+
+	if (pipe(pipex->fd.prev) < 0)
+		return ;
+	i = 0;
+	while (i < pipex->cmd_count)
+	{
+		if (i != pipex->cmd_count - 1)
+			if (pipe(pipex->fd.curr) < 0)
+				cleanup(pipex, "pipe fd.curr failed", 1);
 		pid = fork();
 		if (pid < 0)
-			return (perror("error fork"), 1);
+			cleanup(pipex, "error fork", 1);
 		if (pid == 0)
-		{
-			if (i == 0)   ///ERSTER DURCHLAUF READ AUS STDIN
-			{
-				if (dup2(input_fd, STDIN_FILENO) < 0)
-					exit_call("child - dup2 failed");
-				if (close(input_fd) < 0)
-					exit_call("child - close input_fd failed");
-			}
-			else 		/// AB 2ten DURCHLAUF READ_END in STDIN
-			{
-				if (dup2(prev_fd[0], STDIN_FILENO) < 0)
-					exit_call("child - dup2 failed");
-				if (close(prev_fd[0]) < 0 || close(prev_fd[1]) < 0)
-					exit_call("child - close failed");
-			}
-			if (i == cmd_count - 1)  // LETZTER DURCHLAUF WRITE_END IN STDOUT
-			{
-				if (dup2(output_fd, STDOUT_FILENO) < 0)
-					exit_call("child - dup2 failed");
-				if (close(output_fd) < 0)
-					exit_call("child - close failed");
-			}
-			else		/// AB ERSTEN DURCHLAUF WRITE_END IN STDOUT
-			{
-				if (dup2(curr_fd[1], STDOUT_FILENO) < 0)
-					exit_call("child - dup2 failed");
-				if (close(curr_fd[1]) < 0 || close(curr_fd[0]) < 0)
-					exit_call("child - close failed");
-			}
-			if (!find_access(path, cmds[i]))
-				exit_call("child - access failed");
-		}
+			child_process(pipex, i);
 		else
-		{
-			if (i != 0 && (close(prev_fd[0]) < 0 || close(prev_fd[1]) < 0))
-				return (perror("parent - close failed"), 1);
-			prev_fd[0] = curr_fd[0];
-			prev_fd[1] = curr_fd[1];
-		}
+			parent_process(pipex, i);
 		i++;
 	}
-	while (wait(NULL) > 0)
-		continue ;
-	exit(0);
-}
-
-int	open_files(int argc, char **argv, char **envp)
-{
-	int	input_fd;
-	int	output_fd;
-
-	input_fd = open(argv[1], O_RDONLY);
-	if (input_fd == -1)
-		return (1);
-	output_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (output_fd == -1)
-		return (1);
-	if (pipe_fork(argc - 3, &argv[2], envp, input_fd, output_fd))
-		if (close(input_fd) < 0 || close(output_fd) < 0)
-			return (1);
-	return (0);
-}
-
-int	open_files_bonus(int argc, char **argv, char **envp)
-{
-	int	input_fd;
-	int	output_fd;
-
-	input_fd = open(argv[1], O_RDONLY);
-	if (input_fd == -1)
-		return (1);
-	output_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (output_fd == -1)
-		return (1);
-	if (pipe_fork(argc - 3, &argv[2], envp, input_fd, output_fd))
-		if (close(input_fd) < 0 || close(output_fd) < 0)
-			return (1);
-	return (0);
+	if (close(pipex->fd.input) < 0 || close(pipex->fd.output) < 0)
+		cleanup(pipex, "parent - close failed", 1);
+	ft_exit_status(pid);
 }

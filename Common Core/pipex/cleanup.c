@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 15:18:54 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/08 21:00:34 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:19:54 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,12 @@ void	free_split_exit(int exit_code, char *message, t_data *pipex)
 
 void	handle_errno(t_data *pipex, int error_code)
 {
-	printf("ERRNO: %i\n", errno);
-	if (error_code == ENOEXEC)
-		free_split_exit(126, NULL, pipex);
+	if (error_code == ISDIR && pipex->cmd_split[0][0] == '/')
+		free_split_exit(126, " : Is a directory\n", pipex);
 	else if (error_code == ENOENT)
 		free_split_exit(127, NULL, pipex);
-	else if (error_code == ENOTDIR || error_code == EISDIR)
-		free_split_exit(126, NULL, pipex);
-	else if (error_code == EACCES)
+	else if (error_code == ENOTDIR || error_code == EISDIR 
+		||  error_code == ENOEXEC || error_code == EACCES) 
 		free_split_exit(126, NULL, pipex);
 }
 
