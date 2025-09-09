@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_and_fork_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/09 16:52:12 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/09 19:16:53 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static void	ft_close(t_data *pipex)
 		cleanup(pipex, "child - close failed", 1);
 }
 
-static void parent_process(t_data *pipex, int loop)
+static void	parent_process(t_data *pipex, int loop)
 {
 	if (loop != 0 && (close(pipex->fd.prev[0]) < 0
 			|| close(pipex->fd.prev[1]) < 0))
 		cleanup(pipex, "parent - close failed", 1);
-	if (loop != pipex->cmd_count -1 )
+	if (loop != pipex->cmd_count - 1)
 	{
 		pipex->fd.prev[0] = pipex->fd.curr[0];
 		pipex->fd.prev[1] = pipex->fd.curr[1];
@@ -61,19 +61,24 @@ static void	child_process(t_data *pipex, int loop)
 	find_access(pipex, pipex->cmds[loop]);
 }
 
-static int	ft_exit_status(int pid)
+static void	ft_exit_status(pid_t pid)
 {
-	pid_t	wpid;
 	int		status;
 	int		exit_code;
+	pid_t	wpid;
 
-	while ((wpid = wait(&status)) > 0)
-	if (wpid == pid)
+	exit_code = 0;
+	wpid = wait(&status);
+	while (wpid > 0)
 	{
-		if (WIFEXITED(status))
-			exit_code = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			exit_code = 128 + WTERMSIG(status);
+		if (wpid == pid)
+		{
+			if (WIFEXITED(status))
+				exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				exit_code = 128 + WTERMSIG(status);
+		}
+		wpid = wait(&status);
 	}
 	exit(exit_code);
 }
@@ -81,7 +86,7 @@ static int	ft_exit_status(int pid)
 void	pipe_fork(t_data *pipex)
 {
 	int		i;
-	int		pid;
+	pid_t	pid;
 
 	if (pipe(pipex->fd.prev) < 0)
 		return ;

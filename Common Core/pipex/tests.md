@@ -26,7 +26,7 @@ env -i ./pipex infile "cat" "echo hi" outfile
 echo $?
 
 # bash
-env -i bash -lc '< infile cat | echo hi > outfile'
+env -i < infile cat | echo hi > outfile
 echo $?
 
 
@@ -184,7 +184,7 @@ Exitcode → 1 (grep findet nichts)
 ##### ###################################################
 9. infile fehlt (Open-Fehler, Pipeline startet nicht)
 
-[X] noch nicht erledigt | bash gibt exitcode 0 aus, warum muss ich 1 ausgeben ? 
+[X] noch nicht erledigt | bash gibt exitcode 0 aus, warum muss ich 1 ausgeben ?
 [ ] erledigt
 
 Setup: rm -f infile ; : > outfile

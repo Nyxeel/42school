@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/01 17:38:57 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:59:46 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 size_t	ft_strlen(const char *str)
 {
 	size_t	count;
+
 	if (!str)
 		return (0);
 	count = 0;
@@ -96,5 +97,3 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		i++;
 	return (str1[i] - str2[i]);
 }
-
-

@@ -7,7 +7,7 @@ NAME    		:= pipex
 # Compiler & Flags (42-konform)
 # =========================
 CC              := cc
-CFLAGS          := -Wall -Wextra -Werror
+CFLAGS          := -Wall -Wextra -Werror -MMD -MP
 
 # =========================
 # Sources
@@ -22,9 +22,22 @@ SOURCES_CORE    := \
 	utils.c \
 	utils2.c \
 
-# Bonus-Zusatz (ersetzt update_game.c)
+# Bonus-Zusatz
 SOURCES_BONUSONLY := \
-		pipe_and_fork_bonus.c \
+	pipe_and_fork_bonus.c \
+
+# =========================
+# Feste Objektpfade
+# =========================
+OBJ_DIR_MAND        := objects/
+OBJ_DIR_BONUS       := objects_bonus/
+
+MAIN_OBJECT_MAND    := $(addprefix $(OBJ_DIR_MAND),$(MAIN_SOURCE:.c=.o))
+OBJECTS_MAND_ALL    := $(addprefix $(OBJ_DIR_MAND),$(SOURCES_CORE:.c=.o))
+OBJECTS_MAND_NOFORK := $(filter-out $(OBJ_DIR_MAND)pipe_and_fork.o,$(OBJECTS_MAND_ALL))
+OBJECT_BONUS_ONLY   := $(addprefix $(OBJ_DIR_BONUS),$(SOURCES_BONUSONLY:.c=.o))
+
+HEADERS             := pipex.h
 
 # =========================
 # Build-Mode (mandatory / bonus)
@@ -32,19 +45,16 @@ SOURCES_BONUSONLY := \
 MODE ?= mandatory
 
 ifeq ($(MODE),bonus)
-OBJ_DIR   := objects_bonus/
-SOURCES   := $(filter-out pipe_and_fork_bonus.c,$(SOURCES_CORE)) $(SOURCES_BONUSONLY)
+# Bonus-Modus: linke Mandatory (ohne pipe_and_fork.o) + Bonus-Objekt
+MAIN_OBJECT := $(MAIN_OBJECT_MAND)
+OBJECTS     := $(OBJECTS_MAND_NOFORK) $(OBJECT_BONUS_ONLY)
 else
-OBJ_DIR   := objects/
-SOURCES   := $(SOURCES_CORE)
+# Mandatory-Modus: nur Mandatory-Objekte
+MAIN_OBJECT := $(MAIN_OBJECT_MAND)
+OBJECTS     := $(OBJECTS_MAND_ALL)
 endif
 
-# =========================
-# Objects
-# =========================
-HEADERS       := pipex.h
-MAIN_OBJECT   := $(addprefix $(OBJ_DIR),$(MAIN_SOURCE:.c=.o))
-OBJECTS       := $(addprefix $(OBJ_DIR),$(SOURCES:.c=.o))
+DEPS := $(MAIN_OBJECT:.o=.d) $(OBJECTS:.o=.d)
 
 # =========================
 # Default Target
@@ -55,32 +65,30 @@ all: $(NAME)
 # Link: Programm (kein unnötiges Relinken)
 # =========================
 $(NAME): $(MAIN_OBJECT) $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $(MAIN_OBJECT) $(OBJECTS)
-
+	$(CC) $(CFLAGS) -o $@ $^
 
 # =========================
-# Pattern Rule: .c -> .o
+# Compile-Rules
 # =========================
-$(OBJ_DIR)%.o: %.c  $(HEADERS) | $(OBJ_DIR)
+# Mandatory-Objects in objects/
+$(OBJ_DIR_MAND)%.o: %.c $(HEADERS) | $(OBJ_DIR_MAND)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Bonus-Object(s) in objects_bonus/
+$(OBJ_DIR_BONUS)%.o: %.c $(HEADERS) | $(OBJ_DIR_BONUS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # =========================
 # Objektordner anlegen
 # =========================
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+$(OBJ_DIR_MAND):
+	mkdir -p $(OBJ_DIR_MAND)
+
+$(OBJ_DIR_BONUS):
+	mkdir -p $(OBJ_DIR_BONUS)
 
 # =========================
-# Debugging
-# =========================
-
-#debug: CFLAGS += -g
-#debug: re
-
-## valgrind --track-fds=yes --trace-children=yes ./pipex infile "grep 4" "wc -l" outfile
-
-# =========================
-# Bonus-Target
+# Bonus-Target (delegiert an Make, damit Up-to-date geprüft wird)
 # =========================
 bonus:
 	$(MAKE) MODE=bonus all
@@ -89,15 +97,18 @@ bonus:
 # Clean Targets
 # =========================
 clean:
-	rm -rf objects/ objects_bonus/
+	rm -rf $(OBJ_DIR_MAND) $(OBJ_DIR_BONUS)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
 
+# Automatisch generierte Dep-Dateien einbinden
+-include $(DEPS)
+
 # =========================
 # Phony
 # =========================
 .PHONY: all clean fclean re bonus
-#.SILENT:
+# .SILENT:

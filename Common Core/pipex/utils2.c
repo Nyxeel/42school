@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/02 20:01:08 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:59:53 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,3 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	return (ft_split_loop(split, s, c));
 }
-

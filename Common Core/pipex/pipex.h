@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:26:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/09 16:52:14 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/09 19:17:06 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
+# define ISDIR 13
 
 # include <limits.h>
 # include <stdbool.h>
@@ -23,8 +24,6 @@
 # include <fcntl.h>
 # include <errno.h>
 
-# define ISDIR 13
-
 typedef struct s_fds
 {
 	int	input;
@@ -35,28 +34,31 @@ typedef struct s_fds
 
 typedef struct s_data
 {
-	int				cmd_count;
-	char			**cmds;
-	char			**path;
-	char			**access_path;
-	char			**cmd_split;
-	int				status;
-	t_fds			fd;
+	int		cmd_count;
+	char	**cmds;
+	char	**path;
+	char	**access_path;
+	char	**cmd_split;
+	int		status;
+	t_fds	fd;
 }	t_data;
 
+/* ========= libft Utilities ========= */
+size_t	ft_strlen(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	**ft_split(char const *s, char c);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	**ft_split(char const *s, char c);
+char	*ft_strjoin(const char *s1, const char *s2);
+char	**ft_split(const char *s, char c);
+void	*ft_calloc(size_t nmemb, size_t size);
+
+/* =	==== Speicher- und Array-Helfer ========= */
+void	free_split(char **split);
 void	ft_freeall(char **freearr, size_t index);
+
+/* =	==== Pipex-Kern-API ========= */
 void	find_access(t_data *pipex, char *command);
 int		open_files_bonus(int argc, char **argv, char **envp);
-void	*ft_calloc(size_t nmemb, size_t size);
-void	cleanup(t_data *pipex, char *message, int exit_id);
-size_t	ft_strlen(const char *str);
-void		pipe_fork(t_data *pipex);
+void	pipe_fork(t_data *pipex);
 void	cleanup(t_data *pipex, char *message, int exit_code);
-void	free_split(char **split);
 void	free_split_exit(int exit_code, char *message, t_data *pipex);
 void	handle_errno(t_data *pipex, int error_code);
 
