@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 15:18:54 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/09 19:15:57 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/10 00:13:26 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	free_split_exit(int exit_code, char *message, t_data *pipex)
 
 void	handle_errno(t_data *pipex, int error_code)
 {
-	printf("ERROR CODE:%i \n", error_code);
 	if (error_code == ISDIR && pipex->cmd_split[0][0] == '/')
 		free_split_exit(126, " : Is a directory\n", pipex);
 	else if (error_code == ENOENT)

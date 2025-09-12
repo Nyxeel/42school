@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:26:38 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/09 19:17:06 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/12 14:38:26 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define PIPEX_H
 # define ISDIR 13
 
+# include <stdio.h>
 # include <limits.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <unistd.h>
 # include <sys/wait.h>
 # include <stdlib.h>
@@ -56,7 +56,6 @@ void	ft_freeall(char **freearr, size_t index);
 
 /* =	==== Pipex-Kern-API ========= */
 void	find_access(t_data *pipex, char *command);
-int		open_files_bonus(int argc, char **argv, char **envp);
 void	pipe_fork(t_data *pipex);
 void	cleanup(t_data *pipex, char *message, int exit_code);
 void	free_split_exit(int exit_code, char *message, t_data *pipex);

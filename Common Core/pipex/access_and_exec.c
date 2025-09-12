@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access_and_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/09 19:17:13 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/12 15:20:52 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ void	find_access(t_data *pipex, char *command)
 		direct_access(pipex, pipex->cmd_split[0]);
 	pipex->access_path = find_path(pipex->path, pipex);
 	if (!pipex->access_path)
-		free_split_exit(1, " : ft_split failed\n", pipex);
+		free_split_exit(1, " : find_path failed\n", pipex);
 	i = 0;
 	while (pipex->access_path[i])
 	{
 		path = create_full_path(pipex->access_path[i], pipex->cmd_split[0]);
 		if (!path)
-			free_split_exit(1, " : ft_split failed\n", pipex);
+			free_split_exit(1, " : create_full_path failed\n", pipex);
 		search_path_access(pipex, path);
 		free(path);
 		i++;
