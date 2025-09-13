@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access_and_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/12 15:20:52 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/13 17:29:43 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,9 @@ static void	search_path_access(t_data *pipex, char *full_path)
 void	find_access(t_data *pipex, char *command)
 {
 	int		i;
-	char	*path;
+	char	*full_path;
 
+	full_path = NULL;
 	pipex->cmd_split = ft_split(command, ' ');
 	if (!pipex->cmd_split)
 		free_split_exit(1, " : ft_split failed\n", pipex);
@@ -90,11 +91,12 @@ void	find_access(t_data *pipex, char *command)
 	i = 0;
 	while (pipex->access_path[i])
 	{
-		path = create_full_path(pipex->access_path[i], pipex->cmd_split[0]);
-		if (!path)
+		full_path = create_full_path(pipex->access_path[i],
+				pipex->cmd_split[0]);
+		if (!full_path)
 			free_split_exit(1, " : create_full_path failed\n", pipex);
-		search_path_access(pipex, path);
-		free(path);
+		search_path_access(pipex, full_path);
+		free(full_path);
 		i++;
 	}
 	free_split_exit(127, " : command not found\n", pipex);

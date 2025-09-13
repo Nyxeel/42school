@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 15:18:54 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/10 00:13:26 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/13 16:52:38 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	free_split_exit(int exit_code, char *message, t_data *pipex)
 {
 	if (message)
 	{
-		write(2, pipex->cmd_split[0], ft_strlen(pipex->cmd_split[0]));
+		if (pipex->cmd_split)
+			write(2, pipex->cmd_split[0], ft_strlen(pipex->cmd_split[0]));
 		write(2, message, ft_strlen(message));
 	}
 	else
@@ -56,7 +57,7 @@ void	cleanup(t_data *pipex, char *message, int exit_code)
 {
 	if (message)
 		write(2, message, ft_strlen(message));
-	if (pipex->path)
+	if (pipex->access_path)
 		free_split(pipex->access_path);
 	if (pipex->cmd_split)
 		free_split(pipex->cmd_split);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/13 17:41:07 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/13 17:42:11 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	pipex;
 
-	if (argc == 5)
+	if (argc > 3)
 	{
 		pipex.cmd_count = argc - 3;
 		pipex.cmds = &argv[2];
@@ -33,6 +33,6 @@ int	main(int argc, char **argv, char **envp)
 		pipe_fork(&pipex);
 	}
 	else
-		write(2, "Enter exactly 4 arguments!\n", 28);
+		write(2, "Enter minimum 3 arguments!\n", 28);
 	return (0);
 }

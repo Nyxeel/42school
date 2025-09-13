@@ -7,12 +7,14 @@ NAME    		:= pipex
 # Compiler & Flags (42-konform)
 # =========================
 CC              := cc
-CFLAGS          := -Wall -Wextra -Werror -MMD -MP
+CFLAGS          := -Wall -Wextra -Werror -MMD -MP -g
 
 # =========================
 # Sources
 # =========================
-MAIN_SOURCE     := main.c
+# Main-Sources getrennt definieren
+MAIN_SOURCE_MAND  := main.c
+MAIN_SOURCE_BONUS := main_bonus.c
 
 # Pflicht-Quellen (mandatory)
 SOURCES_CORE    := \
@@ -32,7 +34,10 @@ SOURCES_BONUSONLY := \
 OBJ_DIR_MAND        := objects/
 OBJ_DIR_BONUS       := objects_bonus/
 
-MAIN_OBJECT_MAND    := $(addprefix $(OBJ_DIR_MAND),$(MAIN_SOURCE:.c=.o))
+# Aus den getrennten Main-Sources die jeweiligen Objektpfade bauen
+MAIN_OBJECT_MAND    := $(addprefix $(OBJ_DIR_MAND),$(MAIN_SOURCE_MAND:.c=.o))
+MAIN_OBJECT_BONUS   := $(addprefix $(OBJ_DIR_BONUS),$(MAIN_SOURCE_BONUS:.c=.o))
+
 OBJECTS_MAND_ALL    := $(addprefix $(OBJ_DIR_MAND),$(SOURCES_CORE:.c=.o))
 OBJECTS_MAND_NOFORK := $(filter-out $(OBJ_DIR_MAND)pipe_and_fork.o,$(OBJECTS_MAND_ALL))
 OBJECT_BONUS_ONLY   := $(addprefix $(OBJ_DIR_BONUS),$(SOURCES_BONUSONLY:.c=.o))
@@ -45,11 +50,11 @@ HEADERS             := pipex.h
 MODE ?= mandatory
 
 ifeq ($(MODE),bonus)
-# Bonus-Modus: linke Mandatory (ohne pipe_and_fork.o) + Bonus-Objekt
-MAIN_OBJECT := $(MAIN_OBJECT_MAND)
+# Bonus-Modus: main_bonus.c in objects_bonus/ + Mandatory (ohne pipe_and_fork.o) + Bonus-Objekt(e)
+MAIN_OBJECT := $(MAIN_OBJECT_BONUS)
 OBJECTS     := $(OBJECTS_MAND_NOFORK) $(OBJECT_BONUS_ONLY)
 else
-# Mandatory-Modus: nur Mandatory-Objekte
+# Mandatory-Modus: main.c in objects/ + alle Mandatory-Objekte
 MAIN_OBJECT := $(MAIN_OBJECT_MAND)
 OBJECTS     := $(OBJECTS_MAND_ALL)
 endif

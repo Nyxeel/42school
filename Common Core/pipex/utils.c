@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 15:12:55 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/09 17:59:46 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/13 17:07:30 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (join);
 }
 
-static void	*ft_bzero(void *s, size_t n)
+static void	ft_bzero(void *s, size_t n)
 {
 	size_t			i;
 	unsigned char	*arr;
@@ -63,7 +63,6 @@ static void	*ft_bzero(void *s, size_t n)
 		arr[i] = 0;
 		i++;
 	}
-	return ((void *) s);
 }
 
 void	*ft_calloc(size_t nmemb, size_t size)
@@ -79,7 +78,8 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	p = malloc(total);
 	if (p == NULL)
 		return (NULL);
-	return (ft_bzero(p, total));
+	ft_bzero(p, total);
+	return (p);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
