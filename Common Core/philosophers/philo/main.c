@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/18 21:23:03 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/18 21:43:35 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,8 @@ void	print_lock(char *str, t_philo *data)
 void	*get_data(void *arg)
 {
 	t_philo	*data;
-	bool	start;
 
-	start = false;
-	data = arg;
-
+	data = (t_philo *) arg;
 	while (1)
 	{
 		pthread_mutex_lock(&data->mutex.wait);
@@ -70,9 +67,6 @@ bool	start_threads(t_philo *data)
 			return (false);
 		i++;
 	}
-/* 	pthread_mutex_lock(&data->mutex.count);
-	data->count++;
-	pthread_mutex_unlock(&data->mutex.count); */
 	i = 0;
 	while (i < data->number_of_philos)
 	{
@@ -82,19 +76,18 @@ bool	start_threads(t_philo *data)
 	}
 	pthread_mutex_destroy(&data->mutex.wait);
 	pthread_mutex_destroy(&data->mutex.print);
-	printf("END\n");
 	return (true);
 }
 
 
 bool	philo_init(t_philo *data, char **av)
 {
+	memset(data, 0, sizeof(t_philo));
 	data->number_of_philos = ft_atoi(av[1]);
 	data->time_to_die = ft_atoi(av[2]);
 	data->time_to_eat = ft_atoi(av[3]);
 	data->time_to_sleep = ft_atoi(av[4]);
-	data->mutex.fork = ft_calloc(data->number_of_philos,
-			sizeof(pthread_mutex_t));
+	data->mutex.fork = ft_calloc(1, sizeof(pthread_mutex_t));
 	if (!data->mutex.fork)
 		return (false);
 	return (true);
@@ -102,24 +95,22 @@ bool	philo_init(t_philo *data, char **av)
 
 int	main(int ac, char **av)
 {
-	t_philo	*data;
-
-	data = ft_calloc(1,	sizeof(t_philo));
-	if (!data)
-		return (false);
+	t_philo	data;
 
 	if (ac == 5 || ac == 6)
 	{
-		if (!input_check(av) || !philo_init(data, av) || !start_threads(data))
+		if (!input_check(av) || !philo_init(&data, av) || !start_threads(&data))
 			return (1); // + CLEANUP für malloc in philo_init
-		free(data->mutex.fork);
-		free(data);
+		free(data.mutex.fork);
 	}
 	return (0);
-	//if (ac <= 6)
+
+
+// ./philo 4 500 200 200 0    -> valid ??
 
 /*
 ./philosophers number_of_philosophers time_to_die time_to_eat time_to_sleep
 [number_of_times_each_philosopher_must_eat]
 */
+
 }
