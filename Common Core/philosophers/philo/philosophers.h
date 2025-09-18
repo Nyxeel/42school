@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/18 21:07:40 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/18 23:49:48 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_philo
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				number_of_meals;
 	unsigned int	id[210];
 	int				count;
 	pthread_t		philo[210];
@@ -56,6 +57,8 @@ typedef struct s_philo
 long long	ft_atoi(const char *str);
 void		*ft_calloc(size_t nmemb, size_t size);
 bool		input_check(char **av);
+void		print_lock(char *str, t_philo *data);
+void		seperate_philos(t_philo *data);
 
 
 ///    ./philo 5 600 200 200

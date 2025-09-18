@@ -6,10 +6,9 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 18:17:22 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/18 21:39:39 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/18 23:06:38 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "philosophers.h"
 
@@ -47,7 +46,7 @@ bool	input_check(char **av)
 			if (num <= 0 || num > INT_MAX)
 				return (printf("invalide Zahl an Philos\n"), false);
 		}
-		else //if (i == 5)
+		else
 		{
 			if (num < 0 || num > INT_MAX)
 				return (printf("invalide Zahl für av[%zu]\n", i), false);
