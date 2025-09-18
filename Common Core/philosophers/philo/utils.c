@@ -6,11 +6,28 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/08/31 22:53:23 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/18 18:21:30 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	unsigned char	*p;
+	size_t			total;
+
+	if (size == 0 || nmemb == 0)
+		return (malloc(0));
+	if (nmemb > (size_t)SIZE_MAX / size)
+		return (NULL);
+	total = nmemb * size;
+	p = malloc(total);
+	if (p == NULL)
+		return (NULL);
+	memset(p, 0, total);
+	return (p);
+}
 
 size_t	ft_strlen(char *str)
 {
@@ -22,11 +39,11 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-int	ft_atoi(const char *str)
+long long	ft_atoi(const char *str)
 {
-	int		minus;
-	size_t	num;
-	size_t	i;
+	int			minus;
+	long long	num;
+	size_t		i;
 
 	i = 0;
 	minus = 1;
@@ -45,5 +62,9 @@ int	ft_atoi(const char *str)
 		num = num + str[i] - '0';
 		i++;
 	}
+	if (i > 11)
+		return (LLONG_MAX);
 	return (minus * num);
 }
+
+// +2147483647

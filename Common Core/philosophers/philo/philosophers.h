@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/01 12:17:05 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/18 21:07:40 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,25 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <unistd.h>
-# include <sys/wait.h>
+# include <sys/time.h>
 # include <stdlib.h>
 # include <stdint.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <string.h>
+
+
+typedef struct s_mutex
+{
+	pthread_mutex_t	wait;
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	count;
+	pthread_mutex_t	print;
+	pthread_mutex_t	r_fork;
+	pthread_mutex_t	l_fork;
+
+}	t_mutex;
+
 
 typedef struct s_philo
 {
@@ -31,14 +45,22 @@ typedef struct s_philo
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				forks;
-	unsigned int	id;
-	pthread_t		philo[];
+	unsigned int	id[210];
+	int				count;
+	pthread_t		philo[210];
+	t_mutex			mutex;
 
 }	t_philo;
 
 
+long long	ft_atoi(const char *str);
+void		*ft_calloc(size_t nmemb, size_t size);
+bool		input_check(char **av);
 
-int	ft_atoi(const char *str);
+
+///    ./philo 5 600 200 200
+// TEST RUN: PHILO SHOULD DIE because of computing delay
+
+//valgrind --leak-check=full --show-leak-kinds=all --tool=helgrind
 
 #endif

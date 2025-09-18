@@ -3,83 +3,117 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/01 12:20:04 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/18 21:23:03 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-
-//pthread_mutex_t lock;
-
-void	*print_hello(void *arg)
+/* void	seperate_philos(t_philo *data)
 {
-	t_philo *data;
+	if
 
+} */
+void	print_lock(char *str, t_philo *data)
+{
+	pthread_mutex_lock(&data->mutex.print);
+	printf("%s", str);	//seperate_philos(data);
+	pthread_mutex_unlock(&data->mutex.print);
+
+}
+void	*get_data(void *arg)
+{
+	t_philo	*data;
+	bool	start;
+
+	start = false;
 	data = arg;
-	//pthread_mutex_lock(&lock);
-	int i = 0;
-	while (i < 10)
-		printf("Hello[%i] from Philo %i\n", i++, data[i].id);
-	//pthread_mutex_unlock(&lock);
-	return NULL;
+
+	while (1)
+	{
+		pthread_mutex_lock(&data->mutex.wait);
+		if (data->count == data->number_of_philos)
+		{
+			pthread_mutex_unlock(&data->mutex.wait);
+			print_lock("GESCHAFFT\n", data);
+			break ;
+		}
+		pthread_mutex_unlock(&data->mutex.wait);
+		usleep(10);
+	}
+	return (NULL);
 }
 
-
-void	*print_world()
+/* void	*get_data(void *arg)
 {
-	//pthread_mutex_lock(&lock);
-	int i = 0;
-	while (i < 10)
-		printf("World[%i]\n", i++);
-	//pthread_mutex_unlock(&lock);
-	return NULL;
-}
+	(void) arg;
+	return (NULL);
+} */
 
-void	start_threads(t_philo *data)
+bool	start_threads(t_philo *data)
 {
-	pthread_t	philo[data->number_of_philos];
+	int	i;
 
-
-	//pthread_mutex_init(&lock, NULL);
-	//number_of_philo = argv[1];
-	for (int i = 0; i < 5; i++)
-		pthread_create(&philo[i], NULL, print_hello, (void *)&data);
-	for (int i = 0; i < 5; i++)
-		pthread_join(philo[i], NULL);
-
-	int i = 0;
+	i = 0;
+	data->count = 0;
+	pthread_mutex_init(&data->mutex.wait, NULL);
+	pthread_mutex_init(&data->mutex.print, NULL);
 	while (i < data->number_of_philos)
-		printf("Number of Threads: %i\n", i++);
-	//pthread_join(philo[1], NULL);
-	//pthread_mutex_destroy(&lock);
+	{
+		pthread_mutex_lock(&data->mutex.wait);
+		data->count++;
+		pthread_mutex_unlock(&data->mutex.wait);
+		if (!!pthread_create(&data->philo[i], NULL, get_data, (void *)data))
+			return (false);
+		i++;
+	}
+/* 	pthread_mutex_lock(&data->mutex.count);
+	data->count++;
+	pthread_mutex_unlock(&data->mutex.count); */
+	i = 0;
+	while (i < data->number_of_philos)
+	{
+		if (!!pthread_join(data->philo[i], NULL))
+			return (false);
+		i++;
+	}
+	pthread_mutex_destroy(&data->mutex.wait);
+	pthread_mutex_destroy(&data->mutex.print);
+	printf("END\n");
+	return (true);
 }
 
-void	philo_init(t_philo *data, char **av)
-{
-	/* int i;
 
-	i = 1; */
+bool	philo_init(t_philo *data, char **av)
+{
 	data->number_of_philos = ft_atoi(av[1]);
 	data->time_to_die = ft_atoi(av[2]);
 	data->time_to_eat = ft_atoi(av[3]);
 	data->time_to_sleep = ft_atoi(av[4]);
-	data->forks = data->number_of_philos;
-	/* while (i <= data->number_of_philos)
-		philo[i].id = i++; */
+	data->mutex.fork = ft_calloc(data->number_of_philos,
+			sizeof(pthread_mutex_t));
+	if (!data->mutex.fork)
+		return (false);
+	return (true);
 }
 
 int	main(int ac, char **av)
 {
-	t_philo	data;
-	
+	t_philo	*data;
+
+	data = ft_calloc(1,	sizeof(t_philo));
+	if (!data)
+		return (false);
+
 	if (ac == 5 || ac == 6)
 	{
-		data_init(&data, av);
-		start_threads(&data);
+		if (!input_check(av) || !philo_init(data, av) || !start_threads(data))
+			return (1); // + CLEANUP für malloc in philo_init
+		free(data->mutex.fork);
+		free(data);
 	}
 	return (0);
 	//if (ac <= 6)
