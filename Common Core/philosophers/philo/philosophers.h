@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/19 17:08:46 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/24 12:06:43 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_philo
 {
 	int				last_meal;
 	int				id;
-	pthread_t		*philo;
+	pthread_t		*thread;
 	pthread_mutex_t	*fork;
 }	t_philo;
 
@@ -53,14 +53,17 @@ typedef struct s_data
 	int				number_of_meals;
 	int				count;
 	t_philo			*philo;
-	t_mutex			mutex;
+	t_mutex			*mutex;
 }	t_data;
 
 long long	ft_atoi(const char *str);
 void		*ft_calloc(size_t nmemb, size_t size);
 bool		input_check(char **av);
-void		print_lock(char *str, t_philo *data);
-void		seperate_philos(t_philo *data);
+void		print_lock(char *str, t_data *data);
+void		seperate_philos(t_data *data);
+
+
+// +2147483647
 
 ///    ./philo 5 600 200 200
 // TEST RUN: PHILO SHOULD DIE because of computing delay

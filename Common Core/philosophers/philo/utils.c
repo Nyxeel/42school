@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/18 23:32:54 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/24 12:06:28 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_lock(char *str, t_philo *data)
+void	print_lock(char *str, t_data *data)
 {
-	pthread_mutex_lock(&data->mutex.print);
+	pthread_mutex_lock(&data->mutex->print);
 	printf("%s", str);
-	pthread_mutex_unlock(&data->mutex.print);
+	pthread_mutex_unlock(&data->mutex->print);
 }
 
 void	*ft_calloc(size_t nmemb, size_t size)
