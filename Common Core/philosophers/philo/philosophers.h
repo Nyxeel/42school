@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 00:51:35 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 01:00:52 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_data
 	int			number_of_meals;
 	int			count;
 	bool		stop;
+	bool		start;
 	t_philo		*philo;
 	t_mutex		mutex;
 }	t_data;

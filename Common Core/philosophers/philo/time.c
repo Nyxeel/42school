@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 00:51:27 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 01:02:23 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ void	set_starttime(t_data *data)
 	printf("ZEIT in Jahren: %ld\n", data->philo[0].last_meal / 60 / 60 / 24 / 365 / 1000);
 	printf("ZEIT in Tagen: %ld\n", data->philo[0].last_meal / 60 / 60 / 24 /1000);
 	printf("ZEIT in MiliSek: %ld\n", data->philo[0].last_meal);
-	data->stop = true;
+	data->start = true;
 	pthread_mutex_unlock(&data->mutex.start_time);
 }
