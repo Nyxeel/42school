@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/18 23:51:32 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/19 14:33:52 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,27 @@ static void	mutex_destroy(t_philo *data)
 	pthread_mutex_destroy(&data->mutex.print);
 }
 
+static void	mutex_init(t_philo *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philos)
+	{
+		pthread_mutex_init(&data->mutex.fork[i], NULL);
+		i++;
+	}
+	pthread_mutex_init(&data->mutex.wait, NULL);
+	pthread_mutex_init(&data->mutex.print, NULL);
+}
+
 bool	start_threads(t_philo *data)
 {
 	int	i;
 
 	i = 0;
 	data->count = 0;
-
+	mutex_init(data);
 	while (i < data->number_of_philos)
 	{
 		pthread_mutex_lock(&data->mutex.wait);
@@ -73,20 +87,6 @@ bool	start_threads(t_philo *data)
 	return (true);
 }
 
-static void	mutex_init(t_philo *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->number_of_philos)
-	{
-		pthread_mutex_init(&data->mutex.fork[i], NULL);
-		i++;
-	}
-	pthread_mutex_init(&data->mutex.wait, NULL);
-	pthread_mutex_init(&data->mutex.print, NULL);
-}
-
 bool	philo_init(t_philo *data, char **av, int ac)
 {
 	memset(data, 0, sizeof(t_philo));
@@ -100,7 +100,6 @@ bool	philo_init(t_philo *data, char **av, int ac)
 			sizeof(pthread_mutex_t));
 	if (!data->mutex.fork)
 		return (false);
-	mutex_init(data);
 	return (true);
 }
 
