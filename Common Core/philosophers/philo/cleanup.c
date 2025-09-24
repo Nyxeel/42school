@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 13:05:45 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/24 23:00:48 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 00:49:45 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	mutex_cleanup(pthread_mutex_t *mtx, int i, t_data *data)
 		pthread_mutex_destroy(&data->mutex.print);
 	if (data->mutex.start_time_ok == true)
 		pthread_mutex_destroy(&data->mutex.start_time);
+	if (data->mutex.timestamp_ok == true)
+		pthread_mutex_destroy(&data->mutex.timestamp);
 }
 
 

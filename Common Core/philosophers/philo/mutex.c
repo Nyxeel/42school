@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/24 23:04:28 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 00:50:12 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	mutex_destroy(t_data *data)
 	pthread_mutex_destroy(&data->mutex.wait);
 	pthread_mutex_destroy(&data->mutex.print);
 	pthread_mutex_destroy(&data->mutex.start_time);
+	pthread_mutex_destroy(&data->mutex.timestamp);
+
 
 	///
 	///
@@ -58,6 +60,10 @@ bool	mutex_init(t_data *data)
 	if (!!pthread_mutex_init(&data->mutex.start_time, NULL))
 		return (mutex_cleanup(data->mutex.fork, i, data), false);
 	data->mutex.start_time_ok = true;
+	data->mutex.print_ok = true;
+	if (!!pthread_mutex_init(&data->mutex.timestamp, NULL))
+		return (mutex_cleanup(data->mutex.fork, i, data), false);
+	data->mutex.timestamp_ok = true;
 
 	///
 	///

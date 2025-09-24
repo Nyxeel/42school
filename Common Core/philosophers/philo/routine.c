@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 23:37:05 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/24 23:57:19 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 00:45:50 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	seperate_philos(t_data *data)
 {
 	while (!data->stop)		//wartet auf get_starttime();
 		;
-	data->philo->timestamp = gettime() - data->start_time_ms;
-	printf("JETZT ZEIT: %ld\n", data->philo->timestamp);
 	if (data->number_of_philos == 1)
 		let_him_die(data);
 	else if (data->number_of_philos % 2 == 0)
