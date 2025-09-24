@@ -6,13 +6,13 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/24 22:34:13 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/24 23:41:15 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	*get_data(void *arg)
+static void	*get_started(void *arg)
 {
 	t_data	*data;
 
@@ -32,41 +32,7 @@ void	*get_data(void *arg)
 	return (NULL);
 }
 
-static void	mutex_destroy(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->number_of_philos)
-	{
-		pthread_mutex_destroy(&data->mutex.fork[i]);
-		i++;
-	}
-	pthread_mutex_destroy(&data->mutex.wait);
-	pthread_mutex_destroy(&data->mutex.print);
-}
-
-static bool	mutex_init(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->number_of_philos)
-	{
-		if (!!pthread_mutex_init(&data->mutex.fork[i], NULL))
-			return (mutex_cleanup(data->mutex.fork, i, data), false);
-		i++;
-	}
-	if (!!pthread_mutex_init(&data->mutex.wait, NULL))
-		return (mutex_cleanup(data->mutex.fork, i, data), false);
-	data->mutex.wait_ok = true;
-	if (!!pthread_mutex_init(&data->mutex.print, NULL))
-		return (mutex_cleanup(data->mutex.fork, i, data), false);
-	data->mutex.print_ok = true;
-	return (true);
-}
-
-bool	join_the_threads(t_data *data)
+static bool	join_the_threads(t_data *data)
 {
 	int	i;
 
@@ -94,7 +60,7 @@ static bool	start_threads(t_data *data)
 		pthread_mutex_lock(&data->mutex.wait);
 		data->count++;
 		pthread_mutex_unlock(&data->mutex.wait);
-		if (!!pthread_create(&data->philo[i].thread, NULL, get_data,
+		if (!!pthread_create(&data->philo[i].thread, NULL, get_started,
 				(void *)data))
 		{
 			data->stop = true;
@@ -103,12 +69,13 @@ static bool	start_threads(t_data *data)
 		}
 		i++;
 	}
+	get_starttime(data);
 	if (!join_the_threads(data))
 		return (false);
 	return (true);
 }
 
-static bool	ft_allocate(t_data *data, char **av, int ac)
+static bool	philo_init(t_data *data, char **av, int ac)
 {
 	memset(data, 0, sizeof(t_data));
 	data->number_of_philos = ft_atoi(av[1]);
@@ -125,7 +92,7 @@ static bool	ft_allocate(t_data *data, char **av, int ac)
 			sizeof(pthread_mutex_t));
 	if (!data->mutex.fork)
 		return (cleanup(data), false);
-	//set_philo(data);
+	set_philo(data);
 
 
 	/*data->philo->thread = ft_calloc(data->number_of_philos,
@@ -143,7 +110,7 @@ int	main(int ac, char **av)
 
 	if (ac == 5 || ac == 6)
 	{
-		if (!input_check(av) || !ft_allocate(&data, av, ac)
+		if (!input_check(av) || !philo_init(&data, av, ac)
 			|| !start_threads(&data))
 			return (cleanup(&data), 1);
 		cleanup(&data);

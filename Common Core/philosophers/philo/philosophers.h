@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/24 22:19:31 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/24 23:33:23 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ typedef struct s_mutex
 	bool			print_ok;
 	pthread_mutex_t	print_time;
 	bool			print_time_ok;
-	pthread_mutex_t	print2222;
-	bool			print2222_ok;
+	pthread_mutex_t	start_time;
+	bool			start_time_ok;
 	pthread_mutex_t	*fork;
 }	t_mutex;
 
 typedef struct s_philo
 {
-	int			last_meal;
+	int64_t		last_meal;
 	int			id;
 	int			ri_fork;
 	int			le_fork;
@@ -72,6 +72,12 @@ void	mutex_cleanup(pthread_mutex_t *mtx, int i, t_data *data);
 void	thread_cleanup(pthread_t *thread, int i);
 
 void	set_forks(t_data *data);
+void	set_philo(t_data *data);
+
+bool	mutex_init(t_data *data);
+void	mutex_destroy(t_data *data);
+
+void	get_starttime(t_data *data);
 
 
 
