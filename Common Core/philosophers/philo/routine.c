@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 23:37:05 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/24 11:45:40 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/24 21:39:20 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,19 @@ void	seperate_philos(t_data *data)
 		even_routine(data);
 	else
 		odd_routine(data);
+}
+
+void	set_philo(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philos)
+	{
+		data->philo[i].ri_fork = i;
+		data->philo[i].le_fork = i + 1 % data->number_of_philos;
+		data->philo[i].id = i + 1;
+		//data->philo[i].last_meal =
+		i++;
+	}
 }

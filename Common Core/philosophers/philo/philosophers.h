@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/24 12:06:43 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/24 22:19:31 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,34 +26,39 @@
 # include <errno.h>
 # include <string.h>
 
-
 typedef struct s_mutex
 {
 	pthread_mutex_t	wait;
-	pthread_mutex_t	count;
+	bool			wait_ok;
 	pthread_mutex_t	print;
-	pthread_mutex_t	r_fork;
-	pthread_mutex_t	l_fork;
+	bool			print_ok;
+	pthread_mutex_t	print_time;
+	bool			print_time_ok;
+	pthread_mutex_t	print2222;
+	bool			print2222_ok;
+	pthread_mutex_t	*fork;
 }	t_mutex;
 
 typedef struct s_philo
 {
-	int				last_meal;
-	int				id;
-	pthread_t		*thread;
-	pthread_mutex_t	*fork;
+	int			last_meal;
+	int			id;
+	int			ri_fork;
+	int			le_fork;
+	pthread_t	thread;
 }	t_philo;
 
 typedef struct s_data
 {
-	int				number_of_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				number_of_meals;
-	int				count;
-	t_philo			*philo;
-	t_mutex			*mutex;
+	int			number_of_philos;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	int			number_of_meals;
+	int			count;
+	bool		stop;
+	t_philo		*philo;
+	t_mutex		mutex;
 }	t_data;
 
 long long	ft_atoi(const char *str);
@@ -61,6 +66,13 @@ void		*ft_calloc(size_t nmemb, size_t size);
 bool		input_check(char **av);
 void		print_lock(char *str, t_data *data);
 void		seperate_philos(t_data *data);
+
+void	cleanup(t_data *data);
+void	mutex_cleanup(pthread_mutex_t *mtx, int i, t_data *data);
+void	thread_cleanup(pthread_t *thread, int i);
+
+void	set_forks(t_data *data);
+
 
 
 // +2147483647

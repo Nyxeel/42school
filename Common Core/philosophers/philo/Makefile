@@ -13,7 +13,7 @@ CFLAGS  := -Wall -Wextra -Werror -g
 # Quellen & Objekte
 # =========================
 # Liste alle deine .c-Dateien explizit auf:
-SRCS    := main.c utils.c input_check.c routine.c
+SRCS    := main.c utils.c input_check.c routine.c cleanup.c
 
 
 OBJS    := $(addprefix obj/,$(SRCS:.c=.o))
