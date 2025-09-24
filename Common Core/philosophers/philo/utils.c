@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/24 23:46:17 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/24 23:55:48 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ int64_t	gettime(void)
 void	get_starttime(t_data *data)
 {
 	int		i;
-	int64_t	start_time_ms;
 
 	i = 0;
 	pthread_mutex_lock(&data->mutex.start_time);
-	start_time_ms = gettime();
+	data->start_time_ms = gettime();
 	while (i < data->number_of_philos)
 	{
-		data->philo[i].last_meal = start_time_ms;
+		data->philo[i].last_meal = data->start_time_ms;
 		i++;
 	}
 	printf("ZEIT in Jahren: %ld\n", data->philo[0].last_meal / 60 / 60 / 24 / 365 / 1000);

@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/24 23:33:23 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/24 23:55:52 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_mutex
 typedef struct s_philo
 {
 	int64_t		last_meal;
+	int64_t		timestamp;
 	int			id;
 	int			ri_fork;
 	int			le_fork;
@@ -50,6 +51,7 @@ typedef struct s_philo
 
 typedef struct s_data
 {
+	int64_t		start_time_ms;
 	int			number_of_philos;
 	int			time_to_die;
 	int			time_to_eat;
