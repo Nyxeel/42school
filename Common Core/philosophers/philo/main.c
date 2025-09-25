@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 00:51:24 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 03:28:08 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static void	*get_started(void *arg)
 	data = (t_data *) arg;
 	while (!data->stop)
 	{
-		pthread_mutex_lock(&data->mutex.wait);
-		if (data->count == data->number_of_philos)
+		pthread_mutex_lock(&data->mutex.start_time);
+		if (data->start == true)
 		{
-			pthread_mutex_unlock(&data->mutex.wait);
+			pthread_mutex_unlock(&data->mutex.start_time);
 			seperate_philos(data);
 			break ;
 		}
-		pthread_mutex_unlock(&data->mutex.wait);
+		pthread_mutex_unlock(&data->mutex.start_time);
 		usleep(10);
 	}
 	return (NULL);
@@ -57,9 +57,6 @@ static bool	start_threads(t_data *data)
 		return (false);
 	while (i < data->number_of_philos)
 	{
-		pthread_mutex_lock(&data->mutex.wait);
-		data->count++;
-		pthread_mutex_unlock(&data->mutex.wait);
 		if (!!pthread_create(&data->philo[i].thread, NULL, get_started,
 				(void *)data))
 		{
@@ -110,8 +107,9 @@ int	main(int ac, char **av)
 
 	if (ac == 5 || ac == 6)
 	{
-		if (!input_check(av) || !philo_init(&data, av, ac)
-			|| !start_threads(&data))
+		if (!input_check(av))
+			return (1);
+		if (!philo_init(&data, av, ac) || !start_threads(&data))
 			return (cleanup(&data), 1);
 		cleanup(&data);
 		return (0);

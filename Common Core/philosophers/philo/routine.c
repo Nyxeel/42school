@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 23:37:05 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 01:03:05 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 03:29:59 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,17 @@ static void	odd_routine(t_data *data)
 
 static void	even_routine(t_data *data)
 {
-
 	(void) *data;
 
-
+/*	int i = 1;
+	
+	 while (i != 0)
+	{	
+		data->start_time_ms = gettime();
+		usleep(20000);
+		print_timestamp(data);
+		i -= 1;
+	} */
 	return ;
 }
 
@@ -38,18 +45,6 @@ static void	let_him_die(t_data *data)
 
 void	seperate_philos(t_data *data)
 {
-	
-	while (!data->stop)		//wartet auf get_starttime();
-	{
-		pthread_mutex_lock(&data->mutex.start_time);
-		if (data->start == true)
-		{
-			pthread_mutex_unlock(&data->mutex.start_time);
-			break ;
-		}
-		pthread_mutex_unlock(&data->mutex.start_time);
-		usleep(10);
-	}
 	if (data->number_of_philos == 1)
 		let_him_die(data);
 	else if (data->number_of_philos % 2 == 0)

@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 01:02:23 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 03:22:00 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	print_timestamp(t_data *data)
 {
-	pthread_mutex_lock(&data->mutex.timestamp);
 	data->timestamp = gettime() - data->start_time_ms;
+	pthread_mutex_lock(&data->mutex.print);
 	printf("Zeit in ms: %ld\n", data->timestamp);
-	pthread_mutex_unlock(&data->mutex.timestamp);
+	pthread_mutex_unlock(&data->mutex.print);
 }
 
 int64_t	gettime(void)

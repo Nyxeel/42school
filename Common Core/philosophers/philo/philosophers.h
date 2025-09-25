@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 01:00:52 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 03:21:18 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	mutex_destroy(t_data *data);
 
 void	set_starttime(t_data *data);
 int64_t	gettime(void);
+void	print_timestamp(t_data *data);
 
 
 
