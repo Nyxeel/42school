@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 03:22:00 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 14:28:03 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	print_timestamp(t_data *data)
 {
-	data->timestamp = gettime() - data->start_time_ms;
 	pthread_mutex_lock(&data->mutex.print);
+	data->start_time_ms = gettime();
+	usleep(10000);
+	data->timestamp = gettime() - data->start_time_ms;
 	printf("Zeit in ms: %ld\n", data->timestamp);
 	pthread_mutex_unlock(&data->mutex.print);
 }

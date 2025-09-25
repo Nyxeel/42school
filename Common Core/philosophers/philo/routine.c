@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 23:37:05 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 03:29:59 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 14:27:15 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,8 @@ static void	even_routine(t_data *data)
 {
 	(void) *data;
 
-/*	int i = 1;
-	
-	 while (i != 0)
-	{	
-		data->start_time_ms = gettime();
-		usleep(20000);
-		print_timestamp(data);
-		i -= 1;
-	} */
+	print_timestamp(data);
+
 	return ;
 }
 

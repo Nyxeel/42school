@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 03:21:18 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 14:40:54 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_data
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			number_of_meals;
+	pthread_t	thread;
 	int			count;
 	bool		stop;
 	bool		start;
@@ -74,13 +75,13 @@ void		seperate_philos(t_data *data);
 
 void	cleanup(t_data *data);
 void	mutex_cleanup(pthread_mutex_t *mtx, int i, t_data *data);
+void	mutex_destroy(t_data *data);
+bool	mutex_init(t_data *data);
 void	thread_cleanup(pthread_t *thread, int i);
 
 void	set_forks(t_data *data);
 void	set_philo(t_data *data);
-
-bool	mutex_init(t_data *data);
-void	mutex_destroy(t_data *data);
+bool	start_threads(t_data *data);
 
 void	set_starttime(t_data *data);
 int64_t	gettime(void);

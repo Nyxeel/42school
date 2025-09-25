@@ -3,74 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 03:28:08 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 14:33:27 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-static void	*get_started(void *arg)
-{
-	t_data	*data;
-
-	data = (t_data *) arg;
-	while (!data->stop)
-	{
-		pthread_mutex_lock(&data->mutex.start_time);
-		if (data->start == true)
-		{
-			pthread_mutex_unlock(&data->mutex.start_time);
-			seperate_philos(data);
-			break ;
-		}
-		pthread_mutex_unlock(&data->mutex.start_time);
-		usleep(10);
-	}
-	return (NULL);
-}
-
-static bool	join_the_threads(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->number_of_philos)
-	{
-		if (!!pthread_join(data->philo[i].thread, NULL))
-			return (mutex_destroy(data), false);
-		i++;
-	}
-	mutex_destroy(data);
-	return (true);
-}
-
-static bool	start_threads(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	data->count = 0;
-	if (!mutex_init(data))
-		return (false);
-	while (i < data->number_of_philos)
-	{
-		if (!!pthread_create(&data->philo[i].thread, NULL, get_started,
-				(void *)data))
-		{
-			data->stop = true;
-			return (thread_cleanup(&data->philo->thread, i),
-				mutex_destroy(data), false);
-		}
-		i++;
-	}
-	set_starttime(data);
-	if (!join_the_threads(data))
-		return (false);
-	return (true);
-}
 
 static bool	philo_init(t_data *data, char **av, int ac)
 {
