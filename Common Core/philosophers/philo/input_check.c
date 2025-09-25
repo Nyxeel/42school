@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 18:17:22 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 15:00:43 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:05:53 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ bool	input_check(char **av)
 	while (av[i])
 	{
 		if (!number_check(av[i]))
-			return (printf("NUMBER CHECK FAIL\n"), false);
+			return (printf("non numeric value detected\n"), false);
 		num = ft_atoi(av[i]);
-		if (i == 1 || i == 5)
+		if (i == 1)
 		{
 			if (num <= 0 || num > INT_MAX)
-				return (printf("invalide Zahl an Philos\n"), false);
+				return (printf("invalid number of philos\n"), false);
 		}
 		else
 		{
 			if (num < 0 || num > INT_MAX)
-				return (printf("invalide Zahl für av[%zu]\n", i), false);
+				return (printf("invalid number for av[%zu]\n", i), false);
 		}
 		i++;
 	}
