@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 18:20:57 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 19:40:44 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int ac, char **av)
 	}
 	printf("WRONG INPUT\n");
 	return (0);
-
+}
 
 // ./philo 4 500 200 200 0    -> valid ??
 
@@ -65,4 +65,3 @@ int	main(int ac, char **av)
 [number_of_times_each_philosopher_must_eat]
 */
 
-}

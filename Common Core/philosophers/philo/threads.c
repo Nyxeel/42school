@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 19:03:40 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 19:43:42 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@
 	return ;
 }
 */
+
+static bool	join(pthread_t monitor)
+{
+	if (!!pthread_join(monitor, NULL))
+		return (false);
+	return (true);
+}
+
+
 static void	*start_monitoring(void *arg)
 {
 	t_data		*monitor;
@@ -73,10 +82,9 @@ static bool	join_the_threads(t_data *data)
 	while (i < data->number_of_philos)
 	{
 		if (!!pthread_join(data->philo[i].thread, NULL))
-			return (mutex_destroy(data), false);
+			return (false);
 		i++;
 	}
-	mutex_destroy(data);
 	return (true);
 }
 
@@ -102,7 +110,8 @@ bool	start_threads(t_data *data)
 		i++;
 	}
 	set_starttime(data);
-	if (!join_the_threads(data))
-		return (false);
+	if (!join_the_threads(data) || !join(monitor))
+		return (mutex_destroy(data), false);
+	mutex_destroy(data);
 	return (true);
 }
