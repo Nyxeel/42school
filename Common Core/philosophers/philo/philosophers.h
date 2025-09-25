@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 20:28:05 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 22:36:05 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	long long	start_time_ms;
-	long long 	timestamp;
+	long long	start_time;
+	long long	timestamp;
 	int			number_of_philos;
 	int			time_to_die;
 	int			time_to_eat;

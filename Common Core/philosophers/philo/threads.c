@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 21:15:55 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 22:39:48 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,14 @@ static void	*start_monitoring(void *arg)
 {
 	t_data	*data;
 	int		i;
-	int		time_to_die;
-
 
 	data = (t_data *) arg;
 	i = 0;
-/* 	data->timestamp = gettime();
-	print_string("MONITOR ms: ", data);
-	print_time(data->timestamp, data); */
-
-	time_to_die = data->time_to_die;
 	usleep(data->time_to_die / 2);
 	while (!data->stop)
 	{
 		pthread_mutex_lock(&data->mutex.timestamp);
-		if (gettime() - data->philo[i].last_meal >= time_to_die)
+		if (gettime() - data->philo[i].last_meal >= data->time_to_die)
 		{
 			pthread_mutex_unlock(&data->mutex.timestamp);
 			print_string("DEAD\n", data);
@@ -94,8 +87,6 @@ bool	start_threads(t_data *data)
 	i = 0;
 	if (!mutex_init(data))
 		return (false);
-	if (!!pthread_create(&data->monitor, NULL, start_monitoring, (void *)data))
-		return (mutex_destroy(data), false);
 	while (i < data->number_of_philos)
 	{
 		if (!!pthread_create(&data->philo[i].thread, NULL, get_started,
@@ -108,6 +99,8 @@ bool	start_threads(t_data *data)
 		i++;
 	}
 	set_starttime(data);
+	if (!!pthread_create(&data->monitor, NULL, start_monitoring, (void *)data))
+		return (mutex_destroy(data), false);
 	if (!join_the_threads(data))
 		return (mutex_destroy(data), false);
 	mutex_destroy(data);

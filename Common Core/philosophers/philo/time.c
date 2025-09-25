@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 21:08:36 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 22:36:29 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,17 @@ long long	gettime(void)
 void	set_starttime(t_data *data)
 {
 	int			i;
-	long long	start_time_ms;
 
 	i = 0;
 	pthread_mutex_lock(&data->mutex.timestamp);
-	start_time_ms = gettime();
+	data->start_time = gettime();
 	while (i < data->number_of_philos)
 	{
-		data->philo[i].last_meal = start_time_ms;
+		data->philo[i].last_meal = data->start_time;
 		i++;
 	}
 	data->start = true;
 	pthread_mutex_unlock(&data->mutex.timestamp);
 	print_string("Start_Time : ", data);
-	print_time(start_time_ms, data);
+	print_time(data->start_time, data);
 }
