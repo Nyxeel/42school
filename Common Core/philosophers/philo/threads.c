@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 16:37:30 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 19:03:40 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@
 {
 	return ;
 }
-
+*/
 static void	*start_monitoring(void *arg)
 {
-	t_data	*monitoring;
-	int 	i;
-	int64_t time_to_die;
+	t_data		*monitor;
 
-	i = 0;
-	monitoring = (t_data *) arg;
-	time_to_die = monitoring->time_to_die;
+	monitor = (t_data *) arg;
+
+	while (!monitor->start)
+		;
+	monitor->timestamp = gettime();
+	printf ("MONITOR ms: %lld\n", monitor->timestamp);
+	/* time_to_die = monitoring->time_to_die;
 	usleep(monitoring->time_to_die / 2);
 	while (!monitoring->stop)
 	{
@@ -36,11 +38,12 @@ static void	*start_monitoring(void *arg)
 		}
 		if (i == monitoring->number_of_philos - 1)
 			i = -1;
-		i++;	
+		i++;
 		usleep(10);
-	}
+	} */
+
 	return (NULL);
-} */
+}
 
 static void	*get_started(void *arg)
 {
@@ -59,7 +62,7 @@ static void	*get_started(void *arg)
 		pthread_mutex_unlock(&data->mutex.start_time);
 		usleep(10);
 	}
-	return (malloc(0));
+	return (NULL);
 }
 
 static bool	join_the_threads(t_data *data)
@@ -79,14 +82,14 @@ static bool	join_the_threads(t_data *data)
 
 bool	start_threads(t_data *data)
 {
-	int	i;
+	int			i;
+	pthread_t	monitor;
 
 	i = 0;
-	data->count = 0;
 	if (!mutex_init(data))
 		return (false);
-/* 	if (!!pthread_create(&data->monitor, NULL, start_monitoring, (void *)data))
-			return (mutex_destroy(data), false); */
+	if (!!pthread_create(&monitor, NULL, start_monitoring, (void *)data))
+		return (mutex_destroy(data), false);
 	while (i < data->number_of_philos)
 	{
 		if (!!pthread_create(&data->philo[i].thread, NULL, get_started,

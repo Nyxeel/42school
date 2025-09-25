@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 17:36:52 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 18:51:19 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ long long	gettime(void)
 	long long		t2;
 
 	gettimeofday(&time, NULL);
-	t1 = (long long)(time.tv_sec) * 1000;
+	t1 = (long long)time.tv_sec * 1000;
 	t2 = (time.tv_usec / 1000);
 	return (t1 + t2);
 }
@@ -46,7 +46,7 @@ void	set_starttime(t_data *data)
 		data->philo[i].last_meal = data->start_time_ms;
 		i++;
 	}
-	printf("Timestamp ms: %lld\n", data->start_time_ms);
+	printf("START_TIME ms: %lld\n", data->start_time_ms);
 	data->start = true;
 	pthread_mutex_unlock(&data->mutex.start_time);
 }
