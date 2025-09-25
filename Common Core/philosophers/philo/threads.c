@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 19:43:42 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 20:02:32 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,6 @@
 }
 */
 
-static bool	join(pthread_t monitor)
-{
-	if (!!pthread_join(monitor, NULL))
-		return (false);
-	return (true);
-}
-
-
 static void	*start_monitoring(void *arg)
 {
 	t_data		*monitor;
@@ -34,8 +26,10 @@ static void	*start_monitoring(void *arg)
 
 	while (!monitor->start)
 		;
+	pthread_mutex_lock(&monitor->mutex.start_time);
 	monitor->timestamp = gettime();
 	printf ("MONITOR ms: %lld\n", monitor->timestamp);
+	pthread_mutex_unlock(&monitor->mutex.start_time);
 	/* time_to_die = monitoring->time_to_die;
 	usleep(monitoring->time_to_die / 2);
 	while (!monitoring->stop)
@@ -74,7 +68,7 @@ static void	*get_started(void *arg)
 	return (NULL);
 }
 
-static bool	join_the_threads(t_data *data)
+static bool	join_the_threads(t_data *data, pthread_t monitor)
 {
 	int	i;
 
@@ -85,13 +79,15 @@ static bool	join_the_threads(t_data *data)
 			return (false);
 		i++;
 	}
+	if (!!pthread_join(monitor, NULL))
+		return (false);
 	return (true);
 }
 
 bool	start_threads(t_data *data)
 {
 	int			i;
-	pthread_t	monitor;
+	pthread_t monitor;
 
 	i = 0;
 	if (!mutex_init(data))
@@ -110,7 +106,7 @@ bool	start_threads(t_data *data)
 		i++;
 	}
 	set_starttime(data);
-	if (!join_the_threads(data) || !join(monitor))
+	if (!join_the_threads(data, monitor))
 		return (mutex_destroy(data), false);
 	mutex_destroy(data);
 	return (true);
