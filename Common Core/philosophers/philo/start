@@ -1,0 +1,12 @@
+	pthread_mutex_lock(&data->mutex.print);
+	data->start_time_ms = gettime();
+	data->timestamp = gettime() - data->start_time_ms;
+	printf("Zeit in ms: %lld\n", data->timestamp);
+	pthread_mutex_unlock(&data->mutex.print);
+	pthread_mutex_lock(&data->mutex.start_time);
+	data->start_time_ms = gettime();
+	while (i < data->number_of_philos)
+		data->philo[i].last_meal = data->start_time_ms;
+	printf("START_TIME ms: %lld\n", data->start_time_ms);
+	data->start = true;
+	pthread_mutex_unlock(&data->mutex.start_time);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 16:43:27 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 20:28:05 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ typedef struct s_data
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			number_of_meals;
-	int			count;
 	bool		stop;
 	bool		start;
+	pthread_t	monitor;
 	t_philo		*philo;
 	t_mutex		mutex;
 }	t_data;
@@ -69,7 +69,6 @@ typedef struct s_data
 long long	ft_atoi(const char *str);
 void		*ft_calloc(size_t nmemb, size_t size);
 bool		input_check(char **av);
-void		print_lock(char *str, t_data *data);
 void		seperate_philos(t_data *data);
 
 void		cleanup(t_data *data);
@@ -85,6 +84,9 @@ void		mutex_destroy(t_data *data);
 
 void		set_starttime(t_data *data);
 long long	gettime(void);
+
+void		print_string(char *str, t_data *data);
+void		print_time(long long num, t_data *data);
 void		print_timestamp(t_data *data);
 
 

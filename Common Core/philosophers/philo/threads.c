@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 20:02:32 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 21:13:54 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,34 @@
 
 static void	*start_monitoring(void *arg)
 {
-	t_data		*monitor;
+	t_data	*data;
+	int		i;
+	int		time_to_die;
 
-	monitor = (t_data *) arg;
 
-	while (!monitor->start)
-		;
-	pthread_mutex_lock(&monitor->mutex.start_time);
-	monitor->timestamp = gettime();
-	printf ("MONITOR ms: %lld\n", monitor->timestamp);
-	pthread_mutex_unlock(&monitor->mutex.start_time);
-	/* time_to_die = monitoring->time_to_die;
-	usleep(monitoring->time_to_die / 2);
-	while (!monitoring->stop)
+	data = (t_data *) arg;
+	i = 0;
+/* 	data->timestamp = gettime();
+	print_string("MONITOR ms: ", data);
+	print_time(data->timestamp, data); */
+
+	time_to_die = data->time_to_die;
+	usleep(data->time_to_die / 2);
+	while (!data->stop)
 	{
-		if (gettime() - monitoring->philo[i].last_meal >= time_to_die)
+		pthread_mutex_lock(&data->mutex.timestamp);
+		if (gettime() - data->philo[i].last_meal >= time_to_die)
 		{
-			print_death();
+			pthread_mutex_unlock(&data->mutex.timestamp);
+			print_string("DEAD\n", data);
 			break ;
 		}
-		if (i == monitoring->number_of_philos - 1)
+		if (i == data->number_of_philos - 1)
 			i = -1;
 		i++;
+		pthread_mutex_unlock(&data->mutex.timestamp);
 		usleep(10);
-	} */
-
+	}
 	return (NULL);
 }
 
@@ -55,20 +58,20 @@ static void	*get_started(void *arg)
 	data = (t_data *) arg;
 	while (!data->stop)
 	{
-		pthread_mutex_lock(&data->mutex.start_time);
+		pthread_mutex_lock(&data->mutex.timestamp);
 		if (data->start == true)
 		{
-			pthread_mutex_unlock(&data->mutex.start_time);
+			pthread_mutex_unlock(&data->mutex.timestamp);
 			seperate_philos(data);
 			break ;
 		}
-		pthread_mutex_unlock(&data->mutex.start_time);
+		pthread_mutex_unlock(&data->mutex.timestamp);
 		usleep(10);
 	}
 	return (NULL);
 }
 
-static bool	join_the_threads(t_data *data, pthread_t monitor)
+static bool	join_the_threads(t_data *data)
 {
 	int	i;
 
@@ -79,7 +82,7 @@ static bool	join_the_threads(t_data *data, pthread_t monitor)
 			return (false);
 		i++;
 	}
-	if (!!pthread_join(monitor, NULL))
+	if (!!pthread_join(data->monitor, NULL))
 		return (false);
 	return (true);
 }
@@ -87,12 +90,11 @@ static bool	join_the_threads(t_data *data, pthread_t monitor)
 bool	start_threads(t_data *data)
 {
 	int			i;
-	pthread_t monitor;
 
 	i = 0;
 	if (!mutex_init(data))
 		return (false);
-	if (!!pthread_create(&monitor, NULL, start_monitoring, (void *)data))
+	if (!!pthread_create(&data->monitor, NULL, start_monitoring, (void *)data))
 		return (mutex_destroy(data), false);
 	while (i < data->number_of_philos)
 	{
@@ -106,7 +108,7 @@ bool	start_threads(t_data *data)
 		i++;
 	}
 	set_starttime(data);
-	if (!join_the_threads(data, monitor))
+	if (!join_the_threads(data))
 		return (mutex_destroy(data), false);
 	mutex_destroy(data);
 	return (true);

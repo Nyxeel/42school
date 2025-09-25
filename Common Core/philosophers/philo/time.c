@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 20:03:02 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 21:08:36 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 void	print_timestamp(t_data *data)
 {
-	pthread_mutex_lock(&data->mutex.print);
-	data->start_time_ms = gettime();
+	long long	timestamp;
+	long long	time;
+
+	pthread_mutex_lock(&data->mutex.timestamp);
+	timestamp = gettime();
+	pthread_mutex_unlock(&data->mutex.timestamp);
+
 	usleep(20000);
-	data->timestamp = gettime() - data->start_time_ms;
-	printf("Zeit in ms: %lld\n", data->timestamp);
-	pthread_mutex_unlock(&data->mutex.print);
+	time = gettime() - timestamp;
+
+	print_time(time, data);
 }
 
 long long	gettime(void)
@@ -36,17 +41,19 @@ long long	gettime(void)
 
 void	set_starttime(t_data *data)
 {
-	int		i;
+	int			i;
+	long long	start_time_ms;
 
 	i = 0;
-	pthread_mutex_lock(&data->mutex.start_time);
-	data->start_time_ms = gettime();
+	pthread_mutex_lock(&data->mutex.timestamp);
+	start_time_ms = gettime();
 	while (i < data->number_of_philos)
 	{
-		data->philo[i].last_meal = data->start_time_ms;
+		data->philo[i].last_meal = start_time_ms;
 		i++;
 	}
-	printf("START_TIME ms: %lld\n", data->start_time_ms);
 	data->start = true;
-	pthread_mutex_unlock(&data->mutex.start_time);
+	pthread_mutex_unlock(&data->mutex.timestamp);
+	print_string("Start_Time : ", data);
+	print_time(start_time_ms, data);
 }

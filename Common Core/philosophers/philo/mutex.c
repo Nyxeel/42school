@@ -3,19 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   mutex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 00:50:12 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 20:51:50 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_lock(char *str, t_data *data)
+void	print_string(char *str, t_data *data)
 {
 	pthread_mutex_lock(&data->mutex.print);
 	printf("%s", str);
+	pthread_mutex_unlock(&data->mutex.print);
+}
+
+void	print_time(long long num, t_data *data)
+{
+	pthread_mutex_lock(&data->mutex.print);
+	printf("%lld\n", num);
 	pthread_mutex_unlock(&data->mutex.print);
 }
 
@@ -60,7 +67,6 @@ bool	mutex_init(t_data *data)
 	if (!!pthread_mutex_init(&data->mutex.start_time, NULL))
 		return (mutex_cleanup(data->mutex.fork, i, data), false);
 	data->mutex.start_time_ok = true;
-	data->mutex.print_ok = true;
 	if (!!pthread_mutex_init(&data->mutex.timestamp, NULL))
 		return (mutex_cleanup(data->mutex.fork, i, data), false);
 	data->mutex.timestamp_ok = true;
