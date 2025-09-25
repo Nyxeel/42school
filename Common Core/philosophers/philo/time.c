@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 14:28:03 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 17:36:52 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@ void	print_timestamp(t_data *data)
 {
 	pthread_mutex_lock(&data->mutex.print);
 	data->start_time_ms = gettime();
-	usleep(10000);
+	usleep(20000);
 	data->timestamp = gettime() - data->start_time_ms;
-	printf("Zeit in ms: %ld\n", data->timestamp);
+	printf("Zeit in ms: %lld\n", data->timestamp);
 	pthread_mutex_unlock(&data->mutex.print);
 }
 
-int64_t	gettime(void)
+long long	gettime(void)
 {
 	struct timeval	time;
-	int64_t			t1;
-	int64_t			t2;
+	long long		t1;
+	long long		t2;
 
 	gettimeofday(&time, NULL);
-	t1 = (int64_t)(time.tv_sec) * 1000;
+	t1 = (long long)(time.tv_sec) * 1000;
 	t2 = (time.tv_usec / 1000);
 	return (t1 + t2);
 }
@@ -46,9 +46,7 @@ void	set_starttime(t_data *data)
 		data->philo[i].last_meal = data->start_time_ms;
 		i++;
 	}
-	printf("ZEIT in Jahren: %ld\n", data->philo[0].last_meal / 60 / 60 / 24 / 365 / 1000);
-	printf("ZEIT in Tagen: %ld\n", data->philo[0].last_meal / 60 / 60 / 24 /1000);
-	printf("ZEIT in MiliSek: %ld\n", data->philo[0].last_meal);
+	printf("Timestamp ms: %lld\n", data->start_time_ms);
 	data->start = true;
 	pthread_mutex_unlock(&data->mutex.start_time);
 }

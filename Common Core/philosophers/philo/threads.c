@@ -6,7 +6,7 @@
 /*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 14:24:51 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 16:37:30 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	*get_started(void *arg)
 		pthread_mutex_unlock(&data->mutex.start_time);
 		usleep(10);
 	}
-	return (NULL);
+	return (malloc(0));
 }
 
 static bool	join_the_threads(t_data *data)

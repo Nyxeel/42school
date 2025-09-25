@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 16:09:23 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:43:27 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_mutex
 
 typedef struct s_philo
 {
-	int64_t		last_meal;
+	long long	last_meal;
 	int			id;
 	int			ri_fork;
 	int			le_fork;
@@ -52,17 +52,16 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int64_t		start_time_ms;
-	int64_t		timestamp;
+	long long	start_time_ms;
+	long long 	timestamp;
+	int			number_of_philos;
 	int			time_to_die;
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			number_of_meals;
-	int			number_of_philos;
 	int			count;
 	bool		stop;
 	bool		start;
-	pthread_t	monitor;
 	t_philo		*philo;
 	t_mutex		mutex;
 }	t_data;
@@ -75,16 +74,17 @@ void		seperate_philos(t_data *data);
 
 void		cleanup(t_data *data);
 void		mutex_cleanup(pthread_mutex_t *mtx, int i, t_data *data);
-void		mutex_destroy(t_data *data);
-bool		mutex_init(t_data *data);
 void		thread_cleanup(pthread_t *thread, int i);
 
 void		set_forks(t_data *data);
 void		set_philo(t_data *data);
 bool		start_threads(t_data *data);
 
+bool		mutex_init(t_data *data);
+void		mutex_destroy(t_data *data);
+
 void		set_starttime(t_data *data);
-int64_t		gettime(void);
+long long	gettime(void);
 void		print_timestamp(t_data *data);
 
 
