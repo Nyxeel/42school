@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 18:17:22 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 15:05:53 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:10:18 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static bool	number_check(char *str)
 
 bool	input_check(char **av)
 {
-	size_t	i;
-	long	num;
+	size_t		i;
+	long long	num;
 
 	i = 1;
 	while (av[i])

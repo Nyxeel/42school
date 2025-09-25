@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 15:00:32 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:10:04 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-long	ft_atoi(const char *str)
+long long	ft_atoi(const char *str)
 {
-	int		minus;
-	long	num;
-	size_t	i;
+	int			minus;
+	long long	num;
+	size_t		i;
 
 	i = 0;
 	minus = 1;
