@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 14:40:54 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:00:11 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,20 @@ typedef struct s_data
 {
 	int64_t		start_time_ms;
 	int64_t		timestamp;
-	int			number_of_philos;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
+	int64_t		time_to_die;
+	int64_t		time_to_eat;
+	int64_t		time_to_sleep;
 	int			number_of_meals;
-	pthread_t	thread;
+	int			number_of_philos;
 	int			count;
 	bool		stop;
 	bool		start;
+	pthread_t	monitor;
 	t_philo		*philo;
 	t_mutex		mutex;
 }	t_data;
 
-long long	ft_atoi(const char *str);
+long		ft_atoi(const char *str);
 void		*ft_calloc(size_t nmemb, size_t size);
 bool		input_check(char **av);
 void		print_lock(char *str, t_data *data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 00:46:37 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/25 15:00:32 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-long long	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
-	int			minus;
-	long long	num;
-	size_t		i;
+	int		minus;
+	long	num;
+	size_t	i;
 
 	i = 0;
 	minus = 1;
@@ -63,7 +63,7 @@ long long	ft_atoi(const char *str)
 		i++;
 	}
 	if (i > 11)
-		return (LLONG_MAX);
+		return (LONG_MAX);
 	return (minus * num);
 }
 
