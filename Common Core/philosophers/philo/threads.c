@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/26 20:06:57 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/26 20:08:24 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static void	*start_monitoring(void *arg)
 		if (gettime() - data->philo[i].last_meal > data->time_to_die)
 		{
 			pthread_mutex_unlock(&data->mutex.timestamp);
-			print_string("Philo has died ", data);
 			print_timestamp(data);
+			print_string("Philo has died ", data);
 			data->stop = true;
 			break ;
 		}

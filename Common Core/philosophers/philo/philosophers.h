@@ -3,15 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/26 14:51:24 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/26 22:40:13 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
+# define EATING 1
+# define SLEEPING 2
+# define THINKING 3
+# define WAITING 4
+
+
+# define EVEN 0
+# define ODD 1
+
+
+
+
 
 # include <pthread.h>
 # include <stdio.h>
@@ -45,6 +57,7 @@ typedef struct s_philo
 {
 	long long	last_meal;
 	int			id;
+	int			state;
 	int			ri_fork;
 	int			le_fork;
 	pthread_t	thread;
@@ -59,6 +72,7 @@ typedef struct s_data
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			number_of_meals;
+	int			id;
 	bool		stop;
 	bool		start;
 	pthread_t	monitor;
