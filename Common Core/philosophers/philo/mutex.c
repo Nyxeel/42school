@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 22:33:28 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/26 14:54:06 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,24 @@
 void	print_string(char *str, t_data *data)
 {
 	pthread_mutex_lock(&data->mutex.print);
-	printf("%s", str);
+	if (!data->stop)
+		printf("%s", str);
 	pthread_mutex_unlock(&data->mutex.print);
 }
 
 void	print_time(long long num, t_data *data)
 {
 	pthread_mutex_lock(&data->mutex.print);
-	printf("%lld\n", num);
+	if (!data->stop)
+		printf("%lld\n", num);
+	pthread_mutex_unlock(&data->mutex.print);
+}
+
+void	print_id(int id, t_data *data)
+{
+	pthread_mutex_lock(&data->mutex.print);
+	if (!data->stop)
+		printf("ID: %i\n", id);
 	pthread_mutex_unlock(&data->mutex.print);
 }
 

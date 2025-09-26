@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 23:37:05 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 22:30:27 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/26 14:55:59 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,29 @@ static void	odd_routine(t_data *data)
 
 static void	even_routine(t_data *data)
 {
-	long long	now;
+	int i = 0;
+	int next_id;
 
-	now = gettime();
-	while (1)
+	next_id = 1;
+	while (!data->stop)
 	{
-		if (gettime() - now >= 4000)
-			break ;
-		print_timestamp(data);
+		while (1)
+		{
+			pthread_mutex_lock(&data->mutex.timestamp);
+			if (next_id == data->philo[i].id)
+			{
+				next_id = (data->philo[i].id % data->number_of_philos) + 1;
+				pthread_mutex_unlock(&data->mutex.timestamp);
+				break ;
+			}
+			pthread_mutex_unlock(&data->mutex.timestamp);
+			usleep(200);
+		}
+		print_id(data->philo[i].id, data);
+		if (i == data->number_of_philos - 1)
+			i = -1;
+		i++;
+		//print_timestamp(data);
 	}
 	return ;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:30:05 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 22:36:05 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/26 14:51:24 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ long long	gettime(void);
 void		print_string(char *str, t_data *data);
 void		print_time(long long num, t_data *data);
 void		print_timestamp(t_data *data);
+void	print_id(int id, t_data *data);
 
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 22:39:48 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/26 14:53:13 by netrunner        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,14 @@ static void	*start_monitoring(void *arg)
 		{
 			pthread_mutex_unlock(&data->mutex.timestamp);
 			print_string("DEAD\n", data);
+			data->stop = true;
 			break ;
 		}
 		if (i == data->number_of_philos - 1)
 			i = -1;
 		i++;
 		pthread_mutex_unlock(&data->mutex.timestamp);
-		usleep(10);
+		usleep(50);
 	}
 	return (NULL);
 }
