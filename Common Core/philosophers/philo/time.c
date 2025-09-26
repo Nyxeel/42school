@@ -6,13 +6,13 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/26 19:39:25 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/26 19:49:02 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_timestamp(t_data *data)
+/* void	print_timestamp(t_data *data)
 {
 	long long	timestamp;
 	long long	time;
@@ -22,6 +22,14 @@ void	print_timestamp(t_data *data)
 	pthread_mutex_unlock(&data->mutex.timestamp);
 	usleep(20000);
 	time = gettime() - timestamp;
+	print_time(time, data);
+} */
+
+void	print_timestamp(t_data *data)
+{
+	long long	time;
+
+	time = gettime() - data->start_time;
 	print_time(time, data);
 }
 
@@ -39,7 +47,7 @@ long long	gettime(void)
 
 void	set_starttime(t_data *data)
 {
-	int			i;
+	int	i;
 
 	i = 0;
 	pthread_mutex_lock(&data->mutex.timestamp);
@@ -51,6 +59,4 @@ void	set_starttime(t_data *data)
 	}
 	data->start = true;
 	pthread_mutex_unlock(&data->mutex.timestamp);
-	print_string("Start_Time : ", data);
-	print_time(data->start_time, data);
 }

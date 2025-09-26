@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 07:32:07 by netrunner         #+#    #+#             */
-/*   Updated: 2025/09/25 19:40:44 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/26 19:46:20 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	set_philo(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philos)
+	{
+		data->philo[i].ri_fork = i;
+		if (data->number_of_philos > 1) // 1 Philo cant pick up a second fork!
+			data->philo[i].le_fork = i + 1 % data->number_of_philos;
+		data->philo[i].id = i + 1;
+		i++;
+	}
+}
 
 static bool	philo_init(t_data *data, char **av, int ac)
 {
