@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: netrunner <netrunner@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 23:37:05 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/26 14:55:59 by netrunner        ###   ########.fr       */
+/*   Updated: 2025/09/26 19:39:55 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,45 @@
 static void	odd_routine(t_data *data)
 {
 
-	(void) *data;
+	(void) data;
 	return ;
 }
 
 static void	even_routine(t_data *data)
 {
-	int i = 0;
+	print_timestamp(data);
+
+	(void ) data; 	
+	/* int i = 0;
 	int next_id;
 
 	next_id = 1;
 	while (!data->stop)
 	{
-		while (1)
+		while (!data->stop)
 		{
-			pthread_mutex_lock(&data->mutex.timestamp);
+			pthread_mutex_lock(&data->mutex.wait);
 			if (next_id == data->philo[i].id)
 			{
 				next_id = (data->philo[i].id % data->number_of_philos) + 1;
-				pthread_mutex_unlock(&data->mutex.timestamp);
+				pthread_mutex_unlock(&data->mutex.wait);
 				break ;
 			}
-			pthread_mutex_unlock(&data->mutex.timestamp);
+			pthread_mutex_unlock(&data->mutex.wait);
 			usleep(200);
 		}
 		print_id(data->philo[i].id, data);
+		pthread_mutex_lock(&data->mutex.wait);
 		if (i == data->number_of_philos - 1)
+		{
+			next_id = 1;
 			i = -1;
+		}
 		i++;
-		//print_timestamp(data);
-	}
+		pthread_mutex_unlock(&data->mutex.wait);
+
+		print_timestamp(data);
+	} */
 	return ;
 }
 
@@ -77,7 +86,6 @@ void	set_philo(t_data *data)
 		if (data->number_of_philos > 1) // 1 Philo cant pick up a second fork!
 			data->philo[i].le_fork = i + 1 % data->number_of_philos;
 		data->philo[i].id = i + 1;
-		//data->philo[i].last_meal =
 		i++;
 	}
 }

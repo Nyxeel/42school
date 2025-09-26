@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 22:52:19 by pjelinek          #+#    #+#             */
-/*   Updated: 2025/09/25 22:36:29 by pjelinek         ###   ########.fr       */
+/*   Updated: 2025/09/26 19:39:25 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ void	print_timestamp(t_data *data)
 	pthread_mutex_lock(&data->mutex.timestamp);
 	timestamp = gettime();
 	pthread_mutex_unlock(&data->mutex.timestamp);
-
 	usleep(20000);
 	time = gettime() - timestamp;
-
 	print_time(time, data);
 }
 
